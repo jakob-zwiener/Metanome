@@ -16,6 +16,7 @@
 
 package de.metanome.frontend.client.algorithms;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
@@ -118,7 +119,7 @@ public class AlgorithmEditForm extends Grid {
     MethodCallback<List<Algorithm>> databaseCallback = getDatabaseCallback();
 
 
-    AlgorithmRestService restService = com.google.gwt.core.client.GWT.create(AlgorithmRestService.class);
+    AlgorithmRestService restService = GWT.create(AlgorithmRestService.class);
     restService.listAvailableAlgorithmFiles(storageCallback);
     restService.listAlgorithms(databaseCallback);
   }

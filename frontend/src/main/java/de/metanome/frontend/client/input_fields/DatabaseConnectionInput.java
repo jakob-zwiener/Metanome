@@ -16,6 +16,8 @@
 
 package de.metanome.frontend.client.input_fields;
 
+import com.google.gwt.core.client.GWT;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingDataSource;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingDatabaseConnection;
@@ -84,8 +86,7 @@ public class DatabaseConnectionInput extends InputField {
       };
 
     DatabaseConnectionRestService
-        databaseConnectionService =
-        com.google.gwt.core.client.GWT.create(DatabaseConnectionRestService.class);
+        databaseConnectionService = GWT.create(DatabaseConnectionRestService.class);
     databaseConnectionService.listDatabaseConnections(callback);
 
   }

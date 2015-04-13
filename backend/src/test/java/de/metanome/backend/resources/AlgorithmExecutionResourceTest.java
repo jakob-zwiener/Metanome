@@ -151,6 +151,9 @@ public class AlgorithmExecutionResourceTest {
     // Check result
     assertFalse(results.isEmpty());
     assertTrue(results.contains(expectedUcc));
+
+    // Clean Up
+    AlgorithmExecutionCache.getResultPrinter(expectedExecutionIdentifier).close();
   }
 
 }

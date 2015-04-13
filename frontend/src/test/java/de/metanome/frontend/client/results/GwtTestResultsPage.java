@@ -22,6 +22,8 @@ import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 
+import de.metanome.backend.results_db.Algorithm;
+import de.metanome.backend.results_db.Execution;
 import de.metanome.frontend.client.BasePage;
 import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.TestHelper;
@@ -112,6 +114,9 @@ public class GwtTestResultsPage extends GWTTestCase {
     // Set up
     TestHelper.resetDatabaseSync();
 
+    Algorithm algorithm = new Algorithm("example_basic_statistic.jar");
+    Execution execution = new Execution(algorithm);
+
     BasePage parent = new BasePage();
     ResultsPage page = new ResultsPage(parent);
     page.setMessageReceiver(new TabWrapper());
@@ -121,12 +126,12 @@ public class GwtTestResultsPage extends GWTTestCase {
 
     // Expected Values
     // Execute
-    page.updateOnSuccess(null, (long) 4543);
+    page.updateOnSuccess(execution, (long) 4543);
 
     // Check
     assertEquals(2, page.getWidgetCount());
     assertTrue(page.getWidget(1) instanceof TabLayoutPanel);
-    assertEquals(2, ((TabLayoutPanel) page.getWidget(1)).getWidgetCount());
+    assertEquals(1, ((TabLayoutPanel) page.getWidget(1)).getWidgetCount());
 
     // Cleanup
     TestHelper.resetDatabaseSync();

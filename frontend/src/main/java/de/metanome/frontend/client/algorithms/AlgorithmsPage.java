@@ -16,6 +16,7 @@
 
 package de.metanome.frontend.client.algorithms;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
@@ -55,7 +56,7 @@ public class AlgorithmsPage extends FlowPanel implements TabContent {
   protected AlgorithmEditForm editForm;
 
   public AlgorithmsPage(BasePage parent) {
-    this.restService = com.google.gwt.core.client.GWT.create(AlgorithmRestService.class);
+    this.restService = GWT.create(AlgorithmRestService.class);
 
     this.basePage = parent;
 
