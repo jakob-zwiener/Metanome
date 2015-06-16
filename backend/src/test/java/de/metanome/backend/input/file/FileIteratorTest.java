@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import de.metanome.algorithm_integration.configuration.ConfigurationSettingFileI
 import de.metanome.algorithm_integration.input.InputGenerationException;
 import de.metanome.algorithm_integration.input.InputIterationException;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -47,10 +46,6 @@ public class FileIteratorTest {
   public void setUp() throws Exception {
     this.fixture = new CsvFileOneLineFixture();
     this.fileIterator = this.fixture.getTestData();
-  }
-
-  @After
-  public void tearDown() throws Exception {
   }
 
   /**
@@ -111,8 +106,8 @@ public class FileIteratorTest {
   }
 
   /**
-   * Test method for {@link FileIterator#next()} <p/> The first line in the file should determine the
-   * line length (it could be the header). Every next line should have this length or an {@link
+   * Test method for {@link FileIterator#next()} <p/> The first line in the file should determine
+   * the line length (it could be the header). Every next line should have this length or an {@link
    * de.metanome.algorithm_integration.input.InputIterationException} should be thrown.
    */
   @Test
@@ -274,9 +269,10 @@ public class FileIteratorTest {
   }
 
   /**
-   * Test method for {@link FileIterator#FileIterator(String, java.io.Reader, de.metanome.algorithm_integration.configuration.ConfigurationSettingFileInput)}  <p/> A
-   * {@link FileIterator} generated from an empty file should be constructable without exceptions,
-   * return false on hasNext, return 0 as numberOfColumns and have a valid standard header.
+   * Test method for {@link FileIterator#FileIterator(String, java.io.Reader,
+   * de.metanome.algorithm_integration.configuration.ConfigurationSettingFileInput)}  <p/> A {@link
+   * FileIterator} generated from an empty file should be constructable without exceptions, return
+   * false on hasNext, return 0 as numberOfColumns and have a valid standard header.
    */
   @Test
   public void testConstructWithEmptyFile() throws InputIterationException, IOException {
@@ -299,10 +295,11 @@ public class FileIteratorTest {
   }
 
   /**
-   * Test method for {@link FileIterator#FileIterator(String, java.io.Reader, de.metanome.algorithm_integration.configuration.ConfigurationSettingFileInput)}  <p/>
-   * A {@link FileIterator} with header generated from an empty file should be
-   * constructable without exceptions, return false on hasNext, return 0 as numberOfColumns and have
-   * a valid standard header.
+   * Test method for {@link FileIterator#FileIterator(String, java.io.Reader,
+   * de.metanome.algorithm_integration.configuration.ConfigurationSettingFileInput)}  <p/> A {@link
+   * FileIterator} with header generated from an empty file should be constructable without
+   * exceptions, return false on hasNext, return 0 as numberOfColumns and have a valid standard
+   * header.
    */
   @Test
   public void testConstructWithEmptyFileAndHeader() throws InputIterationException, IOException {
