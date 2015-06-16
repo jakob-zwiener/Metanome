@@ -24,19 +24,20 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Masks columns of a {@link FileIterator}. Only the specified columns will be in the masked
+ * Masks columns of a {@link RelationalInput}. Only the specified columns will be in the masked
  * iterator. Columns are specified by their column index.
  *
  * @author Jakob Zwiener
  */
-public class MaskingFileIterator implements RelationalInput {
+public class MaskingRelationalInput implements RelationalInput {
 
-  protected final FileIterator fileIterator;
+  protected final RelationalInput relationalInput;
   protected final int[] mask;
 
-  public MaskingFileIterator(FileIterator fileIterator, int... mask) throws InvalidMaskException {
+  public MaskingRelationalInput(RelationalInput relationalInput, int... mask)
+      throws InvalidMaskException {
 
-    this.fileIterator = fileIterator;
+    this.relationalInput = relationalInput;
 
     if (mask == null) {
       throw new InvalidMaskException("The mask should not be null.");
@@ -47,10 +48,10 @@ public class MaskingFileIterator implements RelationalInput {
     }
 
     for (int columnIndex : mask) {
-      if ((columnIndex < 0) || (columnIndex >= this.fileIterator.numberOfColumns())) {
+      if ((columnIndex < 0) || (columnIndex >= this.relationalInput.numberOfColumns())) {
         throw new InvalidMaskException(
             String.format("Column index %d is invalid. Number of columns is %d.", columnIndex,
-                          this.fileIterator.numberOfColumns()));
+                          this.relationalInput.numberOfColumns()));
       }
     }
 
@@ -59,12 +60,12 @@ public class MaskingFileIterator implements RelationalInput {
 
   @Override
   public boolean hasNext() throws InputIterationException {
-    return fileIterator.hasNext();
+    return relationalInput.hasNext();
   }
 
   @Override
   public List<String> next() throws InputIterationException {
-    return maskLine(fileIterator.next());
+    return maskLine(relationalInput.next());
   }
 
   @Override
@@ -74,12 +75,12 @@ public class MaskingFileIterator implements RelationalInput {
 
   @Override
   public String relationName() {
-    return fileIterator.relationName();
+    return relationalInput.relationName();
   }
 
   @Override
   public List<String> columnNames() {
-    return maskLine(fileIterator.columnNames());
+    return maskLine(relationalInput.columnNames());
   }
 
   /**

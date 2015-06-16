@@ -20,7 +20,7 @@ package de.metanome.backend.input.file;
  * Exception to signal an invalid mask.
  *
  * @author Jakob Zwiener
- * @see MaskingFileIterator
+ * @see MaskingRelationalInput
  */
 public class InvalidMaskException extends Exception {
 

@@ -18,6 +18,7 @@ package de.metanome.backend.input.file;
 
 import de.metanome.algorithm_integration.input.InputGenerationException;
 import de.metanome.algorithm_integration.input.InputIterationException;
+import de.metanome.algorithm_integration.input.RelationalInput;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,31 +29,31 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
- * Tests for {@link MaskingFileIterator}
+ * Tests for {@link MaskingRelationalInput}
  *
  * @author Jakob Zwiener
  */
-public class MaskingFileIteratorTest {
+public class MaskingRelationalInputTest {
 
   CsvFileOneLineFixture fixture;
-  MaskingFileIterator maskingFileIterator;
+  MaskingRelationalInput maskingRelationalInput;
 
   @Before
   public void setUp() throws Exception {
     this.fixture = new CsvFileOneLineFixture();
-    this.maskingFileIterator = new MaskingFileIterator(fixture.getTestData(), 0, 2);
+    this.maskingRelationalInput = new MaskingRelationalInput(fixture.getTestData(), 0, 2);
   }
 
   /**
-   * Test method for {@link MaskingFileIterator#MaskingFileIterator(FileIterator, int...)}
+   * Test method for {@link MaskingRelationalInput#MaskingRelationalInput(RelationalInput, int...)}
    *
-   * The {@link MaskingFileIterator} should raise an exception when the mask is null.
+   * The {@link MaskingRelationalInput} should raise an exception when the mask is null.
    */
   @Test
   public void testConstructorMaskNull()
       throws InputGenerationException, InputIterationException, InvalidMaskException {
     try {
-      new MaskingFileIterator(fixture.getTestData(), null);
+      new MaskingRelationalInput(fixture.getTestData(), null);
       fail("Exception not thrown.");
     } catch (InvalidMaskException e) {
       // Intentionally left blank.
@@ -60,14 +61,14 @@ public class MaskingFileIteratorTest {
   }
 
   /**
-   * Test method for {@link MaskingFileIterator#MaskingFileIterator(FileIterator, int...)}
+   * Test method for {@link MaskingRelationalInput#MaskingRelationalInput(RelationalInput, int...)}
    *
-   * The {@link MaskingFileIterator} should raise an exception when the mask is empty.
+   * The {@link MaskingRelationalInput} should raise an exception when the mask is empty.
    */
   @Test
   public void testConstructorMaskEmpty() throws InputGenerationException, InputIterationException {
     try {
-      new MaskingFileIterator(fixture.getTestData());
+      new MaskingRelationalInput(fixture.getTestData());
       fail("Exception not thrown.");
     } catch (InvalidMaskException e) {
       // Intentionally left blank.
@@ -75,23 +76,23 @@ public class MaskingFileIteratorTest {
   }
 
   /**
-   * Test method for {@link MaskingFileIterator#MaskingFileIterator(FileIterator, int...)}
+   * Test method for {@link MaskingRelationalInput#MaskingRelationalInput(RelationalInput, int...)}
    *
-   * The {@link MaskingFileIterator} should raise an exception when the mask contains invalid column
+   * The {@link MaskingRelationalInput} should raise an exception when the mask contains invalid column
    * indices.
    */
   @Test
   public void testConstructorInvalidMaskContents()
       throws InputGenerationException, InputIterationException {
     try {
-      new MaskingFileIterator(fixture.getTestData(), 0, 2, 6);
+      new MaskingRelationalInput(fixture.getTestData(), 0, 2, 6);
       fail("Exception not thrown.");
     } catch (InvalidMaskException e) {
       // Intentionally left blank.
     }
 
     try {
-      new MaskingFileIterator(fixture.getTestData(), 0, 2, -1);
+      new MaskingRelationalInput(fixture.getTestData(), 0, 2, -1);
       fail("Exception not thrown.");
     } catch (InvalidMaskException e) {
       // Intentionally left blank.
@@ -101,41 +102,41 @@ public class MaskingFileIteratorTest {
   @Test
   public void testHasNext() throws InputIterationException {
     // Check result
-    assertTrue(this.maskingFileIterator.hasNext());
-    this.maskingFileIterator.next();
-    assertFalse(this.maskingFileIterator.hasNext());
+    assertTrue(this.maskingRelationalInput.hasNext());
+    this.maskingRelationalInput.next();
+    assertFalse(this.maskingRelationalInput.hasNext());
   }
 
   /**
-   * Test method for {@link MaskingFileIterator#next()}
+   * Test method for {@link MaskingRelationalInput#next()}
    *
    * All lines should be properly masked.
    */
   @Test
   public void testNext() throws InputIterationException {
     // Check result
-    assertEquals(fixture.getExpectedMaskedStrings(), this.maskingFileIterator.next());
+    assertEquals(fixture.getExpectedMaskedStrings(), this.maskingRelationalInput.next());
   }
 
   /**
-   * Test method for {@link MaskingFileIterator#numberOfColumns()}, and {@link
-   * MaskingFileIterator#next()}
+   * Test method for {@link MaskingRelationalInput#numberOfColumns()}, and {@link
+   * MaskingRelationalInput#next()}
    *
    * Values can be in the table multiple times.
    */
   @Test
   public void testRepeatedValuesInMask()
       throws InputGenerationException, InputIterationException, InvalidMaskException {
-    MaskingFileIterator
-        maskingFileIterator =
-        new MaskingFileIterator(fixture.getTestData(), 0, 2, 2);
-    assertEquals(3, maskingFileIterator.numberOfColumns());
-    assertTrue(maskingFileIterator.hasNext());
-    assertEquals(fixture.getExpectedMaskedStringDoubled(), maskingFileIterator.next());
+    MaskingRelationalInput
+        maskingRelationalInput =
+        new MaskingRelationalInput(fixture.getTestData(), 0, 2, 2);
+    assertEquals(3, maskingRelationalInput.numberOfColumns());
+    assertTrue(maskingRelationalInput.hasNext());
+    assertEquals(fixture.getExpectedMaskedStringDoubled(), maskingRelationalInput.next());
   }
 
   /**
-   * Tets method for {@link MaskingFileIterator#numberOfColumns()}
+   * Tets method for {@link MaskingRelationalInput#numberOfColumns()}
    *
    * The number of masked columns should be returned.
    */
@@ -143,29 +144,30 @@ public class MaskingFileIteratorTest {
   public void testNumberOfColumns() {
     // Execute functionality
     // Check result
-    assertEquals(fixture.getExpectedNumberOfMaskedColumns(), maskingFileIterator.numberOfColumns());
+    assertEquals(fixture.getExpectedNumberOfMaskedColumns(),
+                 maskingRelationalInput.numberOfColumns());
   }
 
   /**
-   * Test method for {@link MaskingFileIterator#relationName()}
+   * Test method for {@link MaskingRelationalInput#relationName()}
    */
   @Test
   public void testRelationName() {
-    assertEquals(fixture.getExpectedRelationName(), maskingFileIterator.relationName());
+    assertEquals(fixture.getExpectedRelationName(), maskingRelationalInput.relationName());
   }
 
   /**
-   * Test method for {@link MaskingFileIterator#columnNames()}
+   * Test method for {@link MaskingRelationalInput#columnNames()}
    */
   @Test
   public void testColumnNames() {
     // Execute functionality
     // Check result
-    assertEquals(fixture.getExpectedMaskedColumnNames(), maskingFileIterator.columnNames());
+    assertEquals(fixture.getExpectedMaskedColumnNames(), maskingRelationalInput.columnNames());
   }
 
   /**
-   * Test method for {@link MaskingFileIterator#columnNames()}
+   * Test method for {@link MaskingRelationalInput#columnNames()}
    *
    * Generated masked headers do not necessarily have consecutive numbers. The numbers of the
    * generated headers correspond to the unmasked headers.
@@ -176,20 +178,20 @@ public class MaskingFileIteratorTest {
     // Setup
     CsvFileOneLineFixture fixtureSeparator = new CsvFileOneLineFixture(';');
 
-    MaskingFileIterator
-        maskingFileIteratorWithHeader =
-        new MaskingFileIterator(fixture.getTestData(), 0, 2);
-    MaskingFileIterator
-        maskingFileIteratorWithoutHeader =
-        new MaskingFileIterator(fixture.getTestDataWithoutHeader(), 0, 2);
+    MaskingRelationalInput
+        maskingRelationalInputWithHeader =
+        new MaskingRelationalInput(fixture.getTestData(), 0, 2);
+    MaskingRelationalInput
+        maskingRelationalInputWithoutHeader =
+        new MaskingRelationalInput(fixture.getTestDataWithoutHeader(), 0, 2);
 
     // Execute functionality
     // Check result
     assertEquals(fixture.getExpectedMaskedColumnNames(),
-                 maskingFileIteratorWithHeader.columnNames());
+                 maskingRelationalInputWithHeader.columnNames());
     assertEquals(fixture.getExpectedMaskedDefaultColumnNames(),
-                 maskingFileIteratorWithoutHeader.columnNames());
-    assertEquals(fixture.getExpectedMaskedStrings(), maskingFileIteratorWithoutHeader.next());
+                 maskingRelationalInputWithoutHeader.columnNames());
+    assertEquals(fixture.getExpectedMaskedStrings(), maskingRelationalInputWithoutHeader.next());
   }
 
 }
