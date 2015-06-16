@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -74,13 +74,7 @@ public class CsvFileOneLineFixture {
     List<String> quotedHeader = quoteStrings(getExpectedColumnNames());
     List<String> quotedLine = quoteStrings(getExpectedStrings());
 
-    StringBuilder csvBuilder = new StringBuilder();
-
-    csvBuilder.append(buildLineString(quotedHeader));
-    csvBuilder.append("\n");
-    csvBuilder.append(buildLineString(quotedLine));
-
-    return csvBuilder.toString();
+    return buildLineString(quotedHeader) + "\n" + buildLineString(quotedLine);
   }
 
   protected String buildLineString(List<String> line) {
@@ -106,12 +100,24 @@ public class CsvFileOneLineFixture {
     return ImmutableList.of("value1", "value2", "value3");
   }
 
+  public ImmutableList<String> getExpectedMaskedStrings() {
+    return ImmutableList.of("value1", "value3");
+  }
+
+  public ImmutableList<String> getExpectedMaskedStringDoubled() {
+    return ImmutableList.of("value1", "value3", "value3");
+  }
+
   public String getExpectedRelationName() {
     return "some_relation";
   }
 
   public ImmutableList<String> getExpectedColumnNames() {
     return ImmutableList.of("column1", "column2", "column3");
+  }
+
+  public ImmutableList<String> getExpectedMaskedColumnNames() {
+    return ImmutableList.of("column1", "column3");
   }
 
   public ImmutableList<String> getExpectedDefaultColumnNames() {
@@ -124,8 +130,18 @@ public class CsvFileOneLineFixture {
     return ImmutableList.copyOf(defaultColumnNames);
   }
 
+  public ImmutableList<String> getExpectedMaskedDefaultColumnNames() {
+    List<String> defaultColumnNames = getExpectedDefaultColumnNames();
+
+    return ImmutableList.of(defaultColumnNames.get(0), defaultColumnNames.get(2));
+  }
+
   public int getExpectedNumberOfColumns() {
     return getExpectedStrings().size();
+  }
+
+  public int getExpectedNumberOfMaskedColumns() {
+    return 2;
   }
 
 }
