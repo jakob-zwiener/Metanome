@@ -27,6 +27,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Tests for {@link MaskingRelationalInput}
@@ -192,6 +195,25 @@ public class MaskingRelationalInputTest {
     assertEquals(fixture.getExpectedMaskedDefaultColumnNames(),
                  maskingRelationalInputWithoutHeader.columnNames());
     assertEquals(fixture.getExpectedMaskedStrings(), maskingRelationalInputWithoutHeader.next());
+  }
+
+  /**
+   * Test method for {@link MaskingRelationalInput#close()}
+   */
+  @Test
+  public void testClose() throws Exception {
+    // Setup
+    RelationalInput mockedRelationalInput = mock(RelationalInput.class);
+    when(mockedRelationalInput.numberOfColumns()).thenReturn(3);
+    MaskingRelationalInput
+        maskingRelationalInput =
+        new MaskingRelationalInput(mockedRelationalInput, 0, 2);
+
+    // Execute functionality
+    maskingRelationalInput.close();
+
+    // Check result
+    verify(mockedRelationalInput).close();
   }
 
 }

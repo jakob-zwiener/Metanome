@@ -101,6 +101,6 @@ public class MaskingRelationalInput implements RelationalInput {
 
   @Override
   public void close() throws Exception {
-
+    relationalInput.close();
   }
 }
