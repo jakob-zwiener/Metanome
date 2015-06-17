@@ -55,7 +55,7 @@ public class InvalidMaskExceptionTest {
   /**
    * Test method for {@link InvalidMaskException#InvalidMaskException(String, Throwable)}
    *
-   * The exceptioin should store the message and the cause.
+   * The exception should store the message and the cause.
    */
   @Test
   public void testInvalidMaskExceptionStringThrowable() {
