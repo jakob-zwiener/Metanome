@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.metanome.backend.input.file;
+package de.metanome.backend.input;
 
 import de.metanome.algorithm_integration.input.InputIterationException;
 import de.metanome.algorithm_integration.input.RelationalInput;

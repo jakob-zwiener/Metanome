@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.metanome.backend.input.file;
+package de.metanome.backend.input;
 
 import org.junit.Test;
 

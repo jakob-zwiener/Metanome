@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.metanome.backend.input.file;
+package de.metanome.backend.input;
 
 /**
  * Exception to signal an invalid mask.

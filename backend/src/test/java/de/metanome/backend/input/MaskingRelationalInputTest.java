@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package de.metanome.backend.input.file;
+package de.metanome.backend.input;
 
 import de.metanome.algorithm_integration.input.InputGenerationException;
 import de.metanome.algorithm_integration.input.InputIterationException;
 import de.metanome.algorithm_integration.input.RelationalInput;
+import de.metanome.backend.input.file.CsvFileOneLineFixture;
 
 import org.junit.Before;
 import org.junit.Test;
