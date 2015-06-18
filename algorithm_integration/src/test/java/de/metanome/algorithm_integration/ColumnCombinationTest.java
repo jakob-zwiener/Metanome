@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,6 @@ package de.metanome.algorithm_integration;
 
 import de.metanome.test_helper.GwtSerializationTester;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Set;
@@ -33,22 +31,6 @@ import static org.junit.Assert.assertTrue;
  * Tests for {@link de.metanome.algorithm_integration.ColumnCombination}
  */
 public class ColumnCombinationTest {
-
-  /**
-   * @throws Exception
-   */
-  @Before
-  public void setUp() throws Exception {
-
-  }
-
-  /**
-   * @throws Exception
-   */
-  @After
-  public void tearDown() throws Exception {
-
-  }
 
   /**
    * A {@link de.metanome.algorithm_integration.ColumnCombination} should store all it's
