@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -116,7 +116,9 @@ public class FileIterator implements RelationalInput {
       throws InputIterationException {
     if (currentLine.size() != this.numberOfColumns()) {
       throw new InputIterationException(
-          "Csv line length did not match on line " + currentLineNumber);
+          String.format(
+              "Csv line length did not match on line %d. Line length was %d, where it should have been %d.",
+              currentLineNumber, currentLine.size(), this.numberOfColumns()));
     }
   }
 
@@ -135,7 +137,7 @@ public class FileIterator implements RelationalInput {
   }
 
   protected List<String> generateHeaderLine() {
-    List<String> headerList = new ArrayList<String>();
+    List<String> headerList = new ArrayList<>();
     for (Integer i = 1; i <= this.numberOfColumns; i++) {
       headerList.add(DEFAULT_HEADER_STRING + i.toString());
     }
@@ -155,7 +157,7 @@ public class FileIterator implements RelationalInput {
       return null;
     } else {
       // Convert empty Strings to null
-      List<String> list = new ArrayList<String>();
+      List<String> list = new ArrayList<>();
       for (String val : lineArray) {
         if (val.equals(this.nullValue)) {
           list.add(null);
