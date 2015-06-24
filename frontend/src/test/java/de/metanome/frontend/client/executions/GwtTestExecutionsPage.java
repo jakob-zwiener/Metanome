@@ -16,8 +16,13 @@
 
 package de.metanome.frontend.client.executions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.HTML;
+
+import org.fusesource.restygwt.client.MethodCallback;
 
 import de.metanome.backend.results_db.Algorithm;
 import de.metanome.backend.results_db.EntityStorageException;
@@ -26,16 +31,11 @@ import de.metanome.frontend.client.BasePage;
 import de.metanome.frontend.client.TestHelper;
 import de.metanome.frontend.client.helpers.InputValidationException;
 
-import org.fusesource.restygwt.client.MethodCallback;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class GwtTestExecutionsPage extends GWTTestCase {
 
   /**
    * Test method for {@link de.metanome.frontend.client.executions.ExecutionsPage}
-   *
+   * <p/>
    * When a new ExecutionPage is created, a table should be present, and service as well as
    * parent set.
    */
@@ -111,9 +111,9 @@ public class GwtTestExecutionsPage extends GWTTestCase {
     int rowCount = executionPage.executionsTable.getRowCount();
 
     // Execute (delete execution 2)
-    MethodCallback<Void >
-        callback =
-        executionPage.getDeleteCallback(execution2);
+    MethodCallback<Void>
+      callback =
+      executionPage.getDeleteCallback(execution2);
     callback.onSuccess(null, null);
 
     // Check

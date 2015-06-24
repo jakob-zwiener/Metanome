@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,10 @@
 
 package de.metanome.algorithm_integration.configuration;
 
+import java.util.Set;
+
 import de.metanome.algorithm_integration.Algorithm;
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
-
-import java.util.Set;
 
 /**
  * Represents configuration values for {@link Algorithm}s. Sets it's own value on an {@link
@@ -30,11 +30,10 @@ public interface ConfigurationValue {
   /**
    * Sets the configuration value on the algorithm. The type of the configuration value is resolved
    * in the implementations.
-   *
-   * @param algorithm           the algorithm to set the value on
+   * @param algorithm the algorithm to set the value on
    * @param algorithmInterfaces the interfaces the algorithm implements
    */
   void triggerSetValue(Algorithm algorithm, Set<Class<?>> algorithmInterfaces)
-      throws AlgorithmConfigurationException;
+    throws AlgorithmConfigurationException;
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,9 @@
 
 package de.metanome.frontend.client.parameter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirementListBox;
@@ -24,9 +27,6 @@ import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.helpers.InputValidationException;
 import de.metanome.frontend.client.input_fields.InputField;
 import de.metanome.frontend.client.input_fields.ListBoxInput;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class InputParameterListBoxWidget extends InputParameterWidget {
 
@@ -44,7 +44,9 @@ public class InputParameterListBoxWidget extends InputParameterWidget {
     String defaultValue = this.specification.getDefaultValue(settingIndex);
     ListBoxInput field = new ListBoxInput(optional, required);
     field.setValues(this.specification.getValues());
-    if (defaultValue != null) field.setSelectedValue(defaultValue);
+    if (defaultValue != null) {
+      field.setSelectedValue(defaultValue);
+    }
 
     // Add the field at the correct position
     this.inputWidgets.add(field);
@@ -54,13 +56,15 @@ public class InputParameterListBoxWidget extends InputParameterWidget {
 
   @Override
   public ConfigurationRequirementListBox getUpdatedSpecification()
-      throws AlgorithmConfigurationException, InputValidationException {
+    throws AlgorithmConfigurationException, InputValidationException
+  {
     this.specification.checkAndSetSettings(this.getConfigurationSettings());
     return this.specification;
   }
 
   protected ConfigurationSettingListBox[] getConfigurationSettings()
-      throws InputValidationException {
+    throws InputValidationException
+  {
     List<ConfigurationSettingListBox> values = new ArrayList<>();
 
     for (ListBoxInput lbi : this.inputWidgets) {

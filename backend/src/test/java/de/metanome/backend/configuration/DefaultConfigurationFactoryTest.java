@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,15 @@
  */
 
 package de.metanome.backend.configuration;
+
+import static org.junit.Assert.*;
+
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirementBoolean;
@@ -32,19 +41,8 @@ import de.metanome.algorithm_integration.input.InputGenerationException;
 import de.metanome.algorithm_integration.input.InputIterationException;
 import de.metanome.backend.input.file.FileFixture;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-
 /**
  * Tests for {@link de.metanome.backend.configuration.DefaultConfigurationFactory}
- *
  * @author Jakob Zwiener
  */
 public class DefaultConfigurationFactoryTest {
@@ -58,7 +56,7 @@ public class DefaultConfigurationFactoryTest {
 
   /**
    * Test method for {@link de.metanome.backend.configuration.DefaultConfigurationFactory#build(de.metanome.algorithm_integration.configuration.ConfigurationRequirementBoolean)}
-   *
+   * <p/>
    * {@link de.metanome.algorithm_integration.configuration.ConfigurationRequirementBoolean}s should be correctly converted to {@link de.metanome.backend.configuration.ConfigurationValueBoolean}s.
    */
   @Test
@@ -69,15 +67,15 @@ public class DefaultConfigurationFactoryTest {
     boolean expectedValue1 = true;
     boolean expectedValue2 = false;
     ConfigurationRequirementBoolean
-        requirement =
-        new ConfigurationRequirementBoolean(expectedIdentifier, 2);
+      requirement =
+      new ConfigurationRequirementBoolean(expectedIdentifier, 2);
     requirement.checkAndSetSettings(new ConfigurationSettingBoolean(expectedValue1),
-                                    new ConfigurationSettingBoolean(
-                                        expectedValue2));
+      new ConfigurationSettingBoolean(
+        expectedValue2));
 
     // Execute functionality
     ConfigurationValueBoolean actualConfigValue =
-        factory.build(requirement);
+      factory.build(requirement);
 
     // Check result
     assertEquals(expectedIdentifier, actualConfigValue.identifier);
@@ -88,7 +86,7 @@ public class DefaultConfigurationFactoryTest {
 
   /**
    * Test method for {@link de.metanome.backend.configuration.DefaultConfigurationFactory#build(de.metanome.algorithm_integration.configuration.ConfigurationRequirementInteger)}
-   *
+   * <p/>
    * {@link de.metanome.algorithm_integration.configuration.ConfigurationRequirementInteger}s should
    * be correctly converted to {@link de.metanome.backend.configuration.ConfigurationValueInteger}s.
    */
@@ -100,15 +98,15 @@ public class DefaultConfigurationFactoryTest {
     Integer expectedValue1 = 42;
     Integer expectedValue2 = 23;
     ConfigurationRequirementInteger
-        requirement =
-        new ConfigurationRequirementInteger(expectedIdentifier, 2);
+      requirement =
+      new ConfigurationRequirementInteger(expectedIdentifier, 2);
     requirement.checkAndSetSettings(new ConfigurationSettingInteger(expectedValue1),
-                                    new ConfigurationSettingInteger(
-                                        expectedValue2));
+      new ConfigurationSettingInteger(
+        expectedValue2));
 
     // Execute functionality
     ConfigurationValueInteger actualConfigValue =
-        factory.build(requirement);
+      factory.build(requirement);
 
     // Check result
     assertEquals(expectedIdentifier, actualConfigValue.identifier);
@@ -119,7 +117,7 @@ public class DefaultConfigurationFactoryTest {
 
   /**
    * Test method for {@link de.metanome.backend.configuration.DefaultConfigurationFactory#build(de.metanome.algorithm_integration.configuration.ConfigurationRequirementListBox)}
-   *
+   * <p/>
    * {@link de.metanome.algorithm_integration.configuration.ConfigurationRequirementListBox}s should
    * be correctly converted to {@link de.metanome.backend.configuration.ConfigurationValueListBox}s.
    */
@@ -133,10 +131,10 @@ public class DefaultConfigurationFactoryTest {
     String expectedValue1 = possibleValues.get(0);
     String expectedValue2 = possibleValues.get(1);
     ConfigurationRequirementListBox
-        requirement =
-        new ConfigurationRequirementListBox(expectedIdentifier, possibleValues, 2);
+      requirement =
+      new ConfigurationRequirementListBox(expectedIdentifier, possibleValues, 2);
     requirement.checkAndSetSettings(new ConfigurationSettingListBox(expectedValue1),
-                                    new ConfigurationSettingListBox(expectedValue2));
+      new ConfigurationSettingListBox(expectedValue2));
 
     // Execute functionality
     ConfigurationValueListBox actualConfigValue = factory.build(requirement);
@@ -150,29 +148,30 @@ public class DefaultConfigurationFactoryTest {
 
   /**
    * Test method for {@link de.metanome.backend.configuration.DefaultConfigurationFactory#build(de.metanome.algorithm_integration.configuration.ConfigurationRequirementRelationalInput)}
-   *
+   * <p/>
    * A {@link de.metanome.algorithm_integration.configuration.ConfigurationRequirementRelationalInput}
    * should be converted into a {@link de.metanome.backend.configuration.ConfigurationValueRelationalInputGenerator}.
    * The underlying data source is a file.
    */
   @Test
   public void testBuildRelationalInput()
-      throws FileNotFoundException, AlgorithmConfigurationException, InputGenerationException,
-             InputIterationException, UnsupportedEncodingException {
+    throws FileNotFoundException, AlgorithmConfigurationException, InputGenerationException,
+    InputIterationException, UnsupportedEncodingException
+  {
     // Setup
     // Expected values
     String expectedIdentifier = "some identifier";
     String expectedPath = new FileFixture("fileContent").getTestData("some file name").getPath();
     ConfigurationRequirementRelationalInput
-        configRequirement =
-        new ConfigurationRequirementRelationalInput(
-            expectedIdentifier);
+      configRequirement =
+      new ConfigurationRequirementRelationalInput(
+        expectedIdentifier);
 
     configRequirement.checkAndSetSettings(new ConfigurationSettingFileInput(expectedPath));
 
     // Execute functionality
     ConfigurationValueRelationalInputGenerator
-        actualConfigurationValue = factory.build(configRequirement);
+      actualConfigurationValue = factory.build(configRequirement);
 
     // Check result
     assertEquals(expectedIdentifier, actualConfigurationValue.identifier);
@@ -181,27 +180,28 @@ public class DefaultConfigurationFactoryTest {
 
   /**
    * Test method for{@link de.metanome.backend.configuration.DefaultConfigurationFactory#build(de.metanome.algorithm_integration.configuration.ConfigurationRequirementFileInput)}
-   *
+   * <p/>
    * {@link de.metanome.algorithm_integration.configuration.ConfigurationRequirementFileInput}s
    * should be correctly converted to {@link de.metanome.backend.configuration.ConfigurationValueFileInputGenerator}s.
    */
   @Test
   public void testBuildFileInput()
-      throws AlgorithmConfigurationException, FileNotFoundException, UnsupportedEncodingException,
-             InputGenerationException, InputIterationException {
+    throws AlgorithmConfigurationException, FileNotFoundException, UnsupportedEncodingException,
+    InputGenerationException, InputIterationException
+  {
     // Setup
     // Expected values
     String expectedIdentifier = "some identifier";
     String expectedPath = new FileFixture("fileContent").getTestData("some file name").getPath();
     ConfigurationRequirementFileInput
-        configRequirement =
-        new ConfigurationRequirementFileInput(expectedIdentifier);
+      configRequirement =
+      new ConfigurationRequirementFileInput(expectedIdentifier);
     configRequirement.checkAndSetSettings(new ConfigurationSettingFileInput(expectedPath));
 
     // Execute functionality
     ConfigurationValueFileInputGenerator
-        actualConfigurationValue =
-        factory.build(configRequirement);
+      actualConfigurationValue =
+      factory.build(configRequirement);
 
     // Check result
     assertEquals(expectedIdentifier, actualConfigurationValue.identifier);
@@ -211,7 +211,7 @@ public class DefaultConfigurationFactoryTest {
 
   /**
    * Test method for {@link de.metanome.backend.configuration.DefaultConfigurationFactory#build(de.metanome.algorithm_integration.configuration.ConfigurationRequirementString)}
-   *
+   * <p/>
    * {@link de.metanome.algorithm_integration.configuration.ConfigurationRequirementString}s should
    * be correctly converted to {@link de.metanome.backend.configuration.ConfigurationValueString}s.
    */
@@ -223,12 +223,12 @@ public class DefaultConfigurationFactoryTest {
     String expectedValue1 = "some string";
     String expectedValue2 = "some other string";
     ConfigurationRequirementString
-        requirement =
-        new ConfigurationRequirementString(expectedIdentifier, 2);
+      requirement =
+      new ConfigurationRequirementString(expectedIdentifier, 2);
     requirement
-        .checkAndSetSettings(new ConfigurationSettingString(expectedValue1),
-                             new ConfigurationSettingString(
-                                 expectedValue2));
+      .checkAndSetSettings(new ConfigurationSettingString(expectedValue1),
+        new ConfigurationSettingString(
+          expectedValue2));
 
     // Execute functionality
     ConfigurationValueString actualConfigValue = factory.build(requirement);

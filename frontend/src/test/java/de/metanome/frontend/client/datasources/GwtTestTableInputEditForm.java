@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,8 +40,8 @@ public class GwtTestTableInputEditForm extends GWTTestCase {
     DatabaseConnection dbConnection = new DatabaseConnection("url", "user", "password", DbSystem.DB2);
 
     TableInputEditForm
-        editForm =
-        new TableInputEditForm(new TableInputTab(new DataSourcePage(new BasePage())));
+      editForm =
+      new TableInputEditForm(new TableInputTab(new DataSourcePage(new BasePage())));
     editForm.dbConnectionListBox.addValue("1: url");
     editForm.dbMap.put("1: url", dbConnection);
 
@@ -68,8 +68,8 @@ public class GwtTestTableInputEditForm extends GWTTestCase {
     TestHelper.resetDatabaseSync();
 
     TableInputEditForm
-        input =
-        new TableInputEditForm(new TableInputTab(new DataSourcePage(new BasePage())));
+      input =
+      new TableInputEditForm(new TableInputTab(new DataSourcePage(new BasePage())));
     input.dbConnectionListBox.addValue("--");
     input.dbConnectionListBox.addValue("1: db2");
     input.tableNameTextbox.setText("table name");
@@ -104,8 +104,8 @@ public class GwtTestTableInputEditForm extends GWTTestCase {
     connection.setUsername("user");
 
     TableInputEditForm
-        input =
-        new TableInputEditForm(new TableInputTab(new DataSourcePage(new BasePage())));
+      input =
+      new TableInputEditForm(new TableInputTab(new DataSourcePage(new BasePage())));
 
     // Execute
     input.addDatabaseConnection(connection);
@@ -123,7 +123,7 @@ public class GwtTestTableInputEditForm extends GWTTestCase {
   /**
    * Test method for {@link de.metanome.frontend.client.datasources.TableInputEditForm#updateTableInput(TableInput tableInput)}
    * and test method for {@link de.metanome.frontend.client.datasources.TableInputEditForm#showSaveButton}
-   *
+   * <p/>
    * If the edit button for a table input is clicked, the edit form should contain the values
    * of that table input and the edit form should show a update button instead of an save button.
    * If the method 'show save button' is called, the save button should be visible again.
@@ -133,14 +133,14 @@ public class GwtTestTableInputEditForm extends GWTTestCase {
     TestHelper.resetDatabaseSync();
 
     TableInputEditForm
-        editForm =
-        new TableInputEditForm(new TableInputTab(new DataSourcePage(new BasePage())));
+      editForm =
+      new TableInputEditForm(new TableInputTab(new DataSourcePage(new BasePage())));
 
     DatabaseConnection databaseConnection = new DatabaseConnection()
-        .setUrl("url")
-        .setPassword("password")
-        .setUsername("user")
-        .setSystem(DbSystem.DB2);
+      .setUrl("url")
+      .setPassword("password")
+      .setUsername("user")
+      .setSystem(DbSystem.DB2);
 
     String expectedDatabaseIdentifier = databaseConnection.getIdentifier();
     String expectedTableName = "name";
@@ -151,9 +151,9 @@ public class GwtTestTableInputEditForm extends GWTTestCase {
     editForm.dbConnectionListBox.addValue("1");
 
     TableInput tableInput = new TableInput()
-        .setDatabaseConnection(databaseConnection)
-        .setTableName(expectedTableName)
-        .setComment(expectedComment);
+      .setDatabaseConnection(databaseConnection)
+      .setTableName(expectedTableName)
+      .setComment(expectedComment);
 
     // Execute
     editForm.updateTableInput(tableInput);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,20 +31,20 @@ public class WebException extends WebApplicationException {
 
   /**
    * @param throwable the exception, which should be wrapped
-   * @param status    the status of the exception
+   * @param status the status of the exception
    */
   public WebException(Throwable throwable, Response.Status status) {
     super(Response.status(status).
-        entity(throwable.getMessage()).type("text/plain").build());
+      entity(throwable.getMessage()).type("text/plain").build());
   }
 
   /**
    * @param message the exception message
-   * @param status  the status of the exception
+   * @param status the status of the exception
    */
   public WebException(String message, Response.Status status) {
     super(Response.status(status).
-        entity(message).type("text/plain").build());
+      entity(message).type("text/plain").build());
   }
 
 }

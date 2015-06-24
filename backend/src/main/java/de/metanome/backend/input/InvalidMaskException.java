@@ -18,7 +18,6 @@ package de.metanome.backend.input;
 
 /**
  * Exception to signal an invalid mask.
- *
  * @author Jakob Zwiener
  * @see MaskingRelationalInput
  */

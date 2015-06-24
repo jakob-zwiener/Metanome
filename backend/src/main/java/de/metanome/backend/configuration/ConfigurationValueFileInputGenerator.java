@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 package de.metanome.backend.configuration;
 
+import java.util.Set;
+
 import de.metanome.algorithm_integration.Algorithm;
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.algorithm_types.FileInputParameterAlgorithm;
@@ -24,35 +26,37 @@ import de.metanome.algorithm_integration.configuration.ConfigurationSettingFileI
 import de.metanome.algorithm_integration.input.FileInputGenerator;
 import de.metanome.backend.input.file.DefaultFileInputGenerator;
 
-import java.util.Set;
-
 /**
  * Represents {@link de.metanome.algorithm_integration.input.FileInputGenerator} configuration
  * values for {@link Algorithm}s.
- *
  * @author Jakob Zwiener
  */
-public class ConfigurationValueFileInputGenerator extends ConfigurationValue<FileInputGenerator, ConfigurationRequirementFileInput> {
+public class ConfigurationValueFileInputGenerator
+  extends ConfigurationValue<FileInputGenerator, ConfigurationRequirementFileInput>
+{
 
   public ConfigurationValueFileInputGenerator(String identifier,
-                                              FileInputGenerator... values) {
+                                              FileInputGenerator... values)
+  {
     super(identifier, values);
   }
 
   public ConfigurationValueFileInputGenerator(ConfigurationRequirementFileInput requirement)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     super(requirement);
   }
 
   @Override
   protected FileInputGenerator[] convertToValues(
-      ConfigurationRequirementFileInput requirement)
-      throws AlgorithmConfigurationException {
+    ConfigurationRequirementFileInput requirement)
+    throws AlgorithmConfigurationException
+  {
     ConfigurationSettingFileInput[] settings = requirement.getSettings();
 
     FileInputGenerator[]
-        fileInputGenerators =
-        new FileInputGenerator[settings.length];
+      fileInputGenerators =
+      new FileInputGenerator[settings.length];
 
     for (int i = 0; i < settings.length; i++) {
       fileInputGenerators[i] = new DefaultFileInputGenerator(settings[i]);
@@ -63,14 +67,15 @@ public class ConfigurationValueFileInputGenerator extends ConfigurationValue<Fil
 
   @Override
   public void triggerSetValue(Algorithm algorithm, Set<Class<?>> algorithmInterfaces)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     if (!algorithmInterfaces.contains(FileInputParameterAlgorithm.class)) {
       throw new AlgorithmConfigurationException(
-          "Algorithm does not accept file input configuration values.");
+        "Algorithm does not accept file input configuration values.");
     }
 
     FileInputParameterAlgorithm fileInputParameterAlgorithm =
-        (FileInputParameterAlgorithm) algorithm;
+      (FileInputParameterAlgorithm) algorithm;
     fileInputParameterAlgorithm.setFileInputConfigurationValue(identifier, values);
   }
 }

@@ -16,8 +16,18 @@
 
 package de.metanome.backend.result_receiver;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
+
+import org.apache.commons.io.FileUtils;
+import org.junit.Test;
 
 import de.metanome.algorithm_integration.result_receiver.CouldNotReceiveResultException;
 import de.metanome.algorithm_integration.results.BasicStatistic;
@@ -25,19 +35,8 @@ import de.metanome.algorithm_integration.results.InclusionDependency;
 import de.metanome.algorithm_integration.results.UniqueColumnCombination;
 import de.metanome.backend.results_db.ResultType;
 
-import org.apache.commons.io.FileUtils;
-import org.junit.Test;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-
-
-public class ResultCounterTest{
+public class ResultCounterTest {
 
   /**
    * Test method for {@link de.metanome.backend.result_receiver.ResultCounter#getResults}

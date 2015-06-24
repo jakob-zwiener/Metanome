@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ public class ColumnIdentifier implements Comparable<ColumnIdentifier>, Serializa
   }
 
   /**
-   * @param tableIdentifier  table's identifer
+   * @param tableIdentifier table's identifer
    * @param columnIdentifier column's identifier
    */
   public ColumnIdentifier(String tableIdentifier, String columnIdentifier) {
@@ -43,12 +43,18 @@ public class ColumnIdentifier implements Comparable<ColumnIdentifier>, Serializa
   public String getTableIdentifier() {
     return tableIdentifier;
   }
-  public void setTableIdentifier(String tableIdentifier) { this.tableIdentifier = tableIdentifier; }
+
+  public void setTableIdentifier(String tableIdentifier) {
+    this.tableIdentifier = tableIdentifier;
+  }
 
   public String getColumnIdentifier() {
     return columnIdentifier;
   }
-  public void setColumnIdentifier(String columnIdentifier) { this.columnIdentifier = columnIdentifier; }
+
+  public void setColumnIdentifier(String columnIdentifier) {
+    this.columnIdentifier = columnIdentifier;
+  }
 
   @Override
   public String toString() {
@@ -60,10 +66,10 @@ public class ColumnIdentifier implements Comparable<ColumnIdentifier>, Serializa
     final int prime = 31;
     int result = 1;
     result = prime
-             * result
-             + ((columnIdentifier == null) ? 0 : columnIdentifier.hashCode());
+      * result
+      + ((columnIdentifier == null) ? 0 : columnIdentifier.hashCode());
     result = prime * result
-             + ((tableIdentifier == null) ? 0 : tableIdentifier.hashCode());
+      + ((tableIdentifier == null) ? 0 : tableIdentifier.hashCode());
     return result;
   }
 
@@ -83,14 +89,16 @@ public class ColumnIdentifier implements Comparable<ColumnIdentifier>, Serializa
       if (other.columnIdentifier != null) {
         return false;
       }
-    } else if (!columnIdentifier.equals(other.columnIdentifier)) {
+    }
+    else if (!columnIdentifier.equals(other.columnIdentifier)) {
       return false;
     }
     if (tableIdentifier == null) {
       if (other.tableIdentifier != null) {
         return false;
       }
-    } else if (!tableIdentifier.equals(other.tableIdentifier)) {
+    }
+    else if (!tableIdentifier.equals(other.tableIdentifier)) {
       return false;
     }
     return true;
@@ -101,7 +109,8 @@ public class ColumnIdentifier implements Comparable<ColumnIdentifier>, Serializa
     int tableIdentifierComparison = tableIdentifier.compareTo(other.tableIdentifier);
     if (0 != tableIdentifierComparison) {
       return tableIdentifierComparison;
-    } else {
+    }
+    else {
       return columnIdentifier.compareTo(other.columnIdentifier);
     }
   }

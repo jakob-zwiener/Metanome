@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,6 @@
 
 package de.metanome.backend.results_db;
 
-import org.hibernate.annotations.CollectionId;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.Type;
-
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -31,7 +24,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,14 +38,20 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.CollectionId;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
+
 /**
  * Represents an execution in the database.
- *
  * @author Jakob Zwiener
  */
 @Entity
 @Table(name = "execution",
-       uniqueConstraints = @UniqueConstraint(columnNames = {"algorithm", "begin"}))
+  uniqueConstraints = @UniqueConstraint(columnNames = { "algorithm", "begin" }))
 public class Execution implements Serializable, Comparable<Execution> {
 
   // TODO cascading save to children
@@ -79,7 +77,6 @@ public class Execution implements Serializable, Comparable<Execution> {
 
   /**
    * Generates an Execution with the current time as start time.
-   *
    * @param algorithm the executed algorithm
    */
   public Execution(Algorithm algorithm) {
@@ -88,7 +85,7 @@ public class Execution implements Serializable, Comparable<Execution> {
 
   /**
    * @param algorithm the executed algorithm
-   * @param begin     the start time of the execution
+   * @param begin the start time of the execution
    */
   public Execution(Algorithm algorithm, long begin) {
     this.algorithm = algorithm;
@@ -97,7 +94,9 @@ public class Execution implements Serializable, Comparable<Execution> {
 
   @Id
   @GeneratedValue
-  public long getId() { return id; }
+  public long getId() {
+    return id;
+  }
 
   public Execution setId(long id) {
     this.id = id;
@@ -160,9 +159,9 @@ public class Execution implements Serializable, Comparable<Execution> {
   @ManyToMany(fetch = FetchType.EAGER)
   @Fetch(value = FetchMode.SELECT)
   @CollectionId(
-      columns = @Column(name = "ExecutionInput"),
-      type = @Type(type = "long"),
-      generator = "sequence"
+    columns = @Column(name = "ExecutionInput"),
+    type = @Type(type = "long"),
+    generator = "sequence"
   )
   @JoinTable
   public Collection<Input> getInputs() {
@@ -176,9 +175,9 @@ public class Execution implements Serializable, Comparable<Execution> {
   }
 
   @OneToMany(
-      fetch = FetchType.EAGER,
-      mappedBy = "execution",
-      cascade = CascadeType.ALL
+    fetch = FetchType.EAGER,
+    mappedBy = "execution",
+    cascade = CascadeType.ALL
   )
   @OnDelete(action = OnDeleteAction.CASCADE)
   public Set<Result> getResults() {
@@ -240,22 +239,25 @@ public class Execution implements Serializable, Comparable<Execution> {
 
   @Override
   public int compareTo(Execution other) {
-    if (this.begin < other.getBegin())
+    if (this.begin < other.getBegin()) {
       return 1;
-    else if (this.begin > other.getBegin())
+    }
+    else if (this.begin > other.getBegin()) {
       return -1;
+    }
 
     // begin is equal
-    if (other.getAlgorithm() != null)
+    if (other.getAlgorithm() != null) {
       return this.algorithm.compareTo(other.getAlgorithm());
-    else
+    }
+    else {
       return 1;
+    }
   }
 
   /**
    * Adds an {@link de.metanome.backend.results_db.Input} to the list of {@link
    * de.metanome.backend.results_db.Input}s.
-   *
    * @param input the Input to add.
    */
   public Execution addInput(Input input) {
@@ -267,7 +269,6 @@ public class Execution implements Serializable, Comparable<Execution> {
   /**
    * Adds a {@link de.metanome.backend.results_db.Result} to the list of {@link
    * de.metanome.backend.results_db.Result}s and creates a bidirectional association.
-   *
    * @param result the Result to add
    */
   public Execution addResult(Result result) {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,10 +26,9 @@ public interface UniqueColumnCombinationResultReceiver {
 
   /**
    * Receives a {@link UniqueColumnCombination} from a {@link UniqueColumnCombinationsAlgorithm}.
-   *
    * @param uniqueColumnCombination a found {@link de.metanome.algorithm_integration.results.UniqueColumnCombination}
    * @throws CouldNotReceiveResultException if the unique column combination could not be received
    */
   void receiveResult(UniqueColumnCombination uniqueColumnCombination)
-      throws CouldNotReceiveResultException;
+    throws CouldNotReceiveResultException;
 }

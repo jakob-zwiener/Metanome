@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,47 +31,54 @@ public class WidgetFactory {
 
   /**
    * Returns an InputParameterWidget depending on the given ConfigurationSpecification
-   *
-   * @param config          the configuration specification
+   * @param config the configuration specification
    * @param messageReceiver the tab wrapper
    * @return the corresponding widget to the configuration specification
    */
   public static InputParameterWidget buildWidget(ConfigurationRequirement config,
-                                                 TabWrapper messageReceiver) {
+                                                 TabWrapper messageReceiver)
+  {
     InputParameterWidget widget = null;
     if (config instanceof ConfigurationRequirementBoolean) {
       widget =
-          new InputParameterBooleanWidget((ConfigurationRequirementBoolean) config,
-                                          messageReceiver);
-    } else if (config instanceof ConfigurationRequirementString) {
+        new InputParameterBooleanWidget((ConfigurationRequirementBoolean) config,
+          messageReceiver);
+    }
+    else if (config instanceof ConfigurationRequirementString) {
       widget =
-          new InputParameterStringWidget((ConfigurationRequirementString) config,
-                                         messageReceiver);
-    } else if (config instanceof ConfigurationRequirementFileInput) {
+        new InputParameterStringWidget((ConfigurationRequirementString) config,
+          messageReceiver);
+    }
+    else if (config instanceof ConfigurationRequirementFileInput) {
       widget =
-          new InputParameterFileInputWidget((ConfigurationRequirementFileInput) config,
-                                            messageReceiver);
-    } else if (config instanceof ConfigurationRequirementDatabaseConnection) {
+        new InputParameterFileInputWidget((ConfigurationRequirementFileInput) config,
+          messageReceiver);
+    }
+    else if (config instanceof ConfigurationRequirementDatabaseConnection) {
       widget =
-          new InputParameterDatabaseConnectionWidget(
-              (ConfigurationRequirementDatabaseConnection) config,
-              messageReceiver);
-    } else if (config instanceof ConfigurationRequirementInteger) {
+        new InputParameterDatabaseConnectionWidget(
+          (ConfigurationRequirementDatabaseConnection) config,
+          messageReceiver);
+    }
+    else if (config instanceof ConfigurationRequirementInteger) {
       widget =
-          new InputParameterIntegerWidget((ConfigurationRequirementInteger) config,
-                                          messageReceiver);
-    } else if (config instanceof ConfigurationRequirementListBox) {
+        new InputParameterIntegerWidget((ConfigurationRequirementInteger) config,
+          messageReceiver);
+    }
+    else if (config instanceof ConfigurationRequirementListBox) {
       widget =
-          new InputParameterListBoxWidget((ConfigurationRequirementListBox) config,
-                                          messageReceiver);
-    } else if (config instanceof ConfigurationRequirementRelationalInput) {
+        new InputParameterListBoxWidget((ConfigurationRequirementListBox) config,
+          messageReceiver);
+    }
+    else if (config instanceof ConfigurationRequirementRelationalInput) {
       widget =
-          new InputParameterRelationalInputWidget((ConfigurationRequirementRelationalInput) config,
-                                          messageReceiver);
-    } else if (config instanceof ConfigurationRequirementTableInput) {
+        new InputParameterRelationalInputWidget((ConfigurationRequirementRelationalInput) config,
+          messageReceiver);
+    }
+    else if (config instanceof ConfigurationRequirementTableInput) {
       widget =
-          new InputParameterTableInputWidget((ConfigurationRequirementTableInput) config,
-                                                  messageReceiver);
+        new InputParameterTableInputWidget((ConfigurationRequirementTableInput) config,
+          messageReceiver);
     }
     return widget;
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,15 @@
 
 package de.metanome.algorithm_integration;
 
-import de.metanome.test_helper.GwtSerializationTester;
+import static org.junit.Assert.*;
+
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Set;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertTrue;
+import de.metanome.test_helper.GwtSerializationTester;
 
 /**
  * Tests for {@link de.metanome.algorithm_integration.ColumnCombination}
@@ -62,8 +59,8 @@ public class ColumnCombinationTest {
     ColumnIdentifier expectedColumn2 = new ColumnIdentifier("table2", "column2");
     // Execute functionality
     ColumnCombination
-        columnCombination =
-        new ColumnCombination(expectedColumn1, expectedColumn2, expectedColumn2);
+      columnCombination =
+      new ColumnCombination(expectedColumn1, expectedColumn2, expectedColumn2);
 
     // Check result
     assertEquals(2, columnCombination.columnIdentifiers.size());
@@ -83,8 +80,8 @@ public class ColumnCombinationTest {
     ColumnIdentifier expectedColumn2 = new ColumnIdentifier("table2", "column2");
     ColumnIdentifier expectedColumn3 = new ColumnIdentifier("table3", "column3");
     ColumnCombination
-        columnCombination =
-        new ColumnCombination(expectedColumn2, expectedColumn3, expectedColumn1);
+      columnCombination =
+      new ColumnCombination(expectedColumn2, expectedColumn3, expectedColumn1);
 
     // Execute functionality
     Set<ColumnIdentifier> actualColumnIdentifiers = columnCombination.getColumnIdentifiers();
@@ -108,8 +105,8 @@ public class ColumnCombinationTest {
     ColumnCombination columnCombination = new ColumnCombination(expectedColumn1, expectedColumn2);
     // Expected values
     String
-        expectedStringRepresentation =
-        "[" + expectedColumn2.toString() + ", " + expectedColumn1.toString() + "]";
+      expectedStringRepresentation =
+      "[" + expectedColumn2.toString() + ", " + expectedColumn1.toString() + "]";
 
     // Execute functionality
     String actualStringRepresentation = columnCombination.toString();
@@ -130,17 +127,17 @@ public class ColumnCombinationTest {
     ColumnIdentifier column12 = new ColumnIdentifier("table2", "column2");
     ColumnIdentifier column13 = new ColumnIdentifier("table3", "column3");
     ColumnCombination
-        expectedColumnCombination1 =
-        new ColumnCombination(column12, column13, column11);
+      expectedColumnCombination1 =
+      new ColumnCombination(column12, column13, column11);
     ColumnIdentifier column21 = new ColumnIdentifier("table1", "column1");
     ColumnIdentifier column22 = new ColumnIdentifier("table2", "column2");
     ColumnIdentifier column23 = new ColumnIdentifier("table3", "column3");
     ColumnCombination
-        expectedColumnCombination2 =
-        new ColumnCombination(column21, column22, column23);
+      expectedColumnCombination2 =
+      new ColumnCombination(column21, column22, column23);
     ColumnCombination
-        expectedColumnCombinationNotEquals =
-        new ColumnCombination(column21, column23);
+      expectedColumnCombinationNotEquals =
+      new ColumnCombination(column21, column23);
 
     // Execute functionality
     // Check result
@@ -151,7 +148,7 @@ public class ColumnCombinationTest {
     assertEquals(expectedColumnCombination1.hashCode(), expectedColumnCombination2.hashCode());
     assertNotEquals(expectedColumnCombination1, expectedColumnCombinationNotEquals);
     assertNotEquals(expectedColumnCombination1.hashCode(),
-                    expectedColumnCombinationNotEquals.hashCode());
+      expectedColumnCombinationNotEquals.hashCode());
   }
 
   /**
@@ -160,6 +157,6 @@ public class ColumnCombinationTest {
   @Test
   public void testGwtSerialization() {
     GwtSerializationTester
-        .checkGwtSerializability(new ColumnCombination(new ColumnIdentifier("table1", "column1")));
+      .checkGwtSerializability(new ColumnCombination(new ColumnIdentifier("table1", "column1")));
   }
 }

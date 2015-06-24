@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@ package de.metanome.frontend.client.parameter;
 
 import com.google.gwt.junit.client.GWTTestCase;
 
+import org.junit.Test;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirementInteger;
@@ -26,8 +28,6 @@ import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.helpers.InputValidationException;
 import de.metanome.frontend.client.input_fields.IntegerInput;
 
-import org.junit.Test;
-
 public class GwtTestIntegerParameter extends GWTTestCase {
 
   @Test
@@ -35,13 +35,13 @@ public class GwtTestIntegerParameter extends GWTTestCase {
     //Setup
     int noOfValues = 3;
     ConfigurationRequirementInteger
-        specification =
-        new ConfigurationRequirementInteger("integer", noOfValues);
+      specification =
+      new ConfigurationRequirementInteger("integer", noOfValues);
 
     //Execute
     InputParameterIntegerWidget
-        widget =
-        new InputParameterIntegerWidget(specification, new TabWrapper());
+      widget =
+      new InputParameterIntegerWidget(specification, new TabWrapper());
 
     //Check
     assertEquals(noOfValues, widget.inputWidgets.size());
@@ -54,13 +54,13 @@ public class GwtTestIntegerParameter extends GWTTestCase {
     //Setup
     int noOfValues = ConfigurationRequirement.ARBITRARY_NUMBER_OF_VALUES;
     ConfigurationRequirementInteger
-        specification =
-        new ConfigurationRequirementInteger("integer", noOfValues);
+      specification =
+      new ConfigurationRequirementInteger("integer", noOfValues);
 
     //Execute
     InputParameterIntegerWidget
-        widget =
-        new InputParameterIntegerWidget(specification, new TabWrapper());
+      widget =
+      new InputParameterIntegerWidget(specification, new TabWrapper());
 
     //Check
     assertEquals(1, widget.inputWidgets.size());        //expecting one default input field
@@ -72,13 +72,13 @@ public class GwtTestIntegerParameter extends GWTTestCase {
     //Setup
     int maxValue = 5;
     ConfigurationRequirementInteger
-        specification =
-        new ConfigurationRequirementInteger("integer", 3, maxValue);
+      specification =
+      new ConfigurationRequirementInteger("integer", 3, maxValue);
 
     //Execute
     InputParameterIntegerWidget
-        widget =
-        new InputParameterIntegerWidget(specification, new TabWrapper());
+      widget =
+      new InputParameterIntegerWidget(specification, new TabWrapper());
 
     //Check
     assertEquals(maxValue, widget.inputWidgets.size());
@@ -94,13 +94,13 @@ public class GwtTestIntegerParameter extends GWTTestCase {
   public void testAddInput() throws AlgorithmConfigurationException, InputValidationException {
     //Setup
     ConfigurationRequirementInteger
-        specification = new ConfigurationRequirementInteger("integer",
-                                                                                            ConfigurationRequirement.ARBITRARY_NUMBER_OF_VALUES);
+      specification = new ConfigurationRequirementInteger("integer",
+      ConfigurationRequirement.ARBITRARY_NUMBER_OF_VALUES);
     Integer expectedValue = 5;
     specification.checkAndSetDefaultValues(expectedValue);
     InputParameterIntegerWidget
-        widget =
-        new InputParameterIntegerWidget(specification, new TabWrapper());
+      widget =
+      new InputParameterIntegerWidget(specification, new TabWrapper());
     int previousCount = widget.getWidgetCount();
     int listCount = widget.inputWidgets.size();
 
@@ -117,11 +117,11 @@ public class GwtTestIntegerParameter extends GWTTestCase {
   public void testRemoveInput() throws AlgorithmConfigurationException {
     //Setup
     ConfigurationRequirementInteger
-        specification = new ConfigurationRequirementInteger("bool",
-                                                                                            ConfigurationRequirement.ARBITRARY_NUMBER_OF_VALUES);
+      specification = new ConfigurationRequirementInteger("bool",
+      ConfigurationRequirement.ARBITRARY_NUMBER_OF_VALUES);
     InputParameterIntegerWidget
-        widget =
-        new InputParameterIntegerWidget(specification, new TabWrapper());
+      widget =
+      new InputParameterIntegerWidget(specification, new TabWrapper());
     int previousCount = widget.getWidgetCount();
     int listCount = widget.inputWidgets.size();
 
@@ -140,31 +140,32 @@ public class GwtTestIntegerParameter extends GWTTestCase {
     //Setup
     Integer value1 = 7;
     ConfigurationRequirementInteger
-        specification1 =
-        new ConfigurationRequirementInteger("integer",
-                                              ConfigurationRequirement.ARBITRARY_NUMBER_OF_VALUES);
+      specification1 =
+      new ConfigurationRequirementInteger("integer",
+        ConfigurationRequirement.ARBITRARY_NUMBER_OF_VALUES);
     InputParameterIntegerWidget
-        widget1 =
-        new InputParameterIntegerWidget(specification1, new TabWrapper());
+      widget1 =
+      new InputParameterIntegerWidget(specification1, new TabWrapper());
 
     ConfigurationRequirementInteger
-        specification2 =
-        new ConfigurationRequirementInteger("integer",
-                                              ConfigurationRequirement.ARBITRARY_NUMBER_OF_VALUES);
+      specification2 =
+      new ConfigurationRequirementInteger("integer",
+        ConfigurationRequirement.ARBITRARY_NUMBER_OF_VALUES);
     InputParameterIntegerWidget
-        widget2 =
-        new InputParameterIntegerWidget(specification2, new TabWrapper());
+      widget2 =
+      new InputParameterIntegerWidget(specification2, new TabWrapper());
 
     InputParameterIntegerWidget
-        widget3 =
-        new InputParameterIntegerWidget(specification2, new TabWrapper());
+      widget3 =
+      new InputParameterIntegerWidget(specification2, new TabWrapper());
 
     //Execute
     ((IntegerInput) widget1.getWidget(0)).textbox.setValue(value1, true);
     ConfigurationSettingInteger[] settings1 = new ConfigurationSettingInteger[0];
     try {
       settings1 = widget1.getUpdatedSpecification().getSettings();
-    } catch (InputValidationException e) {
+    }
+    catch (InputValidationException e) {
       fail();
     }
 
@@ -176,13 +177,15 @@ public class GwtTestIntegerParameter extends GWTTestCase {
 
     try {
       widget2.getUpdatedSpecification().getSettings();
-    } catch (InputValidationException e) {
+    }
+    catch (InputValidationException e) {
       assertTrue(true);
     }
 
     try {
       widget3.getUpdatedSpecification().getSettings();
-    } catch (InputValidationException e) {
+    }
+    catch (InputValidationException e) {
       assertTrue(true);
     }
   }

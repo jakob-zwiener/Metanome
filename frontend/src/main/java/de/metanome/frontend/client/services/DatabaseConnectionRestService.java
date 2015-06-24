@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,40 +16,36 @@
 
 package de.metanome.frontend.client.services;
 
-import de.metanome.backend.results_db.DatabaseConnection;
-
-import org.fusesource.restygwt.client.MethodCallback;
-import org.fusesource.restygwt.client.RestService;
-
 import java.util.List;
-
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
+import org.fusesource.restygwt.client.MethodCallback;
+import org.fusesource.restygwt.client.RestService;
+
+import de.metanome.backend.results_db.DatabaseConnection;
+
 @Path("/api/dbConnections")
 public interface DatabaseConnectionRestService extends RestService {
 
-  @GET
-  public void listDatabaseConnections(MethodCallback<List<DatabaseConnection>> callback);
+  @GET void listDatabaseConnections(MethodCallback<List<DatabaseConnection>> callback);
 
   @GET
-  @Path("/get/{id}")
-  public void getDatabaseConnection(@PathParam("id") long id, MethodCallback<DatabaseConnection> callback);
+  @Path("/get/{id}") void getDatabaseConnection(@PathParam("id") long id, MethodCallback<DatabaseConnection> callback);
 
   @POST
-  @Path("/store")
-  public void storeDatabaseConnection(DatabaseConnection dbConnection, MethodCallback<DatabaseConnection> callback);
+  @Path("/store") void storeDatabaseConnection(DatabaseConnection dbConnection,
+                                               MethodCallback<DatabaseConnection> callback);
 
   @DELETE
-  @Path("/delete/{id}")
-  public void deleteDatabaseConnection(@PathParam("id") long id, MethodCallback<Void> callback);
+  @Path("/delete/{id}") void deleteDatabaseConnection(@PathParam("id") long id, MethodCallback<Void> callback);
 
   @POST
-  @Path("/update")
-  public void updateDatabaseConnection(DatabaseConnection databaseConnection, MethodCallback<DatabaseConnection> callback);
+  @Path("/update") void updateDatabaseConnection(DatabaseConnection databaseConnection,
+                                                 MethodCallback<DatabaseConnection> callback);
 }
 
 

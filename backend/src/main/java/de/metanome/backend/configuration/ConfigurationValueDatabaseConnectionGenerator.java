@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 package de.metanome.backend.configuration;
 
+import java.util.Set;
+
 import de.metanome.algorithm_integration.Algorithm;
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.algorithm_types.DatabaseConnectionParameterAlgorithm;
@@ -24,31 +26,32 @@ import de.metanome.algorithm_integration.configuration.ConfigurationSettingDatab
 import de.metanome.algorithm_integration.input.DatabaseConnectionGenerator;
 import de.metanome.backend.input.database.DefaultDatabaseConnectionGenerator;
 
-import java.util.Set;
-
 /**
  * Represents database connection configuration values for {@link Algorithm}s.
- *
  * @author Jakob Zwiener
  */
 public class ConfigurationValueDatabaseConnectionGenerator
-    extends ConfigurationValue<DatabaseConnectionGenerator, ConfigurationRequirementDatabaseConnection> {
+  extends ConfigurationValue<DatabaseConnectionGenerator, ConfigurationRequirementDatabaseConnection>
+{
 
   public ConfigurationValueDatabaseConnectionGenerator(String identifier,
-                                                       DatabaseConnectionGenerator... values) {
+                                                       DatabaseConnectionGenerator... values)
+  {
     super(identifier, values);
   }
 
   public ConfigurationValueDatabaseConnectionGenerator(
-      ConfigurationRequirementDatabaseConnection requirement)
-      throws AlgorithmConfigurationException {
+    ConfigurationRequirementDatabaseConnection requirement)
+    throws AlgorithmConfigurationException
+  {
     super(requirement);
   }
 
   @Override
   protected DatabaseConnectionGenerator[] convertToValues(
-      ConfigurationRequirementDatabaseConnection requirement)
-      throws AlgorithmConfigurationException {
+    ConfigurationRequirementDatabaseConnection requirement)
+    throws AlgorithmConfigurationException
+  {
     ConfigurationSettingDatabaseConnection[] settings = requirement.getSettings();
     DatabaseConnectionGenerator[] newValues = new DatabaseConnectionGenerator[settings.length];
 
@@ -61,15 +64,16 @@ public class ConfigurationValueDatabaseConnectionGenerator
 
   @Override
   public void triggerSetValue(Algorithm algorithm, Set<Class<?>> algorithmInterfaces)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     if (!algorithmInterfaces.contains(DatabaseConnectionParameterAlgorithm.class)) {
       throw new AlgorithmConfigurationException(
-          "Algorithm does not accept database connection input configuration values.");
+        "Algorithm does not accept database connection input configuration values.");
     }
 
     DatabaseConnectionParameterAlgorithm
-        databaseConnectionParameterAlgorithm = (DatabaseConnectionParameterAlgorithm) algorithm;
+      databaseConnectionParameterAlgorithm = (DatabaseConnectionParameterAlgorithm) algorithm;
     databaseConnectionParameterAlgorithm.setDatabaseConnectionGeneratorConfigurationValue(
-        this.identifier, this.values);
+      this.identifier, this.values);
   }
 }

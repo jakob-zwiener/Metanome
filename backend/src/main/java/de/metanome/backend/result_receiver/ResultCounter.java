@@ -16,6 +16,12 @@
 
 package de.metanome.backend.result_receiver;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.EnumMap;
+import java.util.Map;
+
 import de.metanome.algorithm_integration.result_receiver.CouldNotReceiveResultException;
 import de.metanome.algorithm_integration.results.BasicStatistic;
 import de.metanome.algorithm_integration.results.ConditionalUniqueColumnCombination;
@@ -25,12 +31,6 @@ import de.metanome.algorithm_integration.results.OrderDependency;
 import de.metanome.algorithm_integration.results.UniqueColumnCombination;
 import de.metanome.backend.results_db.ResultType;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.EnumMap;
-import java.util.Map;
-
 public class ResultCounter extends ResultReceiver {
 
   protected EnumMap<ResultType, Integer> resultCounts;
@@ -39,6 +39,7 @@ public class ResultCounter extends ResultReceiver {
     super(algorithmExecutionIdentifier);
     this.resultCounts = new EnumMap<>(ResultType.class);
   }
+
   protected ResultCounter(String algorithmExecutionIdentifier, Boolean test) throws FileNotFoundException {
     super(algorithmExecutionIdentifier, test);
     this.resultCounts = new EnumMap<>(ResultType.class);
@@ -51,19 +52,22 @@ public class ResultCounter extends ResultReceiver {
 
   @Override
   public void receiveResult(ConditionalUniqueColumnCombination conditionalUniqueColumnCombination)
-      throws CouldNotReceiveResultException {
+    throws CouldNotReceiveResultException
+  {
     this.addCount(ResultType.CUCC);
   }
 
   @Override
   public void receiveResult(FunctionalDependency functionalDependency)
-      throws CouldNotReceiveResultException {
+    throws CouldNotReceiveResultException
+  {
     this.addCount(ResultType.FD);
   }
 
   @Override
   public void receiveResult(InclusionDependency inclusionDependency)
-      throws CouldNotReceiveResultException {
+    throws CouldNotReceiveResultException
+  {
     this.addCount(ResultType.IND);
   }
 
@@ -74,14 +78,16 @@ public class ResultCounter extends ResultReceiver {
 
   @Override
   public void receiveResult(UniqueColumnCombination uniqueColumnCombination)
-      throws CouldNotReceiveResultException {
+    throws CouldNotReceiveResultException
+  {
     this.addCount(ResultType.UCC);
   }
 
   protected void addCount(ResultType type) throws CouldNotReceiveResultException {
     if (!resultCounts.containsKey(type)) {
       resultCounts.put(type, 1);
-    } else {
+    }
+    else {
       resultCounts.put(type, resultCounts.get(type) + 1);
     }
   }

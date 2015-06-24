@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,8 @@
  */
 
 package de.metanome.backend.resources;
-import de.metanome.backend.results_db.DatabaseConnection;
-import de.metanome.backend.results_db.EntityStorageException;
-import de.metanome.backend.results_db.HibernateUtil;
 
 import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -30,15 +26,18 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import de.metanome.backend.results_db.DatabaseConnection;
+import de.metanome.backend.results_db.EntityStorageException;
+import de.metanome.backend.results_db.HibernateUtil;
+
 /**
  * Responsible for the database communication for DatabaseConnection and for
  * handling all restful calls of DatabaseConnections.
- *
  * @author Moritz Finke
  */
 
 @Path("dbConnections")
-public class DatabaseConnectionResource implements Resource<DatabaseConnection>{
+public class DatabaseConnectionResource implements Resource<DatabaseConnection> {
 
   /**
    * @return all DatabaseConnections in the database
@@ -49,7 +48,8 @@ public class DatabaseConnectionResource implements Resource<DatabaseConnection>{
   public List<DatabaseConnection> getAll() {
     try {
       return HibernateUtil.queryCriteria(DatabaseConnection.class);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       throw new WebException(e, Response.Status.BAD_REQUEST);
     }
   }
@@ -66,7 +66,8 @@ public class DatabaseConnectionResource implements Resource<DatabaseConnection>{
   public DatabaseConnection get(@PathParam("id") long id) {
     try {
       return (DatabaseConnection) HibernateUtil.retrieve(DatabaseConnection.class, id);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       throw new WebException(e, Response.Status.BAD_REQUEST);
     }
   }
@@ -84,7 +85,8 @@ public class DatabaseConnectionResource implements Resource<DatabaseConnection>{
   public DatabaseConnection store(DatabaseConnection dbConnection) {
     try {
       HibernateUtil.store(dbConnection);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       throw new WebException(e, Response.Status.BAD_REQUEST);
     }
     return dbConnection;
@@ -101,7 +103,8 @@ public class DatabaseConnectionResource implements Resource<DatabaseConnection>{
     try {
       DatabaseConnection dbConnection = (DatabaseConnection) HibernateUtil.retrieve(DatabaseConnection.class, id);
       HibernateUtil.delete(dbConnection);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       throw new WebException(e, Response.Status.BAD_REQUEST);
     }
   }
@@ -119,7 +122,8 @@ public class DatabaseConnectionResource implements Resource<DatabaseConnection>{
   public DatabaseConnection update(DatabaseConnection databaseConnection) {
     try {
       HibernateUtil.update(databaseConnection);
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       throw new WebException(e, Response.Status.BAD_REQUEST);
     }
     return databaseConnection;

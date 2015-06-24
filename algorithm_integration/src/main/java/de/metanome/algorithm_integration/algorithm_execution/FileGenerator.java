@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,14 +21,12 @@ import java.io.File;
 
 /**
  * Generates temporary files.
- *
  * @author Jakob Zwiener
  */
 public interface FileGenerator extends Closeable {
 
   /**
    * Returns a temporary file that will be deleted on close.
-   *
    * @return temporary file
    * @throws FileCreationException if the file cannot be created
    */

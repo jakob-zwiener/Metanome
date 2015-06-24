@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,13 @@
 
 package de.metanome.backend.algorithm_loading;
 
-import de.metanome.test_helper.GwtSerializationTester;
-
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+
+import de.metanome.test_helper.GwtSerializationTester;
 
 /**
  * @author Tanja Bergmann
@@ -31,7 +31,7 @@ public class AlgorithmLoadingExceptionTest {
 
   /**
    * Test method for {@link de.metanome.backend.algorithm_loading.AlgorithmLoadingException#AlgorithmLoadingException(String)}
-   *
+   * <p/>
    * The exception should store the message.
    */
   @Test
@@ -44,7 +44,8 @@ public class AlgorithmLoadingExceptionTest {
     String actualMessage;
     try {
       throw new AlgorithmLoadingException(expectedMessage);
-    } catch (AlgorithmLoadingException e) {
+    }
+    catch (AlgorithmLoadingException e) {
       actualMessage = e.getMessage();
     }
 
@@ -54,7 +55,7 @@ public class AlgorithmLoadingExceptionTest {
 
   /**
    * Test method for {@link de.metanome.backend.algorithm_loading.AlgorithmLoadingException#AlgorithmLoadingException(String, Throwable)}
-   *
+   * <p/>
    * The exception should store the message and the cause.
    */
   @Test
@@ -69,7 +70,8 @@ public class AlgorithmLoadingExceptionTest {
     Throwable actualCause;
     try {
       throw new AlgorithmLoadingException(expectedMessage, expectedCause);
-    } catch (AlgorithmLoadingException e) {
+    }
+    catch (AlgorithmLoadingException e) {
       actualMessage = e.getMessage();
       actualCause = e.getCause();
     }

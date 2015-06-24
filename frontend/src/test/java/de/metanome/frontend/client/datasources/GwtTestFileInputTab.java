@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,12 @@
 
 package de.metanome.frontend.client.datasources;
 
+import java.util.ArrayList;
+
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.HTML;
+
+import org.fusesource.restygwt.client.MethodCallback;
 
 import de.metanome.backend.results_db.EntityStorageException;
 import de.metanome.backend.results_db.FileInput;
@@ -25,10 +29,6 @@ import de.metanome.frontend.client.BasePage;
 import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.TestHelper;
 import de.metanome.frontend.client.helpers.InputValidationException;
-
-import org.fusesource.restygwt.client.MethodCallback;
-
-import java.util.ArrayList;
 
 public class GwtTestFileInputTab extends GWTTestCase {
 
@@ -99,8 +99,8 @@ public class GwtTestFileInputTab extends GWTTestCase {
 
     // Execute (delete File 2)
     MethodCallback<Void>
-        callback =
-        fileInputTab.getDeleteCallback(input2);
+      callback =
+      fileInputTab.getDeleteCallback(input2);
     callback.onSuccess(null, null);
 
     // Check
@@ -140,7 +140,7 @@ public class GwtTestFileInputTab extends GWTTestCase {
     // Expected Values
     String expectedValue = "updated";
     FileInput updatedFileInput = new FileInput(expectedValue)
-        .setComment(expectedValue);
+      .setComment(expectedValue);
 
     // Execute
     fileInputTab.updateFileInputInTable(updatedFileInput, oldFileInput);

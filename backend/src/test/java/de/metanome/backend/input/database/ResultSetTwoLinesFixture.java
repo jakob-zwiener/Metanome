@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package de.metanome.backend.input.database;
 
-import com.google.common.collect.ImmutableList;
+import static org.mockito.Mockito.*;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -24,8 +24,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import com.google.common.collect.ImmutableList;
 
 public class ResultSetTwoLinesFixture {
 
@@ -35,35 +34,35 @@ public class ResultSetTwoLinesFixture {
     // Expected values
     // Expected column count
     when(resultSetMetaData.getColumnCount())
-        .thenReturn(numberOfColumns());
+      .thenReturn(numberOfColumns());
     // Simulate SQLException when starting count at 0.
     when(resultSetMetaData.getTableName(0))
-        .thenThrow(new SQLException());
+      .thenThrow(new SQLException());
     when(resultSetMetaData.getTableName(1))
-        .thenReturn(getExpectedRelationName());
+      .thenReturn(getExpectedRelationName());
     ImmutableList<String> expectedColumnNames = getExpectedColumnNames();
     // Simulate SQLException when starting count at 0.
     when(resultSetMetaData.getColumnName(0))
-        .thenThrow(new SQLException());
+      .thenThrow(new SQLException());
     for (int i = 0; i < expectedColumnNames.size(); i++) {
       when(resultSetMetaData.getColumnLabel(i + 1))
-          .thenReturn(expectedColumnNames.get(i));
+        .thenReturn(expectedColumnNames.get(i));
     }
     // Expected values when calling getMetaData
     when(resultSet.getMetaData())
-        .thenReturn(resultSetMetaData);
+      .thenReturn(resultSetMetaData);
     // Expected values when calling next
     when(resultSet.next())
-        .thenReturn(getFirstExpectedNextValue(), getExpectedNextValuesExceptFirstAsArray());
+      .thenReturn(getFirstExpectedNextValue(), getExpectedNextValuesExceptFirstAsArray());
     List<ImmutableList<String>> expectedRecords = getExpectedRecords();
     // Simulate SQLException when starting count at 0.
     when(resultSet.getString(0))
-        .thenThrow(new SQLException());
+      .thenThrow(new SQLException());
     // Expected values when calling getString
     for (int columnIndex = 0; columnIndex < numberOfColumns(); columnIndex++) {
       when(resultSet.getString(columnIndex + 1))
-          .thenReturn(expectedRecords.get(0).get(columnIndex))
-          .thenReturn(expectedRecords.get(1).get(columnIndex));
+        .thenReturn(expectedRecords.get(0).get(columnIndex))
+        .thenReturn(expectedRecords.get(1).get(columnIndex));
     }
 
     return resultSet;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,14 @@
 
 package de.metanome.frontend.client.input_fields;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingDataSource;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingDatabaseConnection;
@@ -26,17 +34,8 @@ import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.helpers.InputValidationException;
 import de.metanome.frontend.client.services.TableInputRestService;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * An input widget, used to specify settings for a table input.
- *
  * @see de.metanome.backend.results_db.TableInput
  */
 public class TableInputInput extends InputField {
@@ -50,7 +49,7 @@ public class TableInputInput extends InputField {
   private String preselectedTableInput;
 
   /**
-   * @param optional        specifies whether a remove button should be displayed
+   * @param optional specifies whether a remove button should be displayed
    * @param messageReceiver the message receiver
    */
   public TableInputInput(boolean optional, boolean required, TabWrapper messageReceiver) {
@@ -90,7 +89,8 @@ public class TableInputInput extends InputField {
               preselectedIdentifier = identifier;
             }
           }
-        } else {
+        }
+        else {
           messageReceiver.addError("There are no table inputs in the database!");
         }
 
@@ -105,19 +105,19 @@ public class TableInputInput extends InputField {
     };
 
     TableInputRestService
-        lemma = com.google.gwt.core.client.GWT.create(TableInputRestService.class);
+      lemma = com.google.gwt.core.client.GWT.create(TableInputRestService.class);
     lemma.listTableInputs(callback);
   }
 
   /**
    * Selects the given data source in the list box. If the list box has not yet been filled with the
    * available values, we save the value and set it when the list box is filled.
-   *
    * @param dataSourceSetting the data source setting
    * @throws de.metanome.algorithm_integration.AlgorithmConfigurationException If the data source setting is not a table input setting
    */
   public void selectDataSource(ConfigurationSettingDataSource dataSourceSetting)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     this.preselectedTableInput = dataSourceSetting.getValueAsString();
 
     if (!this.listBox.containsValues()) {
@@ -127,14 +127,14 @@ public class TableInputInput extends InputField {
     if (dataSourceSetting instanceof ConfigurationSettingTableInput) {
       ConfigurationSettingTableInput setting = (ConfigurationSettingTableInput) dataSourceSetting;
       this.setValue(setting);
-    } else {
+    }
+    else {
       throw new AlgorithmConfigurationException("This is not a table input setting.");
     }
   }
 
   /**
    * Returns the current widget's settings as a setting
-   *
    * @return the widget's settings
    */
   public ConfigurationSettingTableInput getValue() throws InputValidationException {
@@ -143,7 +143,8 @@ public class TableInputInput extends InputField {
     if (selectedValue == null || selectedValue.equals("--")) {
       if (isRequired) {
         throw new InputValidationException("You must choose a table input!");
-      } else {
+      }
+      else {
         return null;
       }
     }
@@ -155,12 +156,12 @@ public class TableInputInput extends InputField {
 
   /**
    * Takes a setting a sets the selected value of the list box to the given setting.
-   *
    * @param setting the settings to set
    * @throws AlgorithmConfigurationException if no table inputs are set
    */
   public void setValue(ConfigurationSettingTableInput setting)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     for (Map.Entry<String, TableInput> input : this.tableInputs.entrySet()) {
       TableInput current = input.getValue();
       if (current.getTableName().equals(setting.getTable())) {
@@ -173,7 +174,6 @@ public class TableInputInput extends InputField {
 
   /**
    * Creates a ConfigurationSettingTableInput from the given TableInput
-   *
    * @param tableInput the table input
    * @return the setting generated from the table input
    */
@@ -182,10 +182,10 @@ public class TableInputInput extends InputField {
 
     DatabaseConnection databaseConnection = tableInput.getDatabaseConnection();
     ConfigurationSettingDatabaseConnection databaseConnectionSetting = new ConfigurationSettingDatabaseConnection(
-        databaseConnection.getUrl(),
-        databaseConnection.getUsername(),
-        databaseConnection.getPassword(),
-        databaseConnection.getSystem());
+      databaseConnection.getUrl(),
+      databaseConnection.getUsername(),
+      databaseConnection.getPassword(),
+      databaseConnection.getSystem());
     databaseConnectionSetting.setId(databaseConnection.getId());
 
     setting.setTable(tableInput.getTableName());

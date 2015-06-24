@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,22 +16,19 @@
 
 package de.metanome.backend.resources;
 
+import static org.junit.Assert.*;
+
+import java.util.List;
+
+import org.hamcrest.collection.IsIterableContainingInAnyOrder;
+import org.junit.Test;
+
 import de.metanome.backend.results_db.DatabaseConnection;
 import de.metanome.backend.results_db.EntityStorageException;
 import de.metanome.backend.results_db.FileInput;
 import de.metanome.backend.results_db.HibernateUtil;
 import de.metanome.backend.results_db.Input;
 import de.metanome.backend.results_db.TableInput;
-
-import org.hamcrest.collection.IsIterableContainingInAnyOrder;
-import org.junit.Test;
-
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertThat;
 
 /**
  * Tests for {@link de.metanome.backend.resources.InputResource}
@@ -63,7 +60,7 @@ public class InputResourceTest {
 
     // Check result
     assertThat(actualInputs, IsIterableContainingInAnyOrder
-        .containsInAnyOrder(expectedInput, expectedFileInput, expectedTableInput));
+      .containsInAnyOrder(expectedInput, expectedFileInput, expectedTableInput));
 
     // Cleanup
     HibernateUtil.clear();
@@ -133,14 +130,15 @@ public class InputResourceTest {
     Input expectedInput = inputResource.store(new Input("input"));
     FileInput expectedFileInput = fileInputResource.store(new FileInput("fileInput"));
     TableInput expectedTableInput = tableInputResource.store(new TableInput("tableInput"));
-    DatabaseConnection expectedDatabaseConnection = databaseConnectionResource.store(new DatabaseConnection("databaseConnection"));
+    DatabaseConnection expectedDatabaseConnection = databaseConnectionResource.store(new DatabaseConnection(
+      "databaseConnection"));
 
     // Execute functionality
     List<Input> actualInputs = inputResource.listRelationalInputs();
 
     // Check result
     assertThat(actualInputs, IsIterableContainingInAnyOrder
-        .containsInAnyOrder(expectedFileInput, expectedTableInput));
+      .containsInAnyOrder(expectedFileInput, expectedTableInput));
 
     // Cleanup
     HibernateUtil.clear();

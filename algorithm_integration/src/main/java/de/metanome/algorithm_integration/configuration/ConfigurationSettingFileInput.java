@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,21 +16,18 @@
 
 package de.metanome.algorithm_integration.configuration;
 
+import javax.xml.bind.annotation.XmlTransient;
+
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.annotations.GwtIncompatible;
 
 import au.com.bytecode.opencsv.CSVParser;
 import au.com.bytecode.opencsv.CSVReader;
-
-import com.fasterxml.jackson.annotation.JsonTypeName;
-
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.input.RelationalInputGeneratorInitializer;
 
-import javax.xml.bind.annotation.XmlTransient;
-
 /**
  * The setting of a {@link de.metanome.algorithm_integration.configuration.ConfigurationRequirementFileInput}
- *
  * @author Jakob Zwiener
  */
 @JsonTypeName("ConfigurationSettingFileInput")
@@ -41,12 +38,13 @@ public class ConfigurationSettingFileInput extends ConfigurationSettingRelationa
   public final static char DEFAULT_ESCAPE = CSVParser.DEFAULT_ESCAPE_CHARACTER;
   public final static boolean DEFAULT_STRICTQUOTES = CSVParser.DEFAULT_STRICT_QUOTES;
   public final static boolean DEFAULT_IGNORELEADINGWHITESPACE =
-      CSVParser.DEFAULT_IGNORE_LEADING_WHITESPACE;
+    CSVParser.DEFAULT_IGNORE_LEADING_WHITESPACE;
   public final static int DEFAULT_SKIPLINES = CSVReader.DEFAULT_SKIP_LINES;
   public final static boolean DEFAULT_HEADER = true;
   public final static boolean DEFAULT_SKIPDIFFERINGLINES = false;
   public final static String DEFAULT_NULL_VALUE = "";
-
+  // Needed for restful serialization
+  public String type = "ConfigurationSettingFileInput";
   private String fileName;
   private boolean advanced;
   private String separatorChar; //Todo: atm needs to be String instead of char for serialization
@@ -59,9 +57,6 @@ public class ConfigurationSettingFileInput extends ConfigurationSettingRelationa
   private boolean skipDifferingLines;
   private String nullValue;
 
-  // Needed for restful serialization
-  public String type = "ConfigurationSettingFileInput";
-
   /**
    * Exists for serialization.
    */
@@ -70,28 +65,27 @@ public class ConfigurationSettingFileInput extends ConfigurationSettingRelationa
 
   /**
    * Simple constructor, uses default values.
-   *
    * @param fileName the name of the CSV file
    */
   public ConfigurationSettingFileInput(String fileName) {
     this(fileName, false, DEFAULT_SEPARATOR, DEFAULT_QUOTE, DEFAULT_ESCAPE, DEFAULT_STRICTQUOTES,
-         DEFAULT_IGNORELEADINGWHITESPACE, DEFAULT_SKIPLINES, DEFAULT_HEADER,
-         DEFAULT_SKIPDIFFERINGLINES, DEFAULT_NULL_VALUE);
+      DEFAULT_IGNORELEADINGWHITESPACE, DEFAULT_SKIPLINES, DEFAULT_HEADER,
+      DEFAULT_SKIPDIFFERINGLINES, DEFAULT_NULL_VALUE);
   }
 
   /**
    * Advanced constructor.
-   *
    * @param fileName the name of the CSV file
    * @param advanced true if the custom configurations should be used; that is, if one of the
-   *                 following parameters differs from the default value
+   * following parameters differs from the default value
    */
   public ConfigurationSettingFileInput(String fileName, boolean advanced, char separator,
                                        char quote,
                                        char escape, boolean strictQuotes,
                                        boolean ignoreLeadingWhiteSpace, int line,
                                        boolean header, boolean skipDifferingLines,
-                                       String nullValue) {
+                                       String nullValue)
+  {
     this.fileName = fileName;
     this.advanced = advanced;
     this.separatorChar = String.valueOf(separator);
@@ -204,15 +198,20 @@ public class ConfigurationSettingFileInput extends ConfigurationSettingRelationa
   }
 
   @XmlTransient
-  public char getSeparatorAsChar() { return toChar(this.separatorChar); }
+  public char getSeparatorAsChar() {
+    return toChar(this.separatorChar);
+  }
+
   @XmlTransient
   public char getQuoteCharAsChar() {
     return toChar(this.quoteChar);
   }
+
   @XmlTransient
   public char getEscapeCharAsChar() {
     return toChar(this.escapeChar);
   }
+
   @XmlTransient
   private char toChar(String str) {
     if (str.isEmpty()) {
@@ -246,7 +245,8 @@ public class ConfigurationSettingFileInput extends ConfigurationSettingRelationa
   @XmlTransient
   @GwtIncompatible("Can only be called from backend.")
   public void generate(RelationalInputGeneratorInitializer initializer)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     initializer.initialize(this);
   }
 
@@ -262,15 +262,15 @@ public class ConfigurationSettingFileInput extends ConfigurationSettingRelationa
     ConfigurationSettingFileInput that = (ConfigurationSettingFileInput) o;
 
     return !(!this.fileName.equals(that.fileName) ||
-             !this.separatorChar.equals(that.separatorChar) ||
-             !this.quoteChar.equals(that.quoteChar) ||
-             !this.escapeChar.equals(that.escapeChar) ||
-             !this.nullValue.equals(that.nullValue) ||
-             !(this.strictQuotes != that.strictQuotes) ||
-             !(this.ignoreLeadingWhiteSpace != that.ignoreLeadingWhiteSpace) ||
-             !(this.skipDifferingLines != that.skipDifferingLines) ||
-             !(this.header != that.header) ||
-             !(this.skipLines != that.skipLines));
+      !this.separatorChar.equals(that.separatorChar) ||
+      !this.quoteChar.equals(that.quoteChar) ||
+      !this.escapeChar.equals(that.escapeChar) ||
+      !this.nullValue.equals(that.nullValue) ||
+      !(this.strictQuotes != that.strictQuotes) ||
+      !(this.ignoreLeadingWhiteSpace != that.ignoreLeadingWhiteSpace) ||
+      !(this.skipDifferingLines != that.skipDifferingLines) ||
+      !(this.header != that.header) ||
+      !(this.skipLines != that.skipLines));
   }
 
   @Override

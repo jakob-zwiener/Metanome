@@ -17,23 +17,23 @@
 package de.metanome.backend.configuration;
 
 
+import java.util.Set;
+
 import de.metanome.algorithm_integration.Algorithm;
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
 
-import java.util.Set;
-
 public abstract class ConfigurationValue<T, R extends ConfigurationRequirement> implements
-                                                                                de.metanome.algorithm_integration.configuration.ConfigurationValue{
+  de.metanome.algorithm_integration.configuration.ConfigurationValue
+{
 
   protected final String identifier;
   protected final T[] values;
 
   /**
    * Constructs a ConfigurationValue using an identifier and configuration values.
-   *
    * @param identifier the configuration value identifier
-   * @param values     the configuration values
+   * @param values the configuration values
    */
   public ConfigurationValue(String identifier, T... values) {
     this.identifier = identifier;
@@ -43,11 +43,11 @@ public abstract class ConfigurationValue<T, R extends ConfigurationRequirement> 
   /**
    * Constructs a ConfigurationValue using a
    * {@link de.metanome.algorithm_integration.configuration.ConfigurationRequirement}.
-   *
    * @param requirement the requirement to generate the ConfigurationValue
    */
   public ConfigurationValue(R requirement)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     this.identifier = requirement.getIdentifier();
     this.values = convertToValues(requirement);
   }
@@ -55,17 +55,16 @@ public abstract class ConfigurationValue<T, R extends ConfigurationRequirement> 
   /**
    * Gets the values of a ConfigurationValue out of a
    * {@link de.metanome.algorithm_integration.configuration.ConfigurationRequirement}
-   *
    * @param requirement the configuration requirement
    * @return the values of type T
    */
   protected abstract T[] convertToValues(R requirement)
-      throws AlgorithmConfigurationException;
+    throws AlgorithmConfigurationException;
 
   /**
    * {@inheritDoc}
    */
   public abstract void triggerSetValue(Algorithm algorithm, Set<Class<?>> algorithmInterfaces)
-      throws AlgorithmConfigurationException ;
+    throws AlgorithmConfigurationException;
 
 }

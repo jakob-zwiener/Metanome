@@ -17,12 +17,12 @@
 package de.metanome.algorithm_integration.configuration;
 
 
+import javax.xml.bind.annotation.XmlTransient;
+
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
-
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Handles default values for configuration requirements.
@@ -30,20 +30,23 @@ import javax.xml.bind.annotation.XmlTransient;
  * @param <S> the setting type of the requirement
  */
 @JsonTypeInfo(
-    use = JsonTypeInfo.Id.NAME,
-    include = JsonTypeInfo.As.PROPERTY,
-    property = "type")
+  use = JsonTypeInfo.Id.NAME,
+  include = JsonTypeInfo.As.PROPERTY,
+  property = "type")
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = ConfigurationRequirementBoolean.class, name = "ConfigurationRequirementBoolean"),
-    @JsonSubTypes.Type(value = ConfigurationRequirementInteger.class, name = "ConfigurationRequirementInteger"),
-    @JsonSubTypes.Type(value = ConfigurationRequirementListBox.class, name = "ConfigurationRequirementListBox"),
-    @JsonSubTypes.Type(value = ConfigurationRequirementString.class, name = "ConfigurationRequirementString"),
+  @JsonSubTypes.Type(value = ConfigurationRequirementBoolean.class, name = "ConfigurationRequirementBoolean"),
+  @JsonSubTypes.Type(value = ConfigurationRequirementInteger.class, name = "ConfigurationRequirementInteger"),
+  @JsonSubTypes.Type(value = ConfigurationRequirementListBox.class, name = "ConfigurationRequirementListBox"),
+  @JsonSubTypes.Type(value = ConfigurationRequirementString.class, name = "ConfigurationRequirementString"),
 })
-public abstract class ConfigurationRequirementDefaultValue<T, S extends ConfigurationSettingPrimitive> extends ConfigurationRequirement<S> {
+public abstract class ConfigurationRequirementDefaultValue<T, S extends ConfigurationSettingPrimitive>
+  extends ConfigurationRequirement<S>
+{
 
   public T[] defaultValues;
 
-  public ConfigurationRequirementDefaultValue() { }
+  public ConfigurationRequirementDefaultValue() {
+  }
 
   public ConfigurationRequirementDefaultValue(String identifier) {
     super(identifier);
@@ -54,7 +57,8 @@ public abstract class ConfigurationRequirementDefaultValue<T, S extends Configur
   }
 
   public ConfigurationRequirementDefaultValue(String identifier, int minNumberOfSetting,
-                                              int maxNumberOfSetting) {
+                                              int maxNumberOfSetting)
+  {
     super(identifier, minNumberOfSetting, maxNumberOfSetting);
   }
 
@@ -67,9 +71,10 @@ public abstract class ConfigurationRequirementDefaultValue<T, S extends Configur
   public final void checkAndSetDefaultValues(T... values) throws AlgorithmConfigurationException {
     try {
       checkNumberOfSettings(values.length);
-    } catch (AlgorithmConfigurationException e) {
+    }
+    catch (AlgorithmConfigurationException e) {
       throw new AlgorithmConfigurationException(
-          "The number of default values does not match the number of settings.");
+        "The number of default values does not match the number of settings.");
     }
 
     this.defaultValues = values;
@@ -82,7 +87,8 @@ public abstract class ConfigurationRequirementDefaultValue<T, S extends Configur
   @XmlTransient
   @Override
   public void checkAndSetSettings(S... settings)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     checkNumberOfSettings(settings.length);
     this.settings = settings;
     applyDefaultValues();
@@ -94,8 +100,9 @@ public abstract class ConfigurationRequirementDefaultValue<T, S extends Configur
    */
   @XmlTransient
   public T getDefaultValue(int index) {
-    if (defaultValues != null && defaultValues.length > index)
+    if (defaultValues != null && defaultValues.length > index) {
       return this.defaultValues[index];
+    }
     return null;
   }
 
@@ -105,8 +112,9 @@ public abstract class ConfigurationRequirementDefaultValue<T, S extends Configur
   @XmlTransient
   public void applyDefaultValues() {
     if (this.defaultValues == null || this.settings == null ||
-        this.defaultValues.length != this.settings.length)
+      this.defaultValues.length != this.settings.length) {
       return;
+    }
 
     for (int i = 0; i < this.settings.length; i++) {
       this.settings[i].setValue(this.defaultValues[i]);

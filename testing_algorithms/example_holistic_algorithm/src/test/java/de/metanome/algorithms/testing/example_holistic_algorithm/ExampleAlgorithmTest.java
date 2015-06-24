@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,17 @@
 
 package de.metanome.algorithms.testing.example_holistic_algorithm;
 
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.*;
+
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirementString;
@@ -24,19 +35,6 @@ import de.metanome.algorithm_integration.result_receiver.FunctionalDependencyRes
 import de.metanome.algorithm_integration.result_receiver.UniqueColumnCombinationResultReceiver;
 import de.metanome.algorithm_integration.results.FunctionalDependency;
 import de.metanome.algorithm_integration.results.UniqueColumnCombination;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 public class ExampleAlgorithmTest {
 
@@ -68,13 +66,13 @@ public class ExampleAlgorithmTest {
   public void testGetConfigurationRequirements() {
     // Execute functionality
     List<ConfigurationRequirement>
-        actualConfigurationRequirements =
-        this.algorithm.getConfigurationRequirements();
+      actualConfigurationRequirements =
+      this.algorithm.getConfigurationRequirements();
 
     // Check result
     assertEquals(1, actualConfigurationRequirements.size());
     assertThat(actualConfigurationRequirements.get(0),
-               instanceOf(ConfigurationRequirementString.class));
+      instanceOf(ConfigurationRequirementString.class));
   }
 
   /**
@@ -102,11 +100,11 @@ public class ExampleAlgorithmTest {
   public void testExecute() throws CouldNotReceiveResultException, AlgorithmConfigurationException {
     // Setup
     FunctionalDependencyResultReceiver
-        fdResultReceiver =
-        mock(FunctionalDependencyResultReceiver.class);
+      fdResultReceiver =
+      mock(FunctionalDependencyResultReceiver.class);
     UniqueColumnCombinationResultReceiver
-        uccResultReceiver =
-        mock(UniqueColumnCombinationResultReceiver.class);
+      uccResultReceiver =
+      mock(UniqueColumnCombinationResultReceiver.class);
     this.algorithm.setStringConfigurationValue(pathIdentifier, "something", "something");
 
     // Execute functionality

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,25 +22,22 @@ import java.sql.SQLException;
 
 /**
  * Generates new copies of {@link RelationalInput}s or {@link ResultSet}s.
- *
  * @author Jakob Zwiener
  */
 public interface DatabaseConnectionGenerator extends AutoCloseable {
 
   /**
    * Creates a {@link RelationalInput} from an sql statement issued to a database.
-   *
    * @param queryString the query string to generate the input
    * @return the {@link de.metanome.algorithm_integration.input.RelationalInput} containing the
    * query result
    * @throws InputGenerationException if the input cannot be generated
    */
   RelationalInput generateRelationalInputFromSql(String queryString)
-      throws InputGenerationException;
+    throws InputGenerationException;
 
   /**
    * Creates a {@link ResultSet} from an sql statement issued to a database.
-   *
    * @param queryString the query string to generate the input
    * @return the {@link ResultSet} containing the query result
    * @throws InputGenerationException if the result cannot be generated

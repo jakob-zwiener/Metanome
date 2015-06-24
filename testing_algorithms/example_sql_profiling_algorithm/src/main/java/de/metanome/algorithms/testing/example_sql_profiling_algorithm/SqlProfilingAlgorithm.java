@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 package de.metanome.algorithms.testing.example_sql_profiling_algorithm;
 
+import java.util.ArrayList;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.AlgorithmExecutionException;
 import de.metanome.algorithm_integration.algorithm_types.DatabaseConnectionParameterAlgorithm;
@@ -23,12 +25,9 @@ import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirementDatabaseConnection;
 import de.metanome.algorithm_integration.input.DatabaseConnectionGenerator;
 
-import java.util.ArrayList;
-
 
 /**
  * TODO docs
- *
  * @author Jakob Zwiener
  */
 public class SqlProfilingAlgorithm implements DatabaseConnectionParameterAlgorithm {
@@ -40,7 +39,8 @@ public class SqlProfilingAlgorithm implements DatabaseConnectionParameterAlgorit
   @Override
   public void setDatabaseConnectionGeneratorConfigurationValue(String identifier,
                                                                DatabaseConnectionGenerator... values)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
 
     if (identifier.equals(DATABASE_IDENTIFIER)) {
       inputGenerator = values[0];
@@ -52,7 +52,7 @@ public class SqlProfilingAlgorithm implements DatabaseConnectionParameterAlgorit
     ArrayList<ConfigurationRequirement> configurationRequirements = new ArrayList<>();
 
     configurationRequirements.add(new ConfigurationRequirementDatabaseConnection(
-        DATABASE_IDENTIFIER));
+      DATABASE_IDENTIFIER));
 
     return configurationRequirements;
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,10 +40,9 @@ public class ResultTable extends FlowPanel {
 
   /**
    * Sets the text of a specific row and column
-   *
-   * @param row    the row
+   * @param row the row
    * @param column the column
-   * @param text   the text, which should be set
+   * @param text the text, which should be set
    */
   public void setText(int row, int column, String text) {
     this.table.setText(row, column, text);
@@ -51,8 +50,7 @@ public class ResultTable extends FlowPanel {
 
   /**
    * Set the widget in the specific row and column
-   *
-   * @param row    the row
+   * @param row the row
    * @param column the column
    * @param widget widget, which should be displayed
    */

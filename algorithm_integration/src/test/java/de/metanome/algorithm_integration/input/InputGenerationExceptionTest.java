@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,15 @@
 
 package de.metanome.algorithm_integration.input;
 
-import de.metanome.test_helper.GwtSerializationTester;
+import static org.junit.Assert.*;
+
+import java.io.FileNotFoundException;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.FileNotFoundException;
-
-import static org.junit.Assert.assertEquals;
+import de.metanome.test_helper.GwtSerializationTester;
 
 /**
  * Tests for {@link InputGenerationException}
@@ -59,7 +59,8 @@ public class InputGenerationExceptionTest {
     String actualMessage;
     try {
       throw new InputGenerationException(expectedMessage);
-    } catch (InputGenerationException e) {
+    }
+    catch (InputGenerationException e) {
       actualMessage = e.getMessage();
     }
 
@@ -69,7 +70,7 @@ public class InputGenerationExceptionTest {
 
   /**
    * Test method for {@link de.metanome.algorithm_integration.input.InputGenerationException#InputGenerationException(String, Throwable)}
-   *
+   * <p/>
    * The exception should store the message and the cause.
    */
   @Test
@@ -84,7 +85,8 @@ public class InputGenerationExceptionTest {
     Throwable actualCause;
     try {
       throw new InputGenerationException(expectedMessage, expectedCause);
-    } catch (InputGenerationException e) {
+    }
+    catch (InputGenerationException e) {
       actualMessage = e.getMessage();
       actualCause = e.getCause();
     }

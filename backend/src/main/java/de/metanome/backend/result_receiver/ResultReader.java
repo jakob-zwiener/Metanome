@@ -16,6 +16,13 @@
 
 package de.metanome.backend.result_receiver;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import de.metanome.algorithm_integration.results.BasicStatistic;
 import de.metanome.algorithm_integration.results.ConditionalUniqueColumnCombination;
 import de.metanome.algorithm_integration.results.FunctionalDependency;
@@ -26,13 +33,6 @@ import de.metanome.algorithm_integration.results.Result;
 import de.metanome.algorithm_integration.results.UniqueColumnCombination;
 import de.metanome.backend.results_db.ResultType;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 public class ResultReader {
 
   public static List<Result> readResultsFromFile(String fileName, String type) throws IOException {
@@ -42,7 +42,7 @@ public class ResultReader {
 
     BufferedReader br = new BufferedReader(new FileReader(resultFile));
     String line;
-    while((line = br.readLine()) != null) {
+    while ((line = br.readLine()) != null) {
       results.add(convertStringToResult(line, type));
     }
 
@@ -54,23 +54,28 @@ public class ResultReader {
       JsonConverter<ConditionalUniqueColumnCombination> jsonConverter = new JsonConverter<>();
       return jsonConverter.fromJsonString(str, ConditionalUniqueColumnCombination.class);
 
-    } else if (name.equals(ResultType.OD.getName())) {
+    }
+    else if (name.equals(ResultType.OD.getName())) {
       JsonConverter<OrderDependency> jsonConverter = new JsonConverter<>();
       return jsonConverter.fromJsonString(str, OrderDependency.class);
 
-    } else if (name.equals(ResultType.IND.getName())) {
+    }
+    else if (name.equals(ResultType.IND.getName())) {
       JsonConverter<InclusionDependency> jsonConverter = new JsonConverter<>();
       return jsonConverter.fromJsonString(str, InclusionDependency.class);
 
-    } else if (name.equals(ResultType.FD.getName())) {
+    }
+    else if (name.equals(ResultType.FD.getName())) {
       JsonConverter<FunctionalDependency> jsonConverter = new JsonConverter<>();
       return jsonConverter.fromJsonString(str, FunctionalDependency.class);
 
-    } else if (name.equals(ResultType.UCC.getName())) {
+    }
+    else if (name.equals(ResultType.UCC.getName())) {
       JsonConverter<UniqueColumnCombination> jsonConverter = new JsonConverter<>();
       return jsonConverter.fromJsonString(str, UniqueColumnCombination.class);
 
-    } else if (name.equals(ResultType.STAT.getName())) {
+    }
+    else if (name.equals(ResultType.STAT.getName())) {
       JsonConverter<BasicStatistic> jsonConverter = new JsonConverter<>();
       return jsonConverter.fromJsonString(str, BasicStatistic.class);
 

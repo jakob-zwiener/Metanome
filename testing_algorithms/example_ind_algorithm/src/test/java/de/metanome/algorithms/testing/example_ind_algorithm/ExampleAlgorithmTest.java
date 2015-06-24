@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,18 @@
 
 package de.metanome.algorithms.testing.example_ind_algorithm;
 
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.*;
+
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.AlgorithmExecutionException;
 import de.metanome.algorithm_integration.algorithm_execution.FileGenerator;
@@ -25,24 +37,8 @@ import de.metanome.algorithm_integration.input.FileInputGenerator;
 import de.metanome.algorithm_integration.result_receiver.InclusionDependencyResultReceiver;
 import de.metanome.algorithm_integration.results.InclusionDependency;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 /**
  * Test for {@link de.metanome.algorithms.testing.example_ind_algorithm.ExampleAlgorithm}
- *
  * @author Jakob Zwiener
  */
 public class ExampleAlgorithmTest {
@@ -74,8 +70,8 @@ public class ExampleAlgorithmTest {
   public void testGetConfigurationRequirements() {
     // Execute functionality
     List<ConfigurationRequirement>
-        actualConfigurationRequirements =
-        this.algorithm.getConfigurationRequirements();
+      actualConfigurationRequirements =
+      this.algorithm.getConfigurationRequirements();
 
     // Check result
     assertEquals(3, actualConfigurationRequirements.size());
@@ -97,9 +93,9 @@ public class ExampleAlgorithmTest {
 
     // Execute functionality
     this.algorithm.setStringConfigurationValue(ExampleAlgorithm.STRING_IDENTIFIER,
-                                               expectedConfigurationValue1);
+      expectedConfigurationValue1);
     this.algorithm.setIntegerConfigurationValue(ExampleAlgorithm.INTEGER_IDENTIFIER,
-                                                expectedConfigurationValue2);
+      expectedConfigurationValue2);
 
     // Check result
     assertEquals(expectedConfigurationValue1, this.algorithm.tableName);
@@ -108,7 +104,8 @@ public class ExampleAlgorithmTest {
     try {
       this.algorithm.setIntegerConfigurationValue("someIdentifier", expectedConfigurationValue2);
       fail("Exception should have been thrown.");
-    } catch (AlgorithmConfigurationException e) {
+    }
+    catch (AlgorithmConfigurationException e) {
       // Intentionally left blank
     }
   }
@@ -118,20 +115,21 @@ public class ExampleAlgorithmTest {
    */
   @Test
   public void testStart()
-      throws AlgorithmExecutionException, UnsupportedEncodingException {
+    throws AlgorithmExecutionException, UnsupportedEncodingException
+  {
     // Setup
     InclusionDependencyResultReceiver
-        resultReceiver =
-        mock(InclusionDependencyResultReceiver.class);
+      resultReceiver =
+      mock(InclusionDependencyResultReceiver.class);
     File tempFile = new File("testFile");
     tempFile.deleteOnExit();
     FileGenerator fileGenerator = mock(FileGenerator.class);
     when(fileGenerator.getTemporaryFile())
-        .thenReturn(tempFile);
+      .thenReturn(tempFile);
     this.algorithm.setStringConfigurationValue(ExampleAlgorithm.STRING_IDENTIFIER, "something");
     this.algorithm.setIntegerConfigurationValue(ExampleAlgorithm.INTEGER_IDENTIFIER, 7);
     this.algorithm
-        .setFileInputConfigurationValue(fileInputIdentifier, mock(FileInputGenerator.class));
+      .setFileInputConfigurationValue(fileInputIdentifier, mock(FileInputGenerator.class));
 
     // Execute functionality
     this.algorithm.setResultReceiver(resultReceiver);

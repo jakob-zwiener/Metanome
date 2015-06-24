@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,13 @@
 
 package de.metanome.frontend.server;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.Set;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+
 import de.metanome.backend.algorithm_loading.AlgorithmFinder;
 import de.metanome.backend.algorithm_loading.InputDataFinder;
 import de.metanome.backend.resources.AlgorithmResource;
@@ -25,17 +32,8 @@ import de.metanome.backend.results_db.Algorithm;
 import de.metanome.backend.results_db.EntityStorageException;
 import de.metanome.backend.results_db.FileInput;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.Set;
-
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-
 /**
  * Is called upon servlet initialization and initializes metanome's results database.
- *
  * @author Jakob Zwiener
  */
 public class DatabaseInitializer implements ServletContextListener {
@@ -45,31 +43,32 @@ public class DatabaseInitializer implements ServletContextListener {
 
   /**
    * Initializes the database.
-   *
    * @param servletContextEvent the servlet context
    */
   @Override
   public void contextInitialized(ServletContextEvent servletContextEvent) {
     try {
       addAlgorithms();
-    } catch (IOException | ClassNotFoundException | EntityStorageException e) {
+    }
+    catch (IOException | ClassNotFoundException | EntityStorageException e) {
       e.printStackTrace();
     }
     try {
       addFileInputs();
-    } catch (UnsupportedEncodingException | EntityStorageException e) {
+    }
+    catch (UnsupportedEncodingException | EntityStorageException e) {
       e.printStackTrace();
     }
   }
 
   /**
    * Prefills the algorithms table in the database with the existing algorithm jars.
-   *
-   * @throws IOException            when algorithm jars cannot be retrieved
+   * @throws IOException when algorithm jars cannot be retrieved
    * @throws ClassNotFoundException when algorithm bootstrap class cannot be found
    */
   protected void addAlgorithms() throws IOException, ClassNotFoundException,
-                                        EntityStorageException {
+    EntityStorageException
+  {
     // only prefill algorithms table if it is currently empty
     if (!algorithmResource.getAll().isEmpty()) {
       return;
@@ -83,10 +82,11 @@ public class DatabaseInitializer implements ServletContextListener {
 
     for (String filePath : algorithmFileNames) {
       try {
-          Set<Class<?>> algorithmInterfaces = jarFinder.getAlgorithmInterfaces(filePath);
-          algorithmResource.store(new Algorithm(filePath, algorithmInterfaces)
-                                             .setName(filePath.replaceAll(".jar", "")));
-      } catch (WebException e) {
+        Set<Class<?>> algorithmInterfaces = jarFinder.getAlgorithmInterfaces(filePath);
+        algorithmResource.store(new Algorithm(filePath, algorithmInterfaces)
+          .setName(filePath.replaceAll(".jar", "")));
+      }
+      catch (WebException e) {
         // Do something with this exception
       }
     }
@@ -94,9 +94,8 @@ public class DatabaseInitializer implements ServletContextListener {
 
   /**
    * Prefills the inputs table in the database with the existing input files.
-   *
    * @throws UnsupportedEncodingException when input files cannot be found
-   * @throws EntityStorageException       when the existing inputs cannot be queried
+   * @throws EntityStorageException when the existing inputs cannot be queried
    */
   protected void addFileInputs() throws UnsupportedEncodingException, EntityStorageException {
     // only prefill input table if currently empty

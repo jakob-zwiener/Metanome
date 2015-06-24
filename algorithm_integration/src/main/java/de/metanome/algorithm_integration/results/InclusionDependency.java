@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,17 @@
 
 package de.metanome.algorithm_integration.results;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import de.metanome.algorithm_integration.ColumnPermutation;
 import de.metanome.algorithm_integration.result_receiver.CouldNotReceiveResultException;
 import de.metanome.algorithm_integration.result_receiver.OmniscientResultReceiver;
 
-import javax.xml.bind.annotation.XmlTransient;
-
 
 /**
  * Represents an inclusion dependency.
- *
  * @author Jakob Zwiener
  */
 @JsonTypeName("InclusionDependency")
@@ -47,7 +46,8 @@ public class InclusionDependency implements Result {
   }
 
   public InclusionDependency(ColumnPermutation dependant,
-		  ColumnPermutation referenced) {
+                             ColumnPermutation referenced)
+  {
     this.dependant = dependant;
     this.referenced = referenced;
   }
@@ -77,7 +77,8 @@ public class InclusionDependency implements Result {
   @Override
   @XmlTransient
   public void sendResultTo(OmniscientResultReceiver resultReceiver)
-      throws CouldNotReceiveResultException {
+    throws CouldNotReceiveResultException
+  {
     resultReceiver.receiveResult(this);
   }
 
@@ -86,9 +87,9 @@ public class InclusionDependency implements Result {
     StringBuilder builder = new StringBuilder();
 
     builder
-        .append(dependant)
-        .append(IND_SEPARATOR)
-        .append(referenced);
+      .append(dependant)
+      .append(IND_SEPARATOR)
+      .append(referenced);
 
     return builder.toString();
   }
@@ -98,9 +99,9 @@ public class InclusionDependency implements Result {
     final int prime = 31;
     int result = 1;
     result = prime * result
-             + ((dependant == null) ? 0 : dependant.hashCode());
+      + ((dependant == null) ? 0 : dependant.hashCode());
     result = prime * result
-             + ((referenced == null) ? 0 : referenced.hashCode());
+      + ((referenced == null) ? 0 : referenced.hashCode());
     return result;
   }
 
@@ -120,14 +121,16 @@ public class InclusionDependency implements Result {
       if (other.dependant != null) {
         return false;
       }
-    } else if (!dependant.equals(other.dependant)) {
+    }
+    else if (!dependant.equals(other.dependant)) {
       return false;
     }
     if (referenced == null) {
       if (other.referenced != null) {
         return false;
       }
-    } else if (!referenced.equals(other.referenced)) {
+    }
+    else if (!referenced.equals(other.referenced)) {
       return false;
     }
     return true;

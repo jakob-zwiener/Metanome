@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,22 @@
 
 package de.metanome.frontend.server;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import javax.servlet.ServletContextEvent;
+
+import org.hamcrest.collection.IsIterableContainingInAnyOrder;
+import org.junit.Test;
+
 import de.metanome.backend.algorithm_loading.AlgorithmFinder;
 import de.metanome.backend.algorithm_loading.InputDataFinder;
 import de.metanome.backend.resources.AlgorithmResource;
@@ -28,35 +44,15 @@ import de.metanome.backend.results_db.FileInput;
 import de.metanome.backend.results_db.HibernateUtil;
 import de.metanome.backend.results_db.Input;
 
-import org.hamcrest.collection.IsIterableContainingInAnyOrder;
-import org.junit.Test;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.ServletContextEvent;
-
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-
 /**
  * Tests for {@link de.metanome.frontend.server.DatabaseInitializer}
- *
  * @author Jakob Zwiener
  */
 public class DatabaseInitializerTest {
 
-  private FileInputResource fileInputResource = new FileInputResource();
-
   AlgorithmResource algorithmResource = new AlgorithmResource();
   InputResource inputResource = new InputResource();
+  private FileInputResource fileInputResource = new FileInputResource();
 
   /**
    * Test method for {@link de.metanome.frontend.server.DatabaseInitializer#contextInitialized(javax.servlet.ServletContextEvent)}
@@ -65,7 +61,8 @@ public class DatabaseInitializerTest {
    */
   @Test
   public void testContextInitializedAlgorithms()
-      throws IOException, ClassNotFoundException, EntityStorageException {
+    throws IOException, ClassNotFoundException, EntityStorageException
+  {
     // Setup
     HibernateUtil.clear();
 
@@ -77,7 +74,7 @@ public class DatabaseInitializerTest {
     Map<String, Algorithm> expectedAlgorithms = new HashMap<>();
     for (int i = 0; i < algorithmFileNames.length; i++) {
       expectedAlgorithms.put(algorithmFileNames[i],
-                             buildExpectedAlgorithm(jarFinder, algorithmFileNames[i]));
+        buildExpectedAlgorithm(jarFinder, algorithmFileNames[i]));
     }
 
     // Execute functionality
@@ -101,7 +98,8 @@ public class DatabaseInitializerTest {
   }
 
   protected Algorithm buildExpectedAlgorithm(AlgorithmFinder jarFinder, String algorithmFileName)
-      throws IOException, ClassNotFoundException {
+    throws IOException, ClassNotFoundException
+  {
     Set<Class<?>> algorithmInterfaces = jarFinder.getAlgorithmInterfaces(algorithmFileName);
 
     Algorithm algorithm = new Algorithm(algorithmFileName, algorithmInterfaces);
@@ -130,7 +128,7 @@ public class DatabaseInitializerTest {
 
     // Check result
     assertThat(actualAlgorithms,
-               IsIterableContainingInAnyOrder.containsInAnyOrder(expectedAlgorithm));
+      IsIterableContainingInAnyOrder.containsInAnyOrder(expectedAlgorithm));
 
     // Cleanup
     HibernateUtil.clear();
@@ -143,7 +141,8 @@ public class DatabaseInitializerTest {
    */
   @Test
   public void testContextInitializedInputs()
-      throws UnsupportedEncodingException, EntityStorageException {
+    throws UnsupportedEncodingException, EntityStorageException
+  {
     // Setup
     HibernateUtil.clear();
 
@@ -170,7 +169,7 @@ public class DatabaseInitializerTest {
 
     // Check input's file names
     assertThat(actualFileNames,
-               IsIterableContainingInAnyOrder.containsInAnyOrder(expectedFileNames));
+      IsIterableContainingInAnyOrder.containsInAnyOrder(expectedFileNames));
 
     // Cleanup
     HibernateUtil.clear();
@@ -195,7 +194,7 @@ public class DatabaseInitializerTest {
 
     // Check result
     assertThat(actualInputs,
-               IsIterableContainingInAnyOrder.containsInAnyOrder((Input) expectedFileInput));
+      IsIterableContainingInAnyOrder.containsInAnyOrder((Input) expectedFileInput));
 
     // Cleanup
     HibernateUtil.clear();

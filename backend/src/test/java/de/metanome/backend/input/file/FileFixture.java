@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,6 @@ import java.net.URLDecoder;
  * Creates a file for testing. The file content is stored upon construction and every call to {@link
  * de.metanome.backend.input.file.FileFixture#getTestData(String)} writes and returns a file with the
  * content to the given path.
- *
  * @author Jakob Zwiener
  */
 public class FileFixture {
@@ -38,7 +37,8 @@ public class FileFixture {
   }
 
   public File getTestData(String fileName)
-      throws FileNotFoundException, UnsupportedEncodingException {
+    throws FileNotFoundException, UnsupportedEncodingException
+  {
     String filePath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
     filePath += fileName;
     File file = new File(URLDecoder.decode(filePath, "utf-8"));

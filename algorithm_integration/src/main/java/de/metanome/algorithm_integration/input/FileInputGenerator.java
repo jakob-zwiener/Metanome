@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import java.io.File;
 
 /**
  * Generates new copies of a file based {@link de.metanome.algorithm_integration.input.RelationalInput}.
- *
  * @author Jakob Zwiener
  */
 public interface FileInputGenerator extends RelationalInputGenerator {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,10 +27,9 @@ public interface BasicStatisticsResultReceiver {
   /**
    * Receives a basic statistic, consisting of the concerned columns, a name and a value of the
    * statistic
-   *
    * @param statistic the calculated value of the statistic on the columns
    * @throws CouldNotReceiveResultException if the statistic could not be received
    */
   void receiveResult(BasicStatistic statistic)
-      throws CouldNotReceiveResultException;
+    throws CouldNotReceiveResultException;
 }

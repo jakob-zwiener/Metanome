@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,17 @@
 
 package de.metanome.backend.results_db;
 
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
 import de.metanome.backend.resources.FileInputResource;
 import de.metanome.backend.resources.InputResource;
 import de.metanome.backend.resources.TableInputResource;
 import de.metanome.test_helper.EqualsAndHashCodeTester;
 
-import org.junit.Test;
-
-import static org.junit.Assert.assertNotEquals;
-
 /**
  * Tests for {@link de.metanome.backend.results_db.Input}
- *
  * @author Jakob Zwiener
  */
 public class InputTest {
@@ -68,15 +67,15 @@ public class InputTest {
     // Expected values
     int id = 42;
     Input input = new Input("input")
-        .setId(id);
+      .setId(id);
     Input equalInput = new Input("input")
-        .setId(id);
+      .setId(id);
     Input notEqualInput = new Input("input")
-        .setId(23);
+      .setId(23);
 
     // Execute functionality
     // Check result
     new EqualsAndHashCodeTester<Input>()
-        .performBasicEqualsAndHashCodeChecks(input, equalInput, notEqualInput);
+      .performBasicEqualsAndHashCodeChecks(input, equalInput, notEqualInput);
   }
 }

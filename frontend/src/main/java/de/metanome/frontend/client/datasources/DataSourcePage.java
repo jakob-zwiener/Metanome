@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,6 @@ public class DataSourcePage extends TabLayoutPanel implements TabContent {
 
   /**
    * Constructor
-   *
    * @param basePage the parent page
    */
   public DataSourcePage(BasePage basePage) {
@@ -62,7 +61,6 @@ public class DataSourcePage extends TabLayoutPanel implements TabContent {
 
   /**
    * Switch to the run configuration page. The selected data source should be preselected.
-   *
    * @param dataSource the preselected data source
    */
   public void callRunConfiguration(ConfigurationSettingDataSource dataSource) {
@@ -72,7 +70,6 @@ public class DataSourcePage extends TabLayoutPanel implements TabContent {
   /**
    * Updates the table input tab. Adds a new database connection to the list of available database
    * connections.
-   *
    * @param connection the connection which is new and should be added
    */
   public void removeDatabaseConnectionFromTableInputTab(DatabaseConnection connection) {
@@ -82,7 +79,6 @@ public class DataSourcePage extends TabLayoutPanel implements TabContent {
   /**
    * Updates the table input tab. Adds a new database connection to the list of available database
    * connections.
-   *
    * @param connection the connection which is new and should be added
    */
   public void addDatabaseConnectionToTableInputTab(DatabaseConnection connection) {
@@ -92,12 +88,12 @@ public class DataSourcePage extends TabLayoutPanel implements TabContent {
   /**
    * Updates the table input tab. Updates database connection in the list of available database
    * connections.
-   *
-   * @param connection    the connection which was updated
+   * @param connection the connection which was updated
    * @param oldConnection the old connection
    */
   public void updateDatabaseConnectionToTableInputTab(DatabaseConnection connection,
-                                                      DatabaseConnection oldConnection) {
+                                                      DatabaseConnection oldConnection)
+  {
     this.tableInputTab.updateDatabaseConnection(connection, oldConnection);
   }
 

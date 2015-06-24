@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,9 @@
 
 package de.metanome.backend.result_receiver;
 
-import de.metanome.algorithm_integration.result_receiver.OmniscientResultReceiver;
-
 import java.io.Closeable;
+
+import de.metanome.algorithm_integration.result_receiver.OmniscientResultReceiver;
 
 public interface CloseableOmniscientResultReceiver extends OmniscientResultReceiver, Closeable {
 

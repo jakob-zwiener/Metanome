@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,21 +16,19 @@
 
 package de.metanome.backend.resources;
 
-import de.metanome.algorithm_integration.ColumnIdentifier;
-import de.metanome.algorithm_integration.results.Result;
-import de.metanome.algorithm_integration.results.UniqueColumnCombination;
-import de.metanome.backend.results_db.ResultType;
-
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.EnumMap;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+
+import de.metanome.algorithm_integration.ColumnIdentifier;
+import de.metanome.algorithm_integration.results.Result;
+import de.metanome.algorithm_integration.results.UniqueColumnCombination;
+import de.metanome.backend.results_db.ResultType;
 
 public class AlgorithmExecutionResourceTest {
 
@@ -43,7 +41,7 @@ public class AlgorithmExecutionResourceTest {
 
     AlgorithmExecutionParams params = new AlgorithmExecutionParams();
     params.setExecutionIdentifier(expectedExecutionIdentifier)
-        .setCacheResults(true);
+      .setCacheResults(true);
 
     // Expected values
     executionService.buildExecutor(params);
@@ -51,9 +49,9 @@ public class AlgorithmExecutionResourceTest {
 
     // Execute functionality
     AlgorithmExecutionCache.getResultCache(expectedExecutionIdentifier).receiveResult(
-        expectedUcc);
+      expectedUcc);
     List<Result>
-        actualResult = executionService.getCacheResults(expectedExecutionIdentifier);
+      actualResult = executionService.getCacheResults(expectedExecutionIdentifier);
 
     // Check result
     assertFalse(actualResult.isEmpty());
@@ -62,7 +60,7 @@ public class AlgorithmExecutionResourceTest {
 
   /**
    * Test method for {@link AlgorithmExecutionResource#fetchProgress(String)}
-   *
+   * <p/>
    * When fetching the current progress for an execution the correct progress should be returned.
    */
   @Test
@@ -72,7 +70,7 @@ public class AlgorithmExecutionResourceTest {
 
     AlgorithmExecutionParams params = new AlgorithmExecutionParams();
     params.setExecutionIdentifier(expectedExecutionIdentifier)
-        .setCountResults(true);
+      .setCountResults(true);
 
     // Expected values
     executionService.buildExecutor(params);
@@ -80,7 +78,7 @@ public class AlgorithmExecutionResourceTest {
 
     // Execute functionality
     AlgorithmExecutionCache.getProgressCache(expectedExecutionIdentifier)
-        .updateProgress(expectedProgress);
+      .updateProgress(expectedProgress);
     float actualProgress = executionService.fetchProgress(expectedExecutionIdentifier);
 
     // Check result
@@ -95,14 +93,14 @@ public class AlgorithmExecutionResourceTest {
 
     AlgorithmExecutionParams params = new AlgorithmExecutionParams();
     params.setExecutionIdentifier(expectedExecutionIdentifier)
-        .setCountResults(true);
+      .setCountResults(true);
 
     // Expected values
     executionService.buildExecutor(params);
 
     // Check
     List<Result>
-        actualResult = executionService.getCacheResults(expectedExecutionIdentifier);
+      actualResult = executionService.getCacheResults(expectedExecutionIdentifier);
   }
 
   @Test
@@ -112,7 +110,7 @@ public class AlgorithmExecutionResourceTest {
 
     AlgorithmExecutionParams params = new AlgorithmExecutionParams();
     params.setExecutionIdentifier(expectedExecutionIdentifier)
-        .setCountResults(true);
+      .setCountResults(true);
 
     // Expected values
     executionService.buildExecutor(params);
@@ -120,9 +118,9 @@ public class AlgorithmExecutionResourceTest {
 
     // Execute functionality
     AlgorithmExecutionCache.getResultCounter(expectedExecutionIdentifier).receiveResult(
-        expectedUcc);
+      expectedUcc);
     EnumMap<ResultType, Integer>
-        results = executionService.getCounterResults(expectedExecutionIdentifier);
+      results = executionService.getCounterResults(expectedExecutionIdentifier);
 
     // Check result
     assertFalse(results.isEmpty());
@@ -136,7 +134,7 @@ public class AlgorithmExecutionResourceTest {
 
     AlgorithmExecutionParams params = new AlgorithmExecutionParams();
     params.setExecutionIdentifier(expectedExecutionIdentifier)
-        .setWriteResults(true);
+      .setWriteResults(true);
 
     // Expected values
     executionService.buildExecutor(params);
@@ -145,7 +143,7 @@ public class AlgorithmExecutionResourceTest {
 
     // Execute functionality
     AlgorithmExecutionCache.getResultPrinter(expectedExecutionIdentifier).receiveResult(
-        expectedUcc);
+      expectedUcc);
     List<Result> results = executionService.getPrinterResults(expectedExecutionIdentifier);
 
     // Check result

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,13 @@
 package de.metanome.backend.algorithm_loading;
 
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.apache.commons.lang3.ClassUtils;
+
 import de.metanome.algorithm_integration.Algorithm;
 import de.metanome.algorithm_integration.algorithm_types.BasicStatisticsAlgorithm;
 import de.metanome.algorithm_integration.algorithm_types.ConditionalUniqueColumnCombinationAlgorithm;
@@ -32,37 +39,28 @@ import de.metanome.algorithm_integration.algorithm_types.TempFileAlgorithm;
 import de.metanome.algorithm_integration.algorithm_types.UniqueColumnCombinationsAlgorithm;
 import de.metanome.backend.results_db.AlgorithmType;
 
-import org.apache.commons.lang3.ClassUtils;
-
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Loads the algorithm and checks which algorithm types are supported.
  */
 public class AlgorithmAnalyzer {
 
+  Set<Class<?>> interfaces;
   private Algorithm algorithm;
-
   private HashSet<AlgorithmType> types;
 
-  Set<Class<?>> interfaces;
-
   /**
-   *
    * @param algorithmPath the algorithm file, which should be analyzed.
-   * @throws IllegalAccessException     if loading fails
-   * @throws IOException                if loading fails
-   * @throws InstantiationException     if loading fails
-   * @throws NoSuchMethodException      if loading fails
-   * @throws InvocationTargetException  if loading fails
-   * @throws ClassNotFoundException     if loading fails
+   * @throws IllegalAccessException if loading fails
+   * @throws IOException if loading fails
+   * @throws InstantiationException if loading fails
+   * @throws NoSuchMethodException if loading fails
+   * @throws InvocationTargetException if loading fails
+   * @throws ClassNotFoundException if loading fails
    */
   public AlgorithmAnalyzer(String algorithmPath)
-      throws IllegalAccessException, IOException, InstantiationException, NoSuchMethodException,
-             InvocationTargetException, ClassNotFoundException {
+    throws IllegalAccessException, IOException, InstantiationException, NoSuchMethodException,
+    InvocationTargetException, ClassNotFoundException
+  {
     AlgorithmJarLoader loader = new AlgorithmJarLoader();
 
     this.algorithm = loader.loadAlgorithm(algorithmPath);
@@ -75,37 +73,49 @@ public class AlgorithmAnalyzer {
   private void analyzerInterfaces() {
     this.interfaces = extractInterfaces(algorithm);
 
-    if (interfaces.contains(FunctionalDependencyAlgorithm.class))
+    if (interfaces.contains(FunctionalDependencyAlgorithm.class)) {
       types.add(AlgorithmType.FD);
-    if (interfaces.contains(InclusionDependencyAlgorithm.class))
+    }
+    if (interfaces.contains(InclusionDependencyAlgorithm.class)) {
       types.add(AlgorithmType.IND);
-    if (interfaces.contains(UniqueColumnCombinationsAlgorithm.class))
+    }
+    if (interfaces.contains(UniqueColumnCombinationsAlgorithm.class)) {
       types.add(AlgorithmType.UCC);
-    if (interfaces.contains(ConditionalUniqueColumnCombinationAlgorithm.class))
+    }
+    if (interfaces.contains(ConditionalUniqueColumnCombinationAlgorithm.class)) {
       types.add(AlgorithmType.CUCC);
-    if (interfaces.contains(OrderDependencyAlgorithm.class))
+    }
+    if (interfaces.contains(OrderDependencyAlgorithm.class)) {
       types.add(AlgorithmType.OD);
-    if (interfaces.contains(BasicStatisticsAlgorithm.class))
+    }
+    if (interfaces.contains(BasicStatisticsAlgorithm.class)) {
       types.add(AlgorithmType.BASIC_STAT);
-    if (interfaces.contains(TempFileAlgorithm.class))
+    }
+    if (interfaces.contains(TempFileAlgorithm.class)) {
       types.add(AlgorithmType.TEMP_FILE);
-    if (interfaces.contains(ProgressEstimatingAlgorithm.class))
+    }
+    if (interfaces.contains(ProgressEstimatingAlgorithm.class)) {
       types.add(AlgorithmType.PROGRESS_EST);
-    if (interfaces.contains(RelationalInputParameterAlgorithm.class))
+    }
+    if (interfaces.contains(RelationalInputParameterAlgorithm.class)) {
       types.add(AlgorithmType.RELATIONAL_INPUT);
-    if (interfaces.contains(FileInputParameterAlgorithm.class))
+    }
+    if (interfaces.contains(FileInputParameterAlgorithm.class)) {
       types.add(AlgorithmType.FILE_INPUT);
-    if (interfaces.contains(TableInputParameterAlgorithm.class))
+    }
+    if (interfaces.contains(TableInputParameterAlgorithm.class)) {
       types.add(AlgorithmType.TABLE_INPUT);
-    if (interfaces.contains(DatabaseConnectionParameterAlgorithm.class))
+    }
+    if (interfaces.contains(DatabaseConnectionParameterAlgorithm.class)) {
       types.add(AlgorithmType.DB_CONNECTION);
+    }
   }
 
-  public boolean hasType(AlgorithmType type){
+  public boolean hasType(AlgorithmType type) {
     return types.contains(type);
   }
 
-  public HashSet getTypes(){
+  public HashSet getTypes() {
     return this.types;
   }
 

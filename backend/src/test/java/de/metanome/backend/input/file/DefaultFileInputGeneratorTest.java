@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,23 +16,22 @@
 
 package de.metanome.backend.input.file;
 
+import static org.junit.Assert.*;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingFileInput;
 import de.metanome.algorithm_integration.input.InputGenerationException;
 import de.metanome.algorithm_integration.input.InputIterationException;
 import de.metanome.algorithm_integration.input.RelationalInput;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-
-import static org.junit.Assert.assertEquals;
-
 /**
  * Tests for {@link DefaultFileInputGenerator}
- *
  * @author Jakob Zwiener
  */
 public class DefaultFileInputGeneratorTest {
@@ -79,7 +78,7 @@ public class DefaultFileInputGeneratorTest {
   /**
    * Test method for {@link DefaultFileInputGenerator#DefaultFileInputGenerator(java.io.File) and all
    * set methods.
-   *
+   * <p/>
    * The generator should store the setting correctly.
    */
   @Test
@@ -91,13 +90,14 @@ public class DefaultFileInputGeneratorTest {
 
   /**
    * Test method for {@link de.metanome.backend.input.file.DefaultFileInputGenerator#DefaultFileInputGenerator(de.metanome.algorithm_integration.configuration.ConfigurationSettingFileInput)}
-   *
+   * <p/>
    * The generator should store the file path correctly.
    * The generator should use a default setting.
    */
   @Test
   public void testConstructorSetting() throws AlgorithmConfigurationException,
-                                              FileNotFoundException {
+    FileNotFoundException
+  {
     // Setup
     ConfigurationSettingFileInput defaultSetting = new ConfigurationSettingFileInput(expectedFile.getPath());
 
@@ -113,7 +113,7 @@ public class DefaultFileInputGeneratorTest {
 
   /**
    * Test method for {@link DefaultFileInputGenerator#generateNewCopy()}
-   *
+   * <p/>
    * The generator should generate fresh file files iterable from the start.
    */
   @Test

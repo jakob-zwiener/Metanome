@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,23 @@
  */
 
 package de.metanome.backend.algorithm_execution;
+
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.*;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import de.metanome.algorithm_integration.AlgorithmExecutionException;
 import de.metanome.algorithm_integration.algorithm_execution.FileGenerator;
@@ -52,27 +69,6 @@ import de.metanome.backend.results_db.HibernateUtil;
 import de.metanome.backend.results_db.Input;
 import de.metanome.backend.results_db.Result;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 /**
  * Tests for {@link de.metanome.backend.algorithm_execution.AlgorithmExecutor}
  */
@@ -101,16 +97,17 @@ public class AlgorithmExecutorTest {
    */
   @Test
   public void testExecuteFunctionalDependencyAlgorithm()
-      throws AlgorithmLoadingException, AlgorithmExecutionException, IllegalArgumentException,
-             SecurityException, ClassNotFoundException, InstantiationException,
-             IllegalAccessException, InvocationTargetException, NoSuchMethodException,
-             EntityStorageException, IOException {
+    throws AlgorithmLoadingException, AlgorithmExecutionException, IllegalArgumentException,
+    SecurityException, ClassNotFoundException, InstantiationException,
+    IllegalAccessException, InvocationTargetException, NoSuchMethodException,
+    EntityStorageException, IOException
+  {
     HibernateUtil.clear();
 
     // Setup
     List<ConfigurationValue> configs = new ArrayList<>();
     configs.add(new ConfigurationValueString("pathToOutputFile", "path/to/file"));
-    String[] selectedValues = {"second"};
+    String[] selectedValues = { "second" };
     configs.add(new ConfigurationValueListBox("column names", selectedValues));
     Algorithm algorithm = new Algorithm("example_fd_algorithm.jar");
     algorithm = resource.store(algorithm);
@@ -132,15 +129,17 @@ public class AlgorithmExecutorTest {
    */
   @Test
   public void testExecuteOrderDependencyAlgorithm()
-      throws AlgorithmLoadingException, AlgorithmExecutionException, IllegalArgumentException,
-             SecurityException, IOException, ClassNotFoundException, InstantiationException,
-             IllegalAccessException, InvocationTargetException, NoSuchMethodException,
-             EntityStorageException {
+    throws AlgorithmLoadingException, AlgorithmExecutionException, IllegalArgumentException,
+    SecurityException, IOException, ClassNotFoundException, InstantiationException,
+    IllegalAccessException, InvocationTargetException, NoSuchMethodException,
+    EntityStorageException
+  {
     HibernateUtil.clear();
 
     // Setup
     List<ConfigurationValue> configs = new ArrayList<>();
-    configs.add(new ConfigurationValueString(de.metanome.algorithms.testing.example_od_algorithm.ExampleAlgorithm.FILE_NAME, "path/to/file"));
+    configs.add(new ConfigurationValueString(
+      de.metanome.algorithms.testing.example_od_algorithm.ExampleAlgorithm.FILE_NAME, "path/to/file"));
     Algorithm algorithm = new Algorithm("example_od_algorithm.jar");
     algorithm = resource.store(algorithm);
 
@@ -153,28 +152,29 @@ public class AlgorithmExecutorTest {
 
     HibernateUtil.clear();
   }
-  
+
   /**
    * Test method for {@link de.metanome.backend.algorithm_execution.AlgorithmExecutor#executeAlgorithm(de.metanome.backend.results_db.Algorithm, java.util.List, String)}
    * Tests the execution of an ind algorithm.
    */
   @Test
   public void testExecuteInclusionDependency()
-      throws AlgorithmLoadingException, AlgorithmExecutionException, IllegalArgumentException,
-             SecurityException, IOException, ClassNotFoundException, InstantiationException,
-             IllegalAccessException, InvocationTargetException, NoSuchMethodException,
-             EntityStorageException {
+    throws AlgorithmLoadingException, AlgorithmExecutionException, IllegalArgumentException,
+    SecurityException, IOException, ClassNotFoundException, InstantiationException,
+    IllegalAccessException, InvocationTargetException, NoSuchMethodException,
+    EntityStorageException
+  {
     HibernateUtil.clear();
 
     // Setup
     List<ConfigurationValue> configs = new ArrayList<>();
     configs.add(new ConfigurationValueString(
-        de.metanome.algorithms.testing.example_ind_algorithm.ExampleAlgorithm.STRING_IDENTIFIER, "table1"));
+      de.metanome.algorithms.testing.example_ind_algorithm.ExampleAlgorithm.STRING_IDENTIFIER, "table1"));
     configs.add(new ConfigurationValueInteger(
-        de.metanome.algorithms.testing.example_ind_algorithm.ExampleAlgorithm.INTEGER_IDENTIFIER, 7));
+      de.metanome.algorithms.testing.example_ind_algorithm.ExampleAlgorithm.INTEGER_IDENTIFIER, 7));
     configs.add(new ConfigurationValueFileInputGenerator(
-        de.metanome.algorithms.testing.example_ind_algorithm.ExampleAlgorithm.CSV_FILE_IDENTIFIER,
-        mock(FileInputGenerator.class)));
+      de.metanome.algorithms.testing.example_ind_algorithm.ExampleAlgorithm.CSV_FILE_IDENTIFIER,
+      mock(FileInputGenerator.class)));
     Algorithm algorithm = new Algorithm("example_ind_algorithm.jar");
     algorithm = resource.store(algorithm);
 
@@ -189,24 +189,25 @@ public class AlgorithmExecutorTest {
 
   /**
    * Test method for {@link de.metanome.backend.algorithm_execution.AlgorithmExecutor#executeAlgorithm(de.metanome.backend.results_db.Algorithm, java.util.List, String)}
-   *
+   * <p/>
    * The {@link de.metanome.algorithms.testing.example_relational_input_algorithm.ExampleAlgorithm}
    * should be executable by generating a {@link de.metanome.algorithm_integration.input.RelationalInputGenerator}
    * from a file.
    */
   @Test
   public void testRelationalInputAlgorithm()
-      throws AlgorithmExecutionException, AlgorithmLoadingException, EntityStorageException,
-             FileNotFoundException, UnsupportedEncodingException {
+    throws AlgorithmExecutionException, AlgorithmLoadingException, EntityStorageException,
+    FileNotFoundException, UnsupportedEncodingException
+  {
     HibernateUtil.clear();
 
     // Setup
     String path = new FileFixture("some file content").getTestData("some file name").getPath();
     List<ConfigurationRequirement> requirements = new ArrayList<>();
     ConfigurationRequirementRelationalInput
-        requirementRelationalInput =
-        new ConfigurationRequirementRelationalInput(
-            ExampleAlgorithm.RELATIONAL_INPUT_IDENTIFIER);
+      requirementRelationalInput =
+      new ConfigurationRequirementRelationalInput(
+        ExampleAlgorithm.RELATIONAL_INPUT_IDENTIFIER);
     requirementRelationalInput.checkAndSetSettings(new ConfigurationSettingFileInput(path));
     requirements.add(requirementRelationalInput);
 
@@ -226,15 +227,18 @@ public class AlgorithmExecutorTest {
    */
   @Test
   public void testExecuteUniqueColumnCombinationsAlgorithm()
-      throws AlgorithmLoadingException, AlgorithmExecutionException, IllegalArgumentException,
-             SecurityException, IOException, ClassNotFoundException, InstantiationException,
-             IllegalAccessException, InvocationTargetException, NoSuchMethodException,
-             EntityStorageException {
+    throws AlgorithmLoadingException, AlgorithmExecutionException, IllegalArgumentException,
+    SecurityException, IOException, ClassNotFoundException, InstantiationException,
+    IllegalAccessException, InvocationTargetException, NoSuchMethodException,
+    EntityStorageException
+  {
     HibernateUtil.clear();
 
     // Setup
     List<ConfigurationValue> configs = new ArrayList<>();
-    configs.add(new ConfigurationValueString(de.metanome.algorithms.testing.example_ucc_algorithm.ExampleAlgorithm.STRING_IDENTIFIER, "path/to/file1", "path/to/file2"));
+    configs.add(new ConfigurationValueString(
+      de.metanome.algorithms.testing.example_ucc_algorithm.ExampleAlgorithm.STRING_IDENTIFIER, "path/to/file1",
+      "path/to/file2"));
 
     Algorithm algorithm = new Algorithm("example_ucc_algorithm.jar");
     algorithm = resource.store(algorithm);
@@ -256,10 +260,11 @@ public class AlgorithmExecutorTest {
    */
   @Test
   public void testExecuteHolisticAlgorithm()
-      throws AlgorithmLoadingException, AlgorithmExecutionException, IllegalArgumentException,
-             SecurityException, IOException, ClassNotFoundException, InstantiationException,
-             IllegalAccessException, InvocationTargetException, NoSuchMethodException,
-             EntityStorageException {
+    throws AlgorithmLoadingException, AlgorithmExecutionException, IllegalArgumentException,
+    SecurityException, IOException, ClassNotFoundException, InstantiationException,
+    IllegalAccessException, InvocationTargetException, NoSuchMethodException,
+    EntityStorageException
+  {
     HibernateUtil.clear();
 
     // Setup
@@ -286,15 +291,16 @@ public class AlgorithmExecutorTest {
    */
   @Test
   public void testExecuteIndirectInterfaceAlgorithm()
-      throws IllegalAccessException, IOException, InstantiationException,
-             AlgorithmExecutionException, NoSuchMethodException, InvocationTargetException,
-             ClassNotFoundException, EntityStorageException, AlgorithmLoadingException {
+    throws IllegalAccessException, IOException, InstantiationException,
+    AlgorithmExecutionException, NoSuchMethodException, InvocationTargetException,
+    ClassNotFoundException, EntityStorageException, AlgorithmLoadingException
+  {
     HibernateUtil.clear();
 
     // Setup
     List<ConfigurationValue> configurationValues = new LinkedList<>();
     configurationValues.add(new ConfigurationValueRelationalInputGenerator("identifier", mock(
-        RelationalInputGenerator.class)));
+      RelationalInputGenerator.class)));
 
     Algorithm algorithm = new Algorithm("example_indirect_interfaces_algorithm.jar");
     algorithm = resource.store(algorithm);
@@ -315,15 +321,16 @@ public class AlgorithmExecutorTest {
    */
   @Test
   public void testExecutionStoredInDatabase()
-      throws IllegalAccessException, IOException, InstantiationException,
-             AlgorithmExecutionException, NoSuchMethodException, InvocationTargetException,
-             ClassNotFoundException, EntityStorageException, AlgorithmLoadingException {
+    throws IllegalAccessException, IOException, InstantiationException,
+    AlgorithmExecutionException, NoSuchMethodException, InvocationTargetException,
+    ClassNotFoundException, EntityStorageException, AlgorithmLoadingException
+  {
     // Setup
     HibernateUtil.clear();
 
     List<ConfigurationValue> configurationValues = new LinkedList<>();
     configurationValues.add(new ConfigurationValueRelationalInputGenerator("identifier", mock(
-        RelationalInputGenerator.class)));
+      RelationalInputGenerator.class)));
 
     Algorithm algorithm = new Algorithm("example_indirect_interfaces_algorithm.jar");
     algorithm = resource.store(algorithm);
@@ -370,15 +377,16 @@ public class AlgorithmExecutorTest {
 
   @Test(expected = Exception.class)
   public void testExecutionWithWrongFileName()
-      throws IllegalAccessException, IOException, InstantiationException,
-             AlgorithmExecutionException, NoSuchMethodException, EntityStorageException,
-             InvocationTargetException, ClassNotFoundException {
+    throws IllegalAccessException, IOException, InstantiationException,
+    AlgorithmExecutionException, NoSuchMethodException, EntityStorageException,
+    InvocationTargetException, ClassNotFoundException
+  {
     // Setup
     HibernateUtil.clear();
 
     List<ConfigurationValue> configurationValues = new LinkedList<>();
     configurationValues.add(new ConfigurationValueRelationalInputGenerator("identifier", mock(
-        RelationalInputGenerator.class)));
+      RelationalInputGenerator.class)));
 
     Algorithm algorithm = new Algorithm("wrong_algorithm.jar");
 
@@ -396,8 +404,9 @@ public class AlgorithmExecutorTest {
    */
   @Test
   public void testExecuteBasicStatisticsAlgorithmWithFileInputGenerator()
-      throws AlgorithmExecutionException, AlgorithmLoadingException, IOException,
-             EntityStorageException {
+    throws AlgorithmExecutionException, AlgorithmLoadingException, IOException,
+    EntityStorageException
+  {
     HibernateUtil.clear();
 
     // Setup
@@ -405,9 +414,9 @@ public class AlgorithmExecutorTest {
     int numberOfInputs = 5;
     List<ConfigurationRequirement> configurationRequirements = new LinkedList<>();
     ConfigurationRequirementFileInput
-        specification =
-        new ConfigurationRequirementFileInput(BasicStatAlgorithm.INPUT_FILE_IDENTIFIER,
-                                              numberOfInputs);
+      specification =
+      new ConfigurationRequirementFileInput(BasicStatAlgorithm.INPUT_FILE_IDENTIFIER,
+        numberOfInputs);
 
     // Build input files
     String expectedStatisticValue = "some value";
@@ -420,8 +429,8 @@ public class AlgorithmExecutorTest {
     ConfigurationSettingFileInput[] settings = new ConfigurationSettingFileInput[numberOfInputs];
     for (int i = 0; i < numberOfInputs - 1; i++) {
       ConfigurationSettingFileInput
-          configurationSetting =
-          mock(ConfigurationSettingFileInput.class);
+        configurationSetting =
+        mock(ConfigurationSettingFileInput.class);
       when(configurationSetting.isAdvanced()).thenReturn(false);
       when(configurationSetting.getFileName()).thenReturn(expectedOtherFileName);
       settings[i] = configurationSetting;

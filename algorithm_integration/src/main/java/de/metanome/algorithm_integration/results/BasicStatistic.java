@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,14 @@
 
 package de.metanome.algorithm_integration.results;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import de.metanome.algorithm_integration.ColumnCombination;
 import de.metanome.algorithm_integration.ColumnIdentifier;
 import de.metanome.algorithm_integration.result_receiver.CouldNotReceiveResultException;
 import de.metanome.algorithm_integration.result_receiver.OmniscientResultReceiver;
-
-import javax.xml.bind.annotation.XmlTransient;
 
 
 @JsonTypeName("BasicStatistic")
@@ -45,7 +45,8 @@ public class BasicStatistic implements Result {
   }
 
   public BasicStatistic(String statisticName, Object statisticValue,
-                        ColumnIdentifier... columnIdentifier) {
+                        ColumnIdentifier... columnIdentifier)
+  {
     this.columnCombination = new ColumnCombination(columnIdentifier);
     this.statisticName = statisticName;
     this.statisticValue = statisticValue;
@@ -87,14 +88,15 @@ public class BasicStatistic implements Result {
   @Override
   @XmlTransient
   public void sendResultTo(OmniscientResultReceiver resultReceiver)
-      throws CouldNotReceiveResultException {
+    throws CouldNotReceiveResultException
+  {
     resultReceiver.receiveResult(this);
   }
 
   @Override
   public String toString() {
     return statisticName + NAME_COLUMN_SEPARATOR + columnCombination.toString() + COLUMN_VALUE_SEPARATOR
-           + statisticValue.toString();
+      + statisticValue.toString();
   }
 
   @Override
@@ -103,9 +105,9 @@ public class BasicStatistic implements Result {
     int result = 1;
     result = prime * result + ((columnCombination == null) ? 0 : columnCombination.hashCode());
     result = prime * result
-             + ((statisticName == null) ? 0 : statisticName.hashCode());
+      + ((statisticName == null) ? 0 : statisticName.hashCode());
     result = prime * result
-             + ((statisticValue == null) ? 0 : statisticValue.hashCode());
+      + ((statisticValue == null) ? 0 : statisticValue.hashCode());
     return result;
   }
 
@@ -125,21 +127,24 @@ public class BasicStatistic implements Result {
       if (other.columnCombination != null) {
         return false;
       }
-    } else if (!columnCombination.equals(other.columnCombination)) {
+    }
+    else if (!columnCombination.equals(other.columnCombination)) {
       return false;
     }
     if (statisticName == null) {
       if (other.statisticName != null) {
         return false;
       }
-    } else if (!statisticName.equals(other.statisticName)) {
+    }
+    else if (!statisticName.equals(other.statisticName)) {
       return false;
     }
     if (statisticValue == null) {
       if (other.statisticValue != null) {
         return false;
       }
-    } else if (!statisticValue.equals(other.statisticValue)) {
+    }
+    else if (!statisticValue.equals(other.statisticValue)) {
       return false;
     }
     return true;

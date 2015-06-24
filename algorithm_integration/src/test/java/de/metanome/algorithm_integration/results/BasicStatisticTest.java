@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,25 +16,21 @@
 
 package de.metanome.algorithm_integration.results;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import de.metanome.algorithm_integration.ColumnCombination;
 import de.metanome.algorithm_integration.ColumnIdentifier;
 import de.metanome.algorithm_integration.result_receiver.CouldNotReceiveResultException;
 import de.metanome.algorithm_integration.result_receiver.OmniscientResultReceiver;
 import de.metanome.test_helper.GwtSerializationTester;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
 /**
  * Test for {@link BasicStatistic}
- *
  * @author Jakob Zwiener
  */
 public class BasicStatisticTest {
@@ -56,8 +52,8 @@ public class BasicStatisticTest {
     // Setup
     OmniscientResultReceiver resultReceiver = mock(OmniscientResultReceiver.class);
     BasicStatistic
-        statistic =
-        new BasicStatistic("Min", mock(Object.class), mock(ColumnIdentifier.class));
+      statistic =
+      new BasicStatistic("Min", mock(Object.class), mock(ColumnIdentifier.class));
 
     // Execute functionality
     statistic.sendResultTo(resultReceiver);
@@ -81,8 +77,8 @@ public class BasicStatisticTest {
     ColumnCombination expectedColumnCombination = new ColumnCombination(expectedColumn);
     // Execute functionality
     BasicStatistic
-        statistic =
-        new BasicStatistic(expectedStatisticName, expectedStatisticValue, expectedColumn);
+      statistic =
+      new BasicStatistic(expectedStatisticName, expectedStatisticValue, expectedColumn);
 
     // Check result
     assertEquals(expectedStatisticName, statistic.getStatisticName());
@@ -102,12 +98,12 @@ public class BasicStatisticTest {
     ColumnIdentifier expectedColumn = new ColumnIdentifier("table42", "column23");
     ColumnCombination expectedColumnCombination = new ColumnCombination(expectedColumn);
     BasicStatistic
-        statistic =
-        new BasicStatistic(expectedStatisticName, expectedStatisticValue, expectedColumn);
+      statistic =
+      new BasicStatistic(expectedStatisticName, expectedStatisticValue, expectedColumn);
     // Expected values
     String
-        expectedStringRepresentation =
-        expectedStatisticName + BasicStatistic.NAME_COLUMN_SEPARATOR +
+      expectedStringRepresentation =
+      expectedStatisticName + BasicStatistic.NAME_COLUMN_SEPARATOR +
         expectedColumnCombination + BasicStatistic.COLUMN_VALUE_SEPARATOR + expectedStatisticValue;
 
     // Execute functionality
@@ -123,25 +119,25 @@ public class BasicStatisticTest {
   public void testEqualsHashCode() {
     // Setup
     BasicStatistic expectedStatistic = new BasicStatistic(
-        "Min",
-        "MinValue",
-        new ColumnIdentifier("table2", "column47"));
+      "Min",
+      "MinValue",
+      new ColumnIdentifier("table2", "column47"));
     BasicStatistic expectedEqualStatistic = new BasicStatistic(
-        "Min",
-        "MinValue",
-        new ColumnIdentifier("table2", "column47"));
+      "Min",
+      "MinValue",
+      new ColumnIdentifier("table2", "column47"));
     BasicStatistic expectedNotEqualNameStatistic = new BasicStatistic(
-        "Max",
-        "MinValue",
-        new ColumnIdentifier("table2", "column47"));
+      "Max",
+      "MinValue",
+      new ColumnIdentifier("table2", "column47"));
     BasicStatistic expectedNotEqualValueStatistic = new BasicStatistic(
-        "Min",
-        "MaxValue",
-        new ColumnIdentifier("table2", "column47"));
+      "Min",
+      "MaxValue",
+      new ColumnIdentifier("table2", "column47"));
     BasicStatistic expectedNotEqualColumnStatistic = new BasicStatistic(
-        "Min",
-        "MinValue",
-        new ColumnIdentifier("table2", "column42"));
+      "Min",
+      "MinValue",
+      new ColumnIdentifier("table2", "column42"));
 
     // Execute functionality
     // Check result
@@ -164,7 +160,7 @@ public class BasicStatisticTest {
   @Test
   public void testGwtSerialization() {
     GwtSerializationTester.checkGwtSerializability(
-        new BasicStatistic("Min", "minValue", mock(ColumnIdentifier.class)));
+      new BasicStatistic("Min", "minValue", mock(ColumnIdentifier.class)));
   }
 
 }

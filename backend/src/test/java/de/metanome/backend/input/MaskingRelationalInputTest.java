@@ -16,25 +16,19 @@
 
 package de.metanome.backend.input;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import de.metanome.algorithm_integration.input.InputGenerationException;
 import de.metanome.algorithm_integration.input.InputIterationException;
 import de.metanome.algorithm_integration.input.RelationalInput;
 import de.metanome.backend.input.file.CsvFileOneLineFixture;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 /**
  * Tests for {@link MaskingRelationalInput}
- *
  * @author Jakob Zwiener
  */
 public class MaskingRelationalInputTest {
@@ -50,23 +44,25 @@ public class MaskingRelationalInputTest {
 
   /**
    * Test method for {@link MaskingRelationalInput#MaskingRelationalInput(RelationalInput, int...)}
-   *
+   * <p/>
    * The {@link MaskingRelationalInput} should raise an exception when the mask is null.
    */
   @Test
   public void testConstructorMaskNull()
-      throws InputGenerationException, InputIterationException, InvalidMaskException {
+    throws InputGenerationException, InputIterationException, InvalidMaskException
+  {
     try {
       new MaskingRelationalInput(fixture.getTestData(), null);
       fail("Exception not thrown.");
-    } catch (InvalidMaskException e) {
+    }
+    catch (InvalidMaskException e) {
       // Intentionally left blank.
     }
   }
 
   /**
    * Test method for {@link MaskingRelationalInput#MaskingRelationalInput(RelationalInput, int...)}
-   *
+   * <p/>
    * The {@link MaskingRelationalInput} should raise an exception when the mask is empty.
    */
   @Test
@@ -74,31 +70,35 @@ public class MaskingRelationalInputTest {
     try {
       new MaskingRelationalInput(fixture.getTestData());
       fail("Exception not thrown.");
-    } catch (InvalidMaskException e) {
+    }
+    catch (InvalidMaskException e) {
       // Intentionally left blank.
     }
   }
 
   /**
    * Test method for {@link MaskingRelationalInput#MaskingRelationalInput(RelationalInput, int...)}
-   *
+   * <p/>
    * The {@link MaskingRelationalInput} should raise an exception when the mask contains invalid column
    * indices.
    */
   @Test
   public void testConstructorInvalidMaskContents()
-      throws InputGenerationException, InputIterationException {
+    throws InputGenerationException, InputIterationException
+  {
     try {
       new MaskingRelationalInput(fixture.getTestData(), 0, 2, 6);
       fail("Exception not thrown.");
-    } catch (InvalidMaskException e) {
+    }
+    catch (InvalidMaskException e) {
       // Intentionally left blank.
     }
 
     try {
       new MaskingRelationalInput(fixture.getTestData(), 0, 2, -1);
       fail("Exception not thrown.");
-    } catch (InvalidMaskException e) {
+    }
+    catch (InvalidMaskException e) {
       // Intentionally left blank.
     }
   }
@@ -113,7 +113,7 @@ public class MaskingRelationalInputTest {
 
   /**
    * Test method for {@link MaskingRelationalInput#next()}
-   *
+   * <p/>
    * All lines should be properly masked.
    */
   @Test
@@ -125,15 +125,16 @@ public class MaskingRelationalInputTest {
   /**
    * Test method for {@link MaskingRelationalInput#numberOfColumns()}, and {@link
    * MaskingRelationalInput#next()}
-   *
+   * <p/>
    * Values can be in the table multiple times.
    */
   @Test
   public void testRepeatedValuesInMask()
-      throws InputGenerationException, InputIterationException, InvalidMaskException {
+    throws InputGenerationException, InputIterationException, InvalidMaskException
+  {
     MaskingRelationalInput
-        maskingRelationalInput =
-        new MaskingRelationalInput(fixture.getTestData(), 0, 2, 2);
+      maskingRelationalInput =
+      new MaskingRelationalInput(fixture.getTestData(), 0, 2, 2);
     assertEquals(3, maskingRelationalInput.numberOfColumns());
     assertTrue(maskingRelationalInput.hasNext());
     assertEquals(fixture.getExpectedMaskedStringDoubled(), maskingRelationalInput.next());
@@ -141,7 +142,7 @@ public class MaskingRelationalInputTest {
 
   /**
    * Tets method for {@link MaskingRelationalInput#numberOfColumns()}
-   *
+   * <p/>
    * The number of masked columns should be returned.
    */
   @Test
@@ -149,7 +150,7 @@ public class MaskingRelationalInputTest {
     // Execute functionality
     // Check result
     assertEquals(fixture.getExpectedNumberOfMaskedColumns(),
-                 maskingRelationalInput.numberOfColumns());
+      maskingRelationalInput.numberOfColumns());
   }
 
   /**
@@ -172,29 +173,30 @@ public class MaskingRelationalInputTest {
 
   /**
    * Test method for {@link MaskingRelationalInput#columnNames()}
-   *
+   * <p/>
    * Generated masked headers do not necessarily have consecutive numbers. The numbers of the
    * generated headers correspond to the unmasked headers.
    */
   @Test
   public void testColumnNamesGenerated()
-      throws InputGenerationException, InputIterationException, InvalidMaskException {
+    throws InputGenerationException, InputIterationException, InvalidMaskException
+  {
     // Setup
     CsvFileOneLineFixture fixtureSeparator = new CsvFileOneLineFixture(';');
 
     MaskingRelationalInput
-        maskingRelationalInputWithHeader =
-        new MaskingRelationalInput(fixture.getTestData(), 0, 2);
+      maskingRelationalInputWithHeader =
+      new MaskingRelationalInput(fixture.getTestData(), 0, 2);
     MaskingRelationalInput
-        maskingRelationalInputWithoutHeader =
-        new MaskingRelationalInput(fixture.getTestDataWithoutHeader(), 0, 2);
+      maskingRelationalInputWithoutHeader =
+      new MaskingRelationalInput(fixture.getTestDataWithoutHeader(), 0, 2);
 
     // Execute functionality
     // Check result
     assertEquals(fixture.getExpectedMaskedColumnNames(),
-                 maskingRelationalInputWithHeader.columnNames());
+      maskingRelationalInputWithHeader.columnNames());
     assertEquals(fixture.getExpectedMaskedDefaultColumnNames(),
-                 maskingRelationalInputWithoutHeader.columnNames());
+      maskingRelationalInputWithoutHeader.columnNames());
     assertEquals(fixture.getExpectedMaskedStrings(), maskingRelationalInputWithoutHeader.next());
   }
 
@@ -207,8 +209,8 @@ public class MaskingRelationalInputTest {
     RelationalInput mockedRelationalInput = mock(RelationalInput.class);
     when(mockedRelationalInput.numberOfColumns()).thenReturn(3);
     MaskingRelationalInput
-        maskingRelationalInput =
-        new MaskingRelationalInput(mockedRelationalInput, 0, 2);
+      maskingRelationalInput =
+      new MaskingRelationalInput(mockedRelationalInput, 0, 2);
 
     // Execute functionality
     maskingRelationalInput.close();

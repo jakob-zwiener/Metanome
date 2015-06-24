@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,43 +16,36 @@
 
 package de.metanome.frontend.client.services;
 
-import de.metanome.backend.results_db.Input;
-
-import org.fusesource.restygwt.client.MethodCallback;
-import org.fusesource.restygwt.client.RestService;
-
 import java.util.List;
-
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
+import org.fusesource.restygwt.client.MethodCallback;
+import org.fusesource.restygwt.client.RestService;
+
+import de.metanome.backend.results_db.Input;
+
 @Path("/api/inputs")
 public interface InputRestService extends RestService {
 
-  @GET
-  public void listInputs(MethodCallback<List<Input>> callback);
+  @GET void listInputs(MethodCallback<List<Input>> callback);
 
   @GET
-  @Path("/relationalInputs")
-  public void listRelationalInputs(MethodCallback<List<Input>> callback);
+  @Path("/relationalInputs") void listRelationalInputs(MethodCallback<List<Input>> callback);
 
   @GET
-  @Path("/get/{id}")
-  public void getInput(@PathParam("id") long id, MethodCallback<Input> callback);
+  @Path("/get/{id}") void getInput(@PathParam("id") long id, MethodCallback<Input> callback);
 
   @POST
-  @Path("/store")
-  public void storeInput(Input fileInput, MethodCallback<Input> callback);
+  @Path("/store") void storeInput(Input fileInput, MethodCallback<Input> callback);
 
   @DELETE
-  @Path("/delete/{id}")
-  public void deleteInput(@PathParam("id") long id, MethodCallback<Void> callback);
+  @Path("/delete/{id}") void deleteInput(@PathParam("id") long id, MethodCallback<Void> callback);
 
   @POST
-  @Path("/update")
-  public void updateInput(Input input, MethodCallback<Input> callback);
+  @Path("/update") void updateInput(Input input, MethodCallback<Input> callback);
 
 }

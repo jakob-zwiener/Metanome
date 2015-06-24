@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,9 @@
 package de.metanome.backend.input;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirementRelationalInput;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingFileInput;
@@ -25,11 +28,8 @@ import de.metanome.algorithm_integration.configuration.ConfigurationSettingTable
 import de.metanome.algorithm_integration.input.RelationalInputGenerator;
 import de.metanome.algorithm_integration.input.RelationalInputGeneratorInitializer;
 import de.metanome.backend.configuration.ConfigurationValueRelationalInputGenerator;
-import de.metanome.backend.input.file.DefaultFileInputGenerator;
 import de.metanome.backend.input.database.DefaultTableInputGenerator;
-
-import java.util.ArrayList;
-import java.util.List;
+import de.metanome.backend.input.file.DefaultFileInputGenerator;
 
 /**
  * {@inheritDoc}
@@ -42,11 +42,12 @@ public class DefaultRelationalInputGeneratorInitializer implements RelationalInp
   /**
    * @param requirementRelationalInput the requirement to initialize from
    * @throws AlgorithmConfigurationException if one of the settings from the requirement cannot be
-   *                                         converted
+   * converted
    */
   public DefaultRelationalInputGeneratorInitializer(
-      ConfigurationRequirementRelationalInput requirementRelationalInput)
-  throws AlgorithmConfigurationException {
+    ConfigurationRequirementRelationalInput requirementRelationalInput)
+    throws AlgorithmConfigurationException
+  {
     this.identifier = requirementRelationalInput.getIdentifier();
 
     ConfigurationSettingRelationalInput[] settings = requirementRelationalInput.getSettings();
@@ -60,7 +61,8 @@ public class DefaultRelationalInputGeneratorInitializer implements RelationalInp
    */
   @Override
   public void initialize(ConfigurationSettingFileInput setting)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     generatorList.add(new DefaultFileInputGenerator(setting));
   }
 
@@ -69,7 +71,8 @@ public class DefaultRelationalInputGeneratorInitializer implements RelationalInp
    */
   @Override
   public void initialize(ConfigurationSettingTableInput setting)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     generatorList.add(new DefaultTableInputGenerator(setting));
   }
 
@@ -78,8 +81,8 @@ public class DefaultRelationalInputGeneratorInitializer implements RelationalInp
    */
   public ConfigurationValueRelationalInputGenerator getConfigurationValue() {
     return new ConfigurationValueRelationalInputGenerator(identifier,
-                                                          generatorList.toArray(
-                                                              new RelationalInputGenerator[generatorList
-                                                                  .size()]));
+      generatorList.toArray(
+        new RelationalInputGenerator[generatorList
+          .size()]));
   }
 }

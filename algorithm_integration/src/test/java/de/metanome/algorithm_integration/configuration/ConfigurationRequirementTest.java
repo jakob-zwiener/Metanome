@@ -16,21 +16,17 @@
 
 package de.metanome.algorithm_integration.configuration;
 
-import de.metanome.algorithm_integration.AlgorithmConfigurationException;
-
-import org.hamcrest.collection.IsIterableContainingInAnyOrder;
-import org.junit.Test;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
+import org.hamcrest.collection.IsIterableContainingInAnyOrder;
+import org.junit.Test;
+
+import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 
 public class ConfigurationRequirementTest {
 
@@ -48,8 +44,8 @@ public class ConfigurationRequirementTest {
 
     // Execute functionality
     ConfigurationRequirementBoolean
-        configSpec =
-        new ConfigurationRequirementBoolean(expectedIdentifier);
+      configSpec =
+      new ConfigurationRequirementBoolean(expectedIdentifier);
     String actualIdentifier = configSpec.getIdentifier();
     int actualNumberOfValues = configSpec.getMinNumberOfSettings();
 
@@ -73,8 +69,8 @@ public class ConfigurationRequirementTest {
 
     // Execute functionality
     ConfigurationRequirementInteger
-        configSpec =
-        new ConfigurationRequirementInteger(expectedIdentifier, expectedNumberOfValues);
+      configSpec =
+      new ConfigurationRequirementInteger(expectedIdentifier, expectedNumberOfValues);
     String actualIdentifier = configSpec.getIdentifier();
     int actualNumberOfValues = configSpec.getMaxNumberOfSettings();
 
@@ -100,9 +96,9 @@ public class ConfigurationRequirementTest {
 
     // Execute functionality
     ConfigurationRequirementString
-        configSpec =
-        new ConfigurationRequirementString(expectedIdentifier, expectedMinNumberOfValues,
-                                           expectedMaxNumberOfValues);
+      configSpec =
+      new ConfigurationRequirementString(expectedIdentifier, expectedMinNumberOfValues,
+        expectedMaxNumberOfValues);
     String actualIdentifier = configSpec.getIdentifier();
     int actualMinNumberOfValues = configSpec.getMinNumberOfSettings();
     int actualMaxNumberOfValues = configSpec.getMaxNumberOfSettings();
@@ -133,7 +129,7 @@ public class ConfigurationRequirementTest {
 
     // Check result
     assertThat(actualSettings, IsIterableContainingInAnyOrder
-        .containsInAnyOrder(expectedSetting0, expectedSetting1));
+      .containsInAnyOrder(expectedSetting0, expectedSetting1));
   }
 
   /**
@@ -155,18 +151,19 @@ public class ConfigurationRequirementTest {
 
     // Check result
     assertThat(actualSettings, IsIterableContainingInAnyOrder
-        .containsInAnyOrder(expectedSetting0, expectedSetting1, expectedSetting2));
+      .containsInAnyOrder(expectedSetting0, expectedSetting1, expectedSetting2));
   }
 
   /**
    * Test method for {@link de.metanome.algorithm_integration.configuration.ConfigurationRequirement<de.metanome.algorithm_integration.configuration.ConfigurationSettingListBox>#checkAndSetSettings(ConfigurationSettingListBox...)}
-   *
+   * <p/>
    * When setting the wrong number of settings, false is returned.
    */
   @Test
   public void testCheckAndSetSettingsWithWrongNumber() {
     // Setup
-    ConfigurationRequirementListBox configSpec = new ConfigurationRequirementListBox("parameter1", new ArrayList<String>(), 2);
+    ConfigurationRequirementListBox configSpec = new ConfigurationRequirementListBox("parameter1",
+      new ArrayList<String>(), 2);
     // Expected values
     ConfigurationSettingListBox expectedSetting0 = mock(ConfigurationSettingListBox.class);
     ConfigurationSettingListBox expectedSetting1 = mock(ConfigurationSettingListBox.class);
@@ -176,19 +173,22 @@ public class ConfigurationRequirementTest {
     // Check result
     try {
       configSpec.checkAndSetSettings(expectedSetting0);
-    } catch (AlgorithmConfigurationException e) {
+    }
+    catch (AlgorithmConfigurationException e) {
       // should trow an exception
     }
 
     try {
       configSpec.checkAndSetSettings(expectedSetting0, expectedSetting1);
-    } catch (AlgorithmConfigurationException e) {
+    }
+    catch (AlgorithmConfigurationException e) {
       fail(); // number of settings is correct
     }
 
     try {
       configSpec.checkAndSetSettings(expectedSetting0, expectedSetting1, expectedSetting2);
-    } catch (AlgorithmConfigurationException e) {
+    }
+    catch (AlgorithmConfigurationException e) {
       // should throw an exception
     }
   }
@@ -196,13 +196,14 @@ public class ConfigurationRequirementTest {
 
   /**
    * Test method for {@link ConfigurationRequirement<de.metanome.algorithm_integration.configuration.ConfigurationSettingRelationalInput>#checkAndSetSettings(ConfigurationSettingRelationalInput...)}
-   *
+   * <p/>
    * When setting the wrong number of settings, false is returned.
    */
   @Test
   public void testCheckAndSetSettingsWithWrongNumberRange() {
     // Setup
-    ConfigurationRequirementRelationalInput configSpec = new ConfigurationRequirementRelationalInput("parameter1", 2, 4);
+    ConfigurationRequirementRelationalInput configSpec = new ConfigurationRequirementRelationalInput("parameter1", 2,
+      4);
     // Expected values
     ConfigurationSettingRelationalInput expectedSetting0 = mock(ConfigurationSettingRelationalInput.class);
     ConfigurationSettingRelationalInput expectedSetting1 = mock(ConfigurationSettingRelationalInput.class);
@@ -213,26 +214,30 @@ public class ConfigurationRequirementTest {
     // Check result
     try {
       configSpec.checkAndSetSettings(expectedSetting0);
-    } catch (AlgorithmConfigurationException e) {
+    }
+    catch (AlgorithmConfigurationException e) {
       // should trow an exception
     }
 
     try {
       configSpec.checkAndSetSettings(expectedSetting0, expectedSetting1);
-    } catch (AlgorithmConfigurationException e) {
+    }
+    catch (AlgorithmConfigurationException e) {
       fail(); // number of settings is correct
     }
 
     try {
       configSpec.checkAndSetSettings(expectedSetting0, expectedSetting1, expectedSetting2);
-    } catch (AlgorithmConfigurationException e) {
+    }
+    catch (AlgorithmConfigurationException e) {
       fail(); // number of settings is correct
     }
 
     try {
       configSpec.checkAndSetSettings(expectedSetting0, expectedSetting1, expectedSetting2,
-                                     expectedSetting3);
-    } catch (AlgorithmConfigurationException e) {
+        expectedSetting3);
+    }
+    catch (AlgorithmConfigurationException e) {
       // should throw an exception
     }
   }

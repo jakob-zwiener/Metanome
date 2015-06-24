@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ public class GwtTestRelationalInputInput extends GWTTestCase {
 
     // Execute functionality
     RelationalInputInput actualRelationalInputInput = new RelationalInputInput(
-        expectedOptional, false, tabWrapper);
+      expectedOptional, false, tabWrapper);
 
     // Check result
     assertEquals(expectedOptional, actualRelationalInputInput.isOptional);
@@ -70,25 +70,27 @@ public class GwtTestRelationalInputInput extends GWTTestCase {
 
     // Expected values
     final ConfigurationSettingRelationalInput expectedSetting =
-        new ConfigurationSettingFileInput("filename");
+      new ConfigurationSettingFileInput("filename");
 
     // Initialize CsvFileInput (waiting for fetching all current file inputs)
     final RelationalInputInput relationalInputInputs = new RelationalInputInput(
-        false, false, new TabWrapper());
+      false, false, new TabWrapper());
 
     relationalInputInputs.listbox.addValue("filename");
     relationalInputInputs.inputs.put("filename", fileInput);
 
     try {
       relationalInputInputs.setValues(expectedSetting);
-    } catch (AlgorithmConfigurationException e) {
+    }
+    catch (AlgorithmConfigurationException e) {
       fail();
     }
 
     ConfigurationSettingRelationalInput actualSetting = null;
     try {
       actualSetting = relationalInputInputs.getValues();
-    } catch (InputValidationException | AlgorithmConfigurationException e) {
+    }
+    catch (InputValidationException | AlgorithmConfigurationException e) {
       fail();
     }
 
@@ -110,11 +112,12 @@ public class GwtTestRelationalInputInput extends GWTTestCase {
 
     // Initialize CsvFileInput (waiting for fetching all current file inputs)
     final RelationalInputInput relationalInputInputs = new RelationalInputInput(
-        false, true, new TabWrapper());
+      false, true, new TabWrapper());
 
     try {
       relationalInputInputs.getValues();
-    } catch (InputValidationException | AlgorithmConfigurationException e) {
+    }
+    catch (InputValidationException | AlgorithmConfigurationException e) {
       // should throw an exception
     }
 

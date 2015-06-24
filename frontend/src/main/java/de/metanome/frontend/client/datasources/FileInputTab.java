@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,17 @@
 
 package de.metanome.frontend.client.datasources;
 
+import java.util.List;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
 
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingDataSource;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingFileInput;
@@ -30,11 +35,6 @@ import de.metanome.frontend.client.TabContent;
 import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.helpers.FilePathHelper;
 import de.metanome.frontend.client.services.FileInputRestService;
-
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
-import java.util.List;
 
 
 public class FileInputTab extends FlowPanel implements TabContent {
@@ -67,30 +67,28 @@ public class FileInputTab extends FlowPanel implements TabContent {
 
   /**
    * Gets all File Inputs available in the database and adds them to the table.
-   *
    * @param panel the parent widget of the table
    */
   public void addFileInputsToTable(final FlowPanel panel) {
     fileInputService.listFileInputs(
-        new MethodCallback<List<FileInput>>() {
-          @Override
-          public void onFailure(Method method, Throwable throwable) {
-            messageReceiver.addError("There are no file inputs: " + method.getResponse().getText());
-            addEditForm();
-          }
+      new MethodCallback<List<FileInput>>() {
+        @Override
+        public void onFailure(Method method, Throwable throwable) {
+          messageReceiver.addError("There are no file inputs: " + method.getResponse().getText());
+          addEditForm();
+        }
 
-          @Override
-          public void onSuccess(Method method, List<FileInput> fileInputs) {
-            listFileInputs(fileInputs);
-            addEditForm();
-          }
+        @Override
+        public void onSuccess(Method method, List<FileInput> fileInputs) {
+          listFileInputs(fileInputs);
+          addEditForm();
+        }
 
-        });
+      });
   }
 
   /**
    * Lists all given file inputs in a table.
-   *
    * @param inputs the file inputs
    */
   protected void listFileInputs(List<FileInput> inputs) {
@@ -107,7 +105,6 @@ public class FileInputTab extends FlowPanel implements TabContent {
 
   /**
    * Adds the given file input to the table.
-   *
    * @param input the file input, which should be added.
    */
   public void addFileInputToTable(final FileInput input) {
@@ -118,7 +115,7 @@ public class FileInputTab extends FlowPanel implements TabContent {
       @Override
       public void onClick(ClickEvent clickEvent) {
         fileInputService.deleteFileInput(input.getId(),
-                                         getDeleteCallback(input));
+          getDeleteCallback(input));
       }
     });
 
@@ -158,22 +155,21 @@ public class FileInputTab extends FlowPanel implements TabContent {
 
   /**
    * Converts a file input into a ConfigurationSettingDataSource
-   *
    * @param input the file input
    * @return the ConfigurationSettingDataSource from the given file input
    */
   private ConfigurationSettingDataSource convertFileInputToDataSource(FileInput input) {
     return new ConfigurationSettingFileInput()
-        .setFileName(input.getFileName())
-        .setEscapeChar(input.getEscapeChar())
-        .setHeader(input.isHasHeader())
-        .setIgnoreLeadingWhiteSpace(input.isIgnoreLeadingWhiteSpace())
-        .setQuoteChar(input.getQuoteChar())
-        .setSeparatorChar(input.getSeparator())
-        .setSkipDifferingLines(input.isSkipDifferingLines())
-        .setSkipLines(input.getSkipLines())
-        .setStrictQuotes(input.isStrictQuotes())
-        .setNullValue(input.getNullValue());
+      .setFileName(input.getFileName())
+      .setEscapeChar(input.getEscapeChar())
+      .setHeader(input.isHasHeader())
+      .setIgnoreLeadingWhiteSpace(input.isIgnoreLeadingWhiteSpace())
+      .setQuoteChar(input.getQuoteChar())
+      .setSeparatorChar(input.getSeparator())
+      .setSkipDifferingLines(input.isSkipDifferingLines())
+      .setSkipLines(input.getSkipLines())
+      .setStrictQuotes(input.isStrictQuotes())
+      .setNullValue(input.getNullValue());
   }
 
   /**
@@ -186,7 +182,6 @@ public class FileInputTab extends FlowPanel implements TabContent {
 
   /**
    * Creates the callback for the delete call.
-   *
    * @param input The file input, which should be deleted.
    * @return The callback
    */
@@ -233,7 +228,7 @@ public class FileInputTab extends FlowPanel implements TabContent {
   /**
    * Find the row of the old file input and updates the values.
    * @param updatedInput the updated file input
-   * @param oldInput     the old file input
+   * @param oldInput the old file input
    */
   public void updateFileInputInTable(final FileInput updatedInput, FileInput oldInput) {
     int row = findRow(oldInput);

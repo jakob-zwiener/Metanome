@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,9 @@
 
 package de.metanome.frontend.client;
 
+import java.util.Date;
+import java.util.List;
+
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.Label;
@@ -23,6 +26,9 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
+
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
 
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingDataSource;
@@ -37,16 +43,9 @@ import de.metanome.frontend.client.results.ResultsPage;
 import de.metanome.frontend.client.runs.RunConfigurationPage;
 import de.metanome.frontend.client.services.AlgorithmExecutionRestService;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
-import java.util.Date;
-import java.util.List;
-
 /**
  * Overall Application page that has tabs for the various functions (subpages). It also coordinates
  * control between these subpages. Should be added to RootPanel.
- *
  * @author Claudia Exeler
  */
 public class BasePage extends TabLayoutPanel {
@@ -68,22 +67,22 @@ public class BasePage extends TabLayoutPanel {
     // Add data source tab
     this.dataSourcePage = new DataSourcePage(this);
     this.insert(new ScrollPanel(new TabWrapper(this.dataSourcePage)), "Data Sources",
-                Tabs.DATA_SOURCES.ordinal());
+      Tabs.DATA_SOURCES.ordinal());
 
     // Add algorithm tab
     this.algorithmPage = new AlgorithmsPage(this);
     this.insert(new ScrollPanel(new TabWrapper(this.algorithmPage)), "Algorithms",
-                Tabs.ALGORITHMS.ordinal());
+      Tabs.ALGORITHMS.ordinal());
 
     // Add execution tab
     this.executionPage = new ExecutionsPage(this);
     this.insert(new ScrollPanel(new TabWrapper(this.executionPage)), "Executions",
-                Tabs.EXECUTIONS.ordinal());
+      Tabs.EXECUTIONS.ordinal());
 
     // Add run configuration tab
     this.runConfigurationsPage = new RunConfigurationPage(this);
     this.insert(new ScrollPanel(new TabWrapper(this.runConfigurationsPage)), "Run Configuration",
-                Tabs.RUN_CONFIGURATION.ordinal());
+      Tabs.RUN_CONFIGURATION.ordinal());
 
     // Add result tab
     this.resultsPage = new ResultsPage(this);
@@ -96,7 +95,6 @@ public class BasePage extends TabLayoutPanel {
 
   /**
    * Create the "About" Page, which should include information about the project.
-   *
    * @return Widget with contents to be placed on the page.
    */
   private Widget createAboutPage() {
@@ -110,20 +108,20 @@ public class BasePage extends TabLayoutPanel {
 
   /**
    * Hand control from the Run Configuration to displaying Results. Start algorithm execution.
-   *
-   * @param executionService  the service instance used for executing the algorithm
-   * @param algorithm         the algorithm to execute
-   * @param parameters        the specification with set settings used to configure the algorithm
-   * @param cacheResults      true, if the results should be cached and written to disk after the algorithm is finished
-   * @param writeResults      true, if the results should be written to disk immediately
-   * @param countResults      true, if the results should be counted
+   * @param executionService the service instance used for executing the algorithm
+   * @param algorithm the algorithm to execute
+   * @param parameters the specification with set settings used to configure the algorithm
+   * @param cacheResults true, if the results should be cached and written to disk after the algorithm is finished
+   * @param writeResults true, if the results should be written to disk immediately
+   * @param countResults true, if the results should be counted
    */
   public void startAlgorithmExecution(AlgorithmExecutionRestService executionService,
                                       Algorithm algorithm,
                                       List<ConfigurationRequirement> parameters,
                                       Boolean cacheResults,
                                       Boolean writeResults,
-                                      Boolean countResults) {
+                                      Boolean countResults)
+  {
 
     // clear previous errors
     this.resultPageTabWrapper.clearErrors();
@@ -132,20 +130,20 @@ public class BasePage extends TabLayoutPanel {
 
     // Execute algorithm
     AlgorithmExecutionParams params = new AlgorithmExecutionParams()
-        .setAlgorithmId(algorithm.getId())
-        .setExecutionIdentifier(executionIdentifier)
-        .setRequirements(parameters)
-        .setCacheResults(cacheResults)
-        .setWriteResults(writeResults)
-        .setCountResults(countResults);
+      .setAlgorithmId(algorithm.getId())
+      .setExecutionIdentifier(executionIdentifier)
+      .setRequirements(parameters)
+      .setCacheResults(cacheResults)
+      .setWriteResults(writeResults)
+      .setCountResults(countResults);
 
     executionService.executeAlgorithm(params,
-                                      this.getExecutionCallback(executionService,
-                                                                executionIdentifier));
+      this.getExecutionCallback(executionService,
+        executionIdentifier));
     // During execution the progress is shown on the result page
     this.resultsPage
-        .setExecutionParameter(executionService, executionIdentifier, algorithm.getFileName(),
-                               cacheResults, writeResults, countResults);
+      .setExecutionParameter(executionService, executionIdentifier, algorithm.getFileName(),
+        cacheResults, writeResults, countResults);
     this.resultsPage.startPolling(algorithm.isProgressEstimating());
 
     this.selectTab(Tabs.RESULTS.ordinal());
@@ -172,13 +170,13 @@ public class BasePage extends TabLayoutPanel {
   /**
    * If the algorithm execution is successful, the results will be shown. otherwise the reason of
    * failure will be displayed.
-   *
-   * @param executionService    the service instance used for executing the algorithm
+   * @param executionService the service instance used for executing the algorithm
    * @param executionIdentifier the execution identifier
    * @return the callback
    */
   private MethodCallback<Execution> getExecutionCallback(final AlgorithmExecutionRestService executionService,
-                                                   final String executionIdentifier) {
+                                                         final String executionIdentifier)
+  {
     return new MethodCallback<Execution>() {
       public void onFailure(Method method, Throwable caught) {
         resultsPage.updateOnError(method.getResponse().getText());
@@ -193,7 +191,6 @@ public class BasePage extends TabLayoutPanel {
 
   /**
    * Generates a string that uniquely identifies an algorithm execution.
-   *
    * @param algorithmName the name of the algorithm being executed
    * @return a string consisting of the algorithmName and the current date and time
    */
@@ -205,12 +202,12 @@ public class BasePage extends TabLayoutPanel {
   /**
    * Hand control from any page to Run Configurations, and pre-configure the latter with the
    * algorithm and/or data source.
-   *
    * @param algorithmName algorithm that shall be run
-   * @param dataSource    data source that shall be profiled
+   * @param dataSource data source that shall be profiled
    */
   public void switchToRunConfiguration(String algorithmName,
-                                       ConfigurationSettingDataSource dataSource) {
+                                       ConfigurationSettingDataSource dataSource)
+  {
     this.selectTab(Tabs.RUN_CONFIGURATION.ordinal());
     if (algorithmName != null) {
       this.runConfigurationsPage.selectAlgorithm(algorithmName);
@@ -222,7 +219,6 @@ public class BasePage extends TabLayoutPanel {
 
   /**
    * Forwards any algorithms found by AlgorithmPage to be available in RunConfigurations
-   *
    * @param algorithms list of available algorithms
    */
   public void addAlgorithmsToRunConfigurations(List<Algorithm> algorithms) {
@@ -239,7 +235,6 @@ public class BasePage extends TabLayoutPanel {
   /**
    * Forwards an algorithm, which should be removed, from the AlgorithmPage to the
    * RunConfigurations
-   *
    * @param algorithmName the name of the algorithm, which should be removed
    */
   public void removeAlgorithmFromRunConfigurations(String algorithmName) {
@@ -249,9 +244,8 @@ public class BasePage extends TabLayoutPanel {
   /**
    * Forwards an algorithm, which was updated, from the AlgorithmPage to the
    * RunConfigurations
-   *
    * @param algorithm the algorithm, which was updated
-   * @param oldName   the old name of the algorithm
+   * @param oldName the old name of the algorithm
    */
   public void updateAlgorithmOnRunConfigurations(Algorithm algorithm, String oldName) {
     this.runConfigurationsPage.updateAlgorithm(algorithm, oldName);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,42 +16,36 @@
 
 package de.metanome.frontend.client.services;
 
-import de.metanome.backend.results_db.Result;
-
-import org.fusesource.restygwt.client.MethodCallback;
-import org.fusesource.restygwt.client.RestService;
-
 import java.util.List;
-
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
+import org.fusesource.restygwt.client.MethodCallback;
+import org.fusesource.restygwt.client.RestService;
+
+import de.metanome.backend.results_db.Result;
+
 @Path("/api/results")
 public interface ResultRestService extends RestService {
 
-  @GET
-  public void listResults(MethodCallback<List<Result>> callback);
+  @GET void listResults(MethodCallback<List<Result>> callback);
 
   @GET
-  @Path("/get/{id}")
-  public void getResult(@PathParam("id") long id, MethodCallback<Result> callback);
+  @Path("/get/{id}") void getResult(@PathParam("id") long id, MethodCallback<Result> callback);
 
   @POST
-  @Path("/store")
-  public void storeResult(Result result, MethodCallback<Result> callback);
+  @Path("/store") void storeResult(Result result, MethodCallback<Result> callback);
 
   @DELETE
-  @Path("/delete/{id}")
-  public void deleteResult(@PathParam("id") long id, MethodCallback<Void> callback);
+  @Path("/delete/{id}") void deleteResult(@PathParam("id") long id, MethodCallback<Void> callback);
 
   @POST
-  @Path("/update")
-  public void updateResult(Result result, MethodCallback<Result> callback);
+  @Path("/update") void updateResult(Result result, MethodCallback<Result> callback);
 
   @GET
-  @Path("/file_input/{id}")
-  public void getResultsForFileInput(@PathParam("id") long id, MethodCallback<List<Result>> callback);
+  @Path("/file_input/{id}") void getResultsForFileInput(@PathParam("id") long id,
+                                                        MethodCallback<List<Result>> callback);
 }

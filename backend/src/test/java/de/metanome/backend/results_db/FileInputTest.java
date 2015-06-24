@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,20 +16,18 @@
 
 package de.metanome.backend.results_db;
 
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
 import au.com.bytecode.opencsv.CSVParser;
 import au.com.bytecode.opencsv.CSVReader;
-
 import de.metanome.backend.input.file.FileIterator;
 import de.metanome.backend.resources.FileInputResource;
 import de.metanome.test_helper.EqualsAndHashCodeTester;
 
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-
 /**
  * Tests for {@link de.metanome.backend.results_db.FileInput}
- *
  * @author Jakob Zwiener
  */
 public class FileInputTest {
@@ -74,7 +72,7 @@ public class FileInputTest {
     assertEquals(Integer.valueOf(CSVReader.DEFAULT_SKIP_LINES), actualFileInput.getSkipLines());
     assertEquals(CSVParser.DEFAULT_STRICT_QUOTES, actualFileInput.isStrictQuotes());
     assertEquals(CSVParser.DEFAULT_IGNORE_LEADING_WHITESPACE,
-                 actualFileInput.isIgnoreLeadingWhiteSpace());
+      actualFileInput.isIgnoreLeadingWhiteSpace());
     assertEquals(FileIterator.DEFAULT_HAS_HEADER, actualFileInput.isHasHeader());
     assertEquals(FileIterator.DEFAULT_SKIP_DIFFERING_LINES, actualFileInput.isSkipDifferingLines());
   }
@@ -89,16 +87,16 @@ public class FileInputTest {
     // Setup
     int id = 42;
     FileInput fileInput = new FileInput("fileInput")
-        .setId(id);
+      .setId(id);
     FileInput equalFileInput = new FileInput("fileInput")
-        .setId(id);
+      .setId(id);
     FileInput notEqualFileInput = new FileInput("fileInput")
-        .setId(23);
+      .setId(23);
 
     // Execute functionality
     // Check result
     new EqualsAndHashCodeTester<FileInput>()
-        .performBasicEqualsAndHashCodeChecks(fileInput, equalFileInput, notEqualFileInput);
+      .performBasicEqualsAndHashCodeChecks(fileInput, equalFileInput, notEqualFileInput);
   }
 
   @Test

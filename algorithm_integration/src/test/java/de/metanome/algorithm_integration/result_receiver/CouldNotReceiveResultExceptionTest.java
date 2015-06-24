@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,11 @@
 
 package de.metanome.algorithm_integration.result_receiver;
 
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 
 public class CouldNotReceiveResultExceptionTest {
@@ -28,7 +28,7 @@ public class CouldNotReceiveResultExceptionTest {
 
   /**
    * Test method for {@link de.metanome.algorithm_integration.result_receiver.CouldNotReceiveResultException#CouldNotReceiveResultException(String)}
-   *
+   * <p/>
    * The exception should store the message.
    */
   @Test
@@ -41,7 +41,8 @@ public class CouldNotReceiveResultExceptionTest {
     String actualMessage;
     try {
       throw new CouldNotReceiveResultException(expectedMessage);
-    } catch (CouldNotReceiveResultException e) {
+    }
+    catch (CouldNotReceiveResultException e) {
       actualMessage = e.getMessage();
     }
 
@@ -51,7 +52,7 @@ public class CouldNotReceiveResultExceptionTest {
 
   /**
    * Test method for {@link de.metanome.algorithm_integration.result_receiver.CouldNotReceiveResultException#CouldNotReceiveResultException(String, Throwable)}
-   *
+   * <p/>
    * The exception should store the message and the cause.
    */
   @Test
@@ -66,7 +67,8 @@ public class CouldNotReceiveResultExceptionTest {
     Throwable actualCause;
     try {
       throw new CouldNotReceiveResultException(expectedMessage, expectedCause);
-    } catch (CouldNotReceiveResultException e) {
+    }
+    catch (CouldNotReceiveResultException e) {
       actualMessage = e.getMessage();
       actualCause = e.getCause();
     }

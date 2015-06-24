@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,20 +25,19 @@ import de.metanome.backend.results_db.EntityStorageException;
 
 /**
  * Helper that performs database interaction synchronously. To be used in tests.
- *
  * @author Jakob Zwiener
  * @see TestDatabaseHelperService
  */
 public class TestHelper {
 
   protected static TestDatabaseHelperServiceAsync
-      testDatabaseHelperService =
-      GWT.create(TestDatabaseHelperService.class);
+    testDatabaseHelperService =
+    GWT.create(TestDatabaseHelperService.class);
 
-  static boolean[] reset_blocked = {true};
-  static boolean[] database_connection_blocked = {true};
-  static boolean[] file_input_blocked = {true};
-  static boolean[] algorithm_blocked = {true};
+  static boolean[] reset_blocked = { true };
+  static boolean[] database_connection_blocked = { true };
+  static boolean[] file_input_blocked = { true };
+  static boolean[] algorithm_blocked = { true };
 
   /**
    * Resets the database synchronously.
@@ -70,11 +69,10 @@ public class TestHelper {
 
   /**
    * Stores an algorithm synchronously.
-   *
    * @param algorithm the {@link de.metanome.backend.results_db.Algorithm} to store
    */
   public static Algorithm storeAlgorithmSync(Algorithm algorithm) throws EntityStorageException {
-    final Algorithm[] returnAlgorithm = {algorithm};
+    final Algorithm[] returnAlgorithm = { algorithm };
 
     testDatabaseHelperService.storeAlgorithmInDatabase(algorithm, new AsyncCallback<Algorithm>() {
       @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,8 @@
 
 package de.metanome.backend.results_db;
 
-import de.metanome.backend.resources.AlgorithmResource;
-import de.metanome.backend.resources.ExecutionResource;
-import de.metanome.test_helper.EqualsAndHashCodeTester;
-
-import org.junit.Test;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -28,15 +25,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
+import org.junit.Test;
+
+import de.metanome.backend.resources.AlgorithmResource;
+import de.metanome.backend.resources.ExecutionResource;
+import de.metanome.test_helper.EqualsAndHashCodeTester;
 
 /**
  * Test method for {@link de.metanome.backend.results_db.Execution}
- *
  * @author Jakob Zwiener
  */
 public class ExecutionTest {
@@ -66,13 +62,13 @@ public class ExecutionTest {
     Execution execution = new Execution(algorithm, begin);
     Execution equalExecution = new Execution(algorithm, begin);
     Execution
-        notEqualExecution =
-        new Execution(new Algorithm("some other file name"), 197);
+      notEqualExecution =
+      new Execution(new Algorithm("some other file name"), 197);
 
     // Execute functionality
     // Check result
     new EqualsAndHashCodeTester<Execution>()
-        .performBasicEqualsAndHashCodeChecks(execution, equalExecution, notEqualExecution);
+      .performBasicEqualsAndHashCodeChecks(execution, equalExecution, notEqualExecution);
   }
 
   /**
@@ -85,9 +81,9 @@ public class ExecutionTest {
     Execution execution = new Execution(mock(Algorithm.class), 123456789);
     // Expected values
     Input input1 = new Input("input")
-        .setId(42);
+      .setId(42);
     Input input2 = new Input("input")
-        .setId(23);
+      .setId(23);
 
     // Execute functionality
     // Check result
@@ -107,7 +103,7 @@ public class ExecutionTest {
 
   /**
    * Test method for {@link Execution#addResult(Result)}
-   *
+   * <p/>
    * After adding a result to the execution the list of results should contain the added result.
    */
   @Test
@@ -160,7 +156,7 @@ public class ExecutionTest {
     HibernateUtil.clear();
   }
 
-  @Test(expected=EntityStorageException.class)
+  @Test(expected = EntityStorageException.class)
   public void testUniqueAlgorithmAndBegin() throws EntityStorageException {
     // Setup
     HibernateUtil.clear();
@@ -177,14 +173,16 @@ public class ExecutionTest {
     Execution execution1 = new Execution(algorithm, begin1);
     try {
       HibernateUtil.store(execution1);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       fail();
     }
 
     Execution execution2 = new Execution(algorithm, begin2);
     try {
       HibernateUtil.store(execution2);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       fail();
     }
 

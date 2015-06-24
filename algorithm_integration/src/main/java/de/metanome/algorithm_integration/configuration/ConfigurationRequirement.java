@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,17 +16,15 @@
 
 package de.metanome.algorithm_integration.configuration;
 
-import com.google.common.annotations.GwtIncompatible;
+import java.io.Serializable;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.google.common.annotations.GwtIncompatible;
 
 import de.metanome.algorithm_integration.Algorithm;
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
-
-import java.io.Serializable;
-
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Represents a configuration parameter an {@link Algorithm} needs to be properly configured. The
@@ -34,34 +32,31 @@ import javax.xml.bind.annotation.XmlTransient;
  * {@link Algorithm} for configuration. Only type concrete ConfigurationRequirement subclasses
  * should be used to specify configuration parameters.
  * @param <T> the setting type of the requirement
- *
  * @author Jakob Zwiener
  */
 @JsonTypeInfo(
-    use = JsonTypeInfo.Id.NAME,
-    include = JsonTypeInfo.As.PROPERTY,
-    property = "type")
+  use = JsonTypeInfo.Id.NAME,
+  include = JsonTypeInfo.As.PROPERTY,
+  property = "type")
 @JsonSubTypes({
-                  @JsonSubTypes.Type(value = ConfigurationRequirementBoolean.class, name = "ConfigurationRequirementBoolean"),
-                  @JsonSubTypes.Type(value = ConfigurationRequirementDatabaseConnection.class, name = "ConfigurationRequirementDatabaseConnection"),
-                  @JsonSubTypes.Type(value = ConfigurationRequirementFileInput.class, name = "ConfigurationRequirementFileInput"),
-                  @JsonSubTypes.Type(value = ConfigurationRequirementInteger.class, name = "ConfigurationRequirementInteger"),
-                  @JsonSubTypes.Type(value = ConfigurationRequirementListBox.class, name = "ConfigurationRequirementListBox"),
-                  @JsonSubTypes.Type(value = ConfigurationRequirementRelationalInput.class, name = "ConfigurationRequirementRelationalInput"),
-                  @JsonSubTypes.Type(value = ConfigurationRequirementString.class, name = "ConfigurationRequirementString"),
-                  @JsonSubTypes.Type(value = ConfigurationRequirementTableInput.class, name = "ConfigurationRequirementTableInput")
-              })
+  @JsonSubTypes.Type(value = ConfigurationRequirementBoolean.class, name = "ConfigurationRequirementBoolean"),
+  @JsonSubTypes.Type(value = ConfigurationRequirementDatabaseConnection.class, name = "ConfigurationRequirementDatabaseConnection"),
+  @JsonSubTypes.Type(value = ConfigurationRequirementFileInput.class, name = "ConfigurationRequirementFileInput"),
+  @JsonSubTypes.Type(value = ConfigurationRequirementInteger.class, name = "ConfigurationRequirementInteger"),
+  @JsonSubTypes.Type(value = ConfigurationRequirementListBox.class, name = "ConfigurationRequirementListBox"),
+  @JsonSubTypes.Type(value = ConfigurationRequirementRelationalInput.class, name = "ConfigurationRequirementRelationalInput"),
+  @JsonSubTypes.Type(value = ConfigurationRequirementString.class, name = "ConfigurationRequirementString"),
+  @JsonSubTypes.Type(value = ConfigurationRequirementTableInput.class, name = "ConfigurationRequirementTableInput")
+})
 public abstract class ConfigurationRequirement<T extends ConfigurationSetting> implements Serializable {
 
   public static final int ARBITRARY_NUMBER_OF_VALUES = -1;
-
+  public T[] settings;
   protected String identifier;
   protected boolean required;
   protected int numberOfSettings;
   protected int minNumberOfSettings;
   protected int maxNumberOfSettings;
-
-  public T[] settings;
 
   /**
    * Exists for serialization.
@@ -73,7 +68,6 @@ public abstract class ConfigurationRequirement<T extends ConfigurationSetting> i
    * Construct a configuration specification. A string identifier is stored to identify
    * configuration parameter. The identifier should be unique among all parameters of one algorithm.
    * The number of requested values defaults to 1.
-   *
    * @param identifier the specification's identifier
    */
   public ConfigurationRequirement(String identifier) {
@@ -85,8 +79,7 @@ public abstract class ConfigurationRequirement<T extends ConfigurationSetting> i
    * configuration parameter. The identifier should be unique among all parameters of one algorithm.
    * The number of requested values is set. Use ARBITRARY_NUMBER_OF_VALUES to request arbitrary
    * number of values.
-   *
-   * @param identifier     the specification's identifier
+   * @param identifier the specification's identifier
    * @param numberOfSettings the number of settings expected
    */
   public ConfigurationRequirement(String identifier, int numberOfSettings) {
@@ -97,8 +90,7 @@ public abstract class ConfigurationRequirement<T extends ConfigurationSetting> i
    * Construct a configuration specification. A string identifier is stored to identify
    * configuration parameter. The identifier should be unique among all parameters of one algorithm.
    * The min and max number of requested values is set.
-   *
-   * @param identifier          the specification's identifier
+   * @param identifier the specification's identifier
    * @param minNumberOfSettings the minimum number of settings expected
    * @param maxNumberOfSettings the maximum number of settings expected (included)
    */
@@ -118,7 +110,6 @@ public abstract class ConfigurationRequirement<T extends ConfigurationSetting> i
   }
 
   /**
-   *
    * @return true, if a fix number of settings is required, false, otherwise
    */
   public Boolean isFixNumberOfSettings() {
@@ -162,12 +153,12 @@ public abstract class ConfigurationRequirement<T extends ConfigurationSetting> i
   }
 
   /**
-   *
    * @return true, if the requirement is required, i.e. it is not optional
    */
   public boolean isRequired() {
     return required;
   }
+
   /**
    * If there is a fix number of settings and required is true, all settings has to be set.
    * If a range of settings is given and required is true, the minimum number of settings has to
@@ -180,26 +171,26 @@ public abstract class ConfigurationRequirement<T extends ConfigurationSetting> i
 
   /**
    * If a setting is set, the number of given settings has to match the expected number.
-   *
    * @throws de.metanome.algorithm_integration.AlgorithmConfigurationException if the given number of settings does not match the expected number.
    */
   @XmlTransient
   protected void checkNumberOfSettings(int number) throws AlgorithmConfigurationException {
     if (this.required && this.numberOfSettings != ARBITRARY_NUMBER_OF_VALUES && number != this.numberOfSettings &&
-        (number < this.minNumberOfSettings || number > this.maxNumberOfSettings))
+      (number < this.minNumberOfSettings || number > this.maxNumberOfSettings)) {
       throw new AlgorithmConfigurationException("The number of settings does not match the expected number!");
+    }
   }
 
   /**
    * Sets the actual settings on the requirement if the number of settings is correct.
-   *
    * @param settings the settings
    * @throws de.metanome.algorithm_integration.AlgorithmConfigurationException if the number of
    * settings does not match the expected number of settings
    */
   @XmlTransient
   public void checkAndSetSettings(T... settings)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     checkNumberOfSettings(settings.length);
     this.settings = settings;
   }
@@ -208,15 +199,14 @@ public abstract class ConfigurationRequirement<T extends ConfigurationSetting> i
    * Builds the corresponding {@link de.metanome.algorithm_integration.configuration.ConfigurationValue}
    * from the {@link de.metanome.algorithm_integration.configuration.ConfigurationRequirement} using
    * the {@link de.metanome.algorithm_integration.configuration.ConfigurationFactory}.
-   *
    * @param factory the {@link de.metanome.algorithm_integration.configuration.ConfigurationFactory}
-   *                used for conversion
+   * used for conversion
    * @return the corresponding {@link de.metanome.algorithm_integration.configuration.ConfigurationValue}
    * @throws AlgorithmConfigurationException thrown if the conversion is not successful
    */
   @XmlTransient
   @GwtIncompatible("ConfigurationValues cannot be build on client side.")
   public abstract ConfigurationValue build(ConfigurationFactory factory)
-      throws AlgorithmConfigurationException;
+    throws AlgorithmConfigurationException;
 
 }

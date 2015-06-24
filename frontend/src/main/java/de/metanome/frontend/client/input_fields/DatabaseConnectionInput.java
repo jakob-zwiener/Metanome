@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,14 @@
 
 package de.metanome.frontend.client.input_fields;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingDataSource;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingDatabaseConnection;
@@ -24,17 +32,8 @@ import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.helpers.InputValidationException;
 import de.metanome.frontend.client.services.DatabaseConnectionRestService;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * An input widget, used to specify settings for a database connection.
- *
  * @author Claudia Exeler
  * @see de.metanome.backend.results_db.DatabaseConnection
  */
@@ -51,7 +50,11 @@ public class DatabaseConnectionInput extends InputField {
    */
   private String preselectedDatabaseConnection;
 
-  public DatabaseConnectionInput(boolean optional, boolean required, TabWrapper messageReceiver, List<String> acceptedDBSystems) {
+  public DatabaseConnectionInput(boolean optional,
+                                 boolean required,
+                                 TabWrapper messageReceiver,
+                                 List<String> acceptedDBSystems)
+  {
     super(optional, required);
 
     this.messageReceiver = messageReceiver;
@@ -84,8 +87,8 @@ public class DatabaseConnectionInput extends InputField {
       };
 
     DatabaseConnectionRestService
-        databaseConnectionService =
-        com.google.gwt.core.client.GWT.create(DatabaseConnectionRestService.class);
+      databaseConnectionService =
+      com.google.gwt.core.client.GWT.create(DatabaseConnectionRestService.class);
     databaseConnectionService.listDatabaseConnections(callback);
 
   }
@@ -110,7 +113,7 @@ public class DatabaseConnectionInput extends InputField {
       // if the database connection is accepted by the algorithm, add the database connection
       // to the list box
       if (this.acceptedDBSystems.contains(db.getSystem().name()) ||
-          this.acceptedDBSystems.isEmpty()) {
+        this.acceptedDBSystems.isEmpty()) {
         this.databaseConnections.put(identifier, db);
         dbConnectionNames.add(identifier);
 
@@ -133,13 +136,13 @@ public class DatabaseConnectionInput extends InputField {
   /**
    * Selects the given data source in the list box. If the list box has not yet been filled with the
    * available values, we save the value and set it when the list box is filled.
-   *
    * @param dataSourceSetting the data source setting
    * @throws AlgorithmConfigurationException If the data source setting is not a database connection
-   *                                         setting
+   * setting
    */
   public void selectDataSource(ConfigurationSettingDataSource dataSourceSetting)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     this.preselectedDatabaseConnection = dataSourceSetting.getValueAsString();
 
     if (!this.listBox.containsValues()) {
@@ -148,17 +151,17 @@ public class DatabaseConnectionInput extends InputField {
 
     if (dataSourceSetting instanceof ConfigurationSettingDatabaseConnection) {
       ConfigurationSettingDatabaseConnection
-          setting =
-          (ConfigurationSettingDatabaseConnection) dataSourceSetting;
+        setting =
+        (ConfigurationSettingDatabaseConnection) dataSourceSetting;
       this.setValues(setting);
-    } else {
+    }
+    else {
       throw new AlgorithmConfigurationException("This is not a database connection setting.");
     }
   }
 
   /**
    * Returns the current widget's settings as a setting
-   *
    * @return the widget's settings
    */
   public ConfigurationSettingDatabaseConnection getValues() throws InputValidationException {
@@ -167,7 +170,8 @@ public class DatabaseConnectionInput extends InputField {
     if (selectedValue == null || selectedValue.equals("--")) {
       if (isRequired) {
         throw new InputValidationException("You must choose a database connection!");
-      } else {
+      }
+      else {
         return null;
       }
     }
@@ -175,7 +179,7 @@ public class DatabaseConnectionInput extends InputField {
     DatabaseConnection currentDatabaseConnection = this.databaseConnections.get(selectedValue);
 
     ConfigurationSettingDatabaseConnection settingDatabaseConnection =
-        new ConfigurationSettingDatabaseConnection()
+      new ConfigurationSettingDatabaseConnection()
         .setDbUrl(currentDatabaseConnection.getUrl())
         .setPassword(currentDatabaseConnection.getPassword())
         .setUsername(currentDatabaseConnection.getUsername())
@@ -186,18 +190,18 @@ public class DatabaseConnectionInput extends InputField {
 
   /**
    * Takes a setting a sets the selected value of the list box to the given setting.
-   *
    * @param setting the settings to set
    * @throws AlgorithmConfigurationException if no database connections are set
    */
   public void setValues(ConfigurationSettingDatabaseConnection setting)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     for (Map.Entry<String, DatabaseConnection> con : this.databaseConnections.entrySet()) {
       DatabaseConnection current = con.getValue();
       if (current.getUrl().equals(setting.getDbUrl()) &&
-          current.getPassword().equals(setting.getPassword()) &&
-          current.getUsername().equals(setting.getUsername()) &&
-          current.getSystem().equals(setting.getSystem())) {
+        current.getPassword().equals(setting.getPassword()) &&
+        current.getUsername().equals(setting.getUsername()) &&
+        current.getSystem().equals(setting.getSystem())) {
         this.listBox.setSelectedValue(con.getKey());
         return;
       }

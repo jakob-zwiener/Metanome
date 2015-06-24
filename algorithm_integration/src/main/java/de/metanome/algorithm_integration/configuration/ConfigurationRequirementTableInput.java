@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,28 +16,28 @@
 
 package de.metanome.algorithm_integration.configuration;
 
-import com.google.common.annotations.GwtIncompatible;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.common.annotations.GwtIncompatible;
 
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
-
-import javax.xml.bind.annotation.XmlTransient;
 
 
 /**
  * Concrete {@link ConfigurationRequirement} for table inputs.
- *
  * @see ConfigurationRequirement
  */
 @JsonTypeName("ConfigurationRequirementTableInput")
 public class ConfigurationRequirementTableInput
-    extends ConfigurationRequirement<ConfigurationSettingTableInput> {
+  extends ConfigurationRequirement<ConfigurationSettingTableInput>
+{
 
   // Needed for restful serialization
   public String type = "ConfigurationRequirementTableInput";
 
-  public ConfigurationRequirementTableInput() { }
+  public ConfigurationRequirementTableInput() {
+  }
 
   public ConfigurationRequirementTableInput(String identifier) {
     super(identifier);
@@ -58,7 +58,8 @@ public class ConfigurationRequirementTableInput
   @Override
   @GwtIncompatible("ConfigurationValues cannot be build on client side.")
   public ConfigurationValue build(ConfigurationFactory factory)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     return factory.build(this);
   }
 

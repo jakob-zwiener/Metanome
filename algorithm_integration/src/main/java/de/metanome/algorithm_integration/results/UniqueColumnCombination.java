@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 package de.metanome.algorithm_integration.results;
 
 
+import javax.xml.bind.annotation.XmlTransient;
+
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import de.metanome.algorithm_integration.ColumnCombination;
@@ -24,12 +26,9 @@ import de.metanome.algorithm_integration.ColumnIdentifier;
 import de.metanome.algorithm_integration.result_receiver.CouldNotReceiveResultException;
 import de.metanome.algorithm_integration.result_receiver.OmniscientResultReceiver;
 
-import javax.xml.bind.annotation.XmlTransient;
-
 
 /**
  * Represents a unique column combination.
- *
  * @author Jakob Zwiener
  */
 @JsonTypeName("UniqueColumnCombination")
@@ -46,7 +45,6 @@ public class UniqueColumnCombination implements Result {
 
   /**
    * Constructs a {@link UniqueColumnCombination} from a number of {@link ColumnIdentifier}s.
-   *
    * @param columnIdentifier the column identifier comprising the column combination
    */
   public UniqueColumnCombination(ColumnIdentifier... columnIdentifier) {
@@ -55,7 +53,6 @@ public class UniqueColumnCombination implements Result {
 
   /**
    * Constructs a {@link UniqueColumnCombination} from a {@link ColumnCombination}.
-   *
    * @param columnCombination a supposedly unique column combination
    */
   public UniqueColumnCombination(ColumnCombination columnCombination) {
@@ -76,7 +73,8 @@ public class UniqueColumnCombination implements Result {
   @Override
   @XmlTransient
   public void sendResultTo(OmniscientResultReceiver resultReceiver)
-      throws CouldNotReceiveResultException {
+    throws CouldNotReceiveResultException
+  {
     resultReceiver.receiveResult(this);
   }
 
@@ -90,9 +88,9 @@ public class UniqueColumnCombination implements Result {
     final int prime = 31;
     int result = 1;
     result = prime
-             * result
-             + ((columnCombination == null) ? 0 : columnCombination
-        .hashCode());
+      * result
+      + ((columnCombination == null) ? 0 : columnCombination
+      .hashCode());
     return result;
   }
 
@@ -112,7 +110,8 @@ public class UniqueColumnCombination implements Result {
       if (other.columnCombination != null) {
         return false;
       }
-    } else if (!columnCombination.equals(other.columnCombination)) {
+    }
+    else if (!columnCombination.equals(other.columnCombination)) {
       return false;
     }
     return true;

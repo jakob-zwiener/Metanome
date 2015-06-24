@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,19 +16,17 @@
 
 package de.metanome.algorithms.testing.example_indirect_interfaces_algorithm;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.isA;
+import static org.mockito.Mockito.*;
+
+import org.junit.Test;
+
 import de.metanome.algorithm_integration.AlgorithmExecutionException;
 import de.metanome.algorithm_integration.algorithm_execution.ProgressReceiver;
 import de.metanome.algorithm_integration.input.RelationalInputGenerator;
 import de.metanome.algorithm_integration.result_receiver.UniqueColumnCombinationResultReceiver;
 import de.metanome.algorithm_integration.results.UniqueColumnCombination;
-
-import org.junit.Test;
-
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.isA;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
 
 /**
  * Tests for {@link de.metanome.algorithms.testing.example_indirect_interfaces_algorithm.IndirectInterfacesAlgorithm}
@@ -46,8 +44,8 @@ public class IndirectInterfacesAlgorithmTest {
     IndirectInterfacesAlgorithm algorithm = new IndirectInterfacesAlgorithm();
     // Expected values
     UniqueColumnCombinationResultReceiver
-        resultReceiver =
-        mock(UniqueColumnCombinationResultReceiver.class);
+      resultReceiver =
+      mock(UniqueColumnCombinationResultReceiver.class);
 
     // Execute functionality
     // Check result
@@ -63,7 +61,7 @@ public class IndirectInterfacesAlgorithmTest {
     verify(resultReceiver, never()).receiveResult(any(UniqueColumnCombination.class));
 
     algorithm
-        .setRelationalInputConfigurationValue("identifier", mock(RelationalInputGenerator.class));
+      .setRelationalInputConfigurationValue("identifier", mock(RelationalInputGenerator.class));
     algorithm.execute();
     verify(resultReceiver).receiveResult(isA(UniqueColumnCombination.class));
   }

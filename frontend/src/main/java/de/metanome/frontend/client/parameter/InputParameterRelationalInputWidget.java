@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,9 @@
 
 package de.metanome.frontend.client.parameter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirementRelationalInput;
@@ -25,9 +28,6 @@ import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.helpers.InputValidationException;
 import de.metanome.frontend.client.input_fields.InputField;
 import de.metanome.frontend.client.input_fields.RelationalInputInput;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class InputParameterRelationalInputWidget extends InputParameterDataSourceWidget {
@@ -41,7 +41,8 @@ public class InputParameterRelationalInputWidget extends InputParameterDataSourc
   private ConfigurationRequirementRelationalInput specification;
 
   public InputParameterRelationalInputWidget(ConfigurationRequirementRelationalInput configSpec,
-                                       TabWrapper messageReceiver) {
+                                             TabWrapper messageReceiver)
+  {
     super(configSpec, messageReceiver);
   }
 
@@ -55,7 +56,8 @@ public class InputParameterRelationalInputWidget extends InputParameterDataSourc
 
   @Override
   public ConfigurationRequirementRelationalInput getUpdatedSpecification()
-      throws InputValidationException, AlgorithmConfigurationException {
+    throws InputValidationException, AlgorithmConfigurationException
+  {
     // Build an array with the actual number of set values.
     List<ConfigurationSettingRelationalInput> values = new ArrayList<>();
 
@@ -73,7 +75,8 @@ public class InputParameterRelationalInputWidget extends InputParameterDataSourc
 
   @Override
   public void setDataSource(ConfigurationSettingDataSource dataSource)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     this.inputWidgets.get(0).selectDataSource(dataSource);
   }
 

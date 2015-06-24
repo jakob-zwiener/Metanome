@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,21 +17,21 @@
 /**
  *
  */
+
 package de.metanome.algorithm_integration.algorithm_execution;
 
-import de.metanome.test_helper.GwtSerializationTester;
+import static org.junit.Assert.*;
+
+import java.io.FileNotFoundException;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.FileNotFoundException;
-
-import static org.junit.Assert.assertEquals;
+import de.metanome.test_helper.GwtSerializationTester;
 
 /**
  * Test for {@link FileCreationException}
- *
  * @author Jakob Zwiener
  */
 public class FileCreationExceptionTest {
@@ -64,7 +64,8 @@ public class FileCreationExceptionTest {
     String actualMessage;
     try {
       throw new FileCreationException(expectedMessage);
-    } catch (FileCreationException e) {
+    }
+    catch (FileCreationException e) {
       actualMessage = e.getMessage();
     }
 
@@ -75,7 +76,7 @@ public class FileCreationExceptionTest {
 
   /**
    * Test method for {@link de.metanome.algorithm_integration.algorithm_execution.FileCreationException#FileCreationException(String, Throwable)}
-   *
+   * <p/>
    * The exception should store the message and the cause.
    */
   @Test
@@ -90,7 +91,8 @@ public class FileCreationExceptionTest {
     Throwable actualCause;
     try {
       throw new FileCreationException(expectedMessage, expectedCause);
-    } catch (FileCreationException e) {
+    }
+    catch (FileCreationException e) {
       actualMessage = e.getMessage();
       actualCause = e.getCause();
     }

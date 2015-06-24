@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,23 +16,23 @@
 
 package de.metanome.backend.algorithm_loading;
 
-import de.metanome.backend.results_db.AlgorithmType;
-
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+
+import de.metanome.backend.results_db.AlgorithmType;
 
 public class AlgorithmAnalyzerTest {
 
   @Test
   public void analyzeInclusionDependencyAlgorithmTest()
-      throws IllegalAccessException, InvocationTargetException, IOException, InstantiationException,
-             NoSuchMethodException, ClassNotFoundException {
+    throws IllegalAccessException, InvocationTargetException, IOException, InstantiationException,
+    NoSuchMethodException, ClassNotFoundException
+  {
     // Setup
     String algorithmFileName = "example_ind_algorithm.jar";
 
@@ -50,8 +50,9 @@ public class AlgorithmAnalyzerTest {
 
   @Test
   public void analyzeFunctionalDependencyAlgorithmTest()
-      throws IllegalAccessException, InvocationTargetException, IOException, InstantiationException,
-             NoSuchMethodException, ClassNotFoundException {
+    throws IllegalAccessException, InvocationTargetException, IOException, InstantiationException,
+    NoSuchMethodException, ClassNotFoundException
+  {
     // Setup
     String algorithmFileName = "example_fd_algorithm.jar";
 
@@ -69,8 +70,9 @@ public class AlgorithmAnalyzerTest {
 
   @Test
   public void analyzeOrderDependencyAlgorithmTest()
-      throws IllegalAccessException, InvocationTargetException, IOException, InstantiationException,
-             NoSuchMethodException, ClassNotFoundException {
+    throws IllegalAccessException, InvocationTargetException, IOException, InstantiationException,
+    NoSuchMethodException, ClassNotFoundException
+  {
     // Setup
     String algorithmFileName = "example_od_algorithm.jar";
 
@@ -85,11 +87,13 @@ public class AlgorithmAnalyzerTest {
   }
 
   private void testTypes(HashSet<AlgorithmType> expectedTypes,
-                         AlgorithmAnalyzer analyzer) {
+                         AlgorithmAnalyzer analyzer)
+  {
     for (AlgorithmType type : AlgorithmType.values()) {
       if (expectedTypes.contains(type)) {
         assertTrue(analyzer.hasType(type));
-      } else {
+      }
+      else {
         assertFalse(analyzer.hasType(type));
       }
     }

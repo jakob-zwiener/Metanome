@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,9 @@
 
 package de.metanome.frontend.client.parameter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirementString;
@@ -24,9 +27,6 @@ import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.helpers.InputValidationException;
 import de.metanome.frontend.client.input_fields.InputField;
 import de.metanome.frontend.client.input_fields.StringInput;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class InputParameterStringWidget extends InputParameterWidget {
 
@@ -43,7 +43,9 @@ public class InputParameterStringWidget extends InputParameterWidget {
     // Create the field with the default value, if one is set
     String defaultValue = this.specification.getDefaultValue(settingIndex);
     StringInput field = new StringInput(optional, required);
-    if (defaultValue != null) field.setValue(defaultValue);
+    if (defaultValue != null) {
+      field.setValue(defaultValue);
+    }
 
     // Add the field at the correct position
     this.inputWidgets.add(field);
@@ -53,13 +55,15 @@ public class InputParameterStringWidget extends InputParameterWidget {
 
   @Override
   public ConfigurationRequirementString getUpdatedSpecification()
-      throws AlgorithmConfigurationException, InputValidationException {
+    throws AlgorithmConfigurationException, InputValidationException
+  {
     this.specification.checkAndSetSettings(this.getConfigurationSettings());
     return this.specification;
   }
 
   protected ConfigurationSettingString[] getConfigurationSettings()
-      throws InputValidationException {
+    throws InputValidationException
+  {
     List<ConfigurationSettingString> values = new ArrayList<>();
 
     for (StringInput si : this.inputWidgets) {

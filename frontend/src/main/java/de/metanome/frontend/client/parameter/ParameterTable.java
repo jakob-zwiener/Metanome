@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,9 @@
  */
 
 package de.metanome.frontend.client.parameter;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -32,9 +35,6 @@ import de.metanome.frontend.client.helpers.InputValidationException;
 import de.metanome.frontend.client.input_fields.InputField;
 import de.metanome.frontend.client.runs.RunConfigurationPage;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * Depending on the currently selected algorithm this widget displays the needed parameters. The
  * parameters can be configured and the algorithm can be executed.
@@ -42,25 +42,25 @@ import java.util.List;
 public class ParameterTable extends FlowPanel {
 
   protected List<InputParameterDataSourceWidget> dataSourceChildWidgets = new LinkedList<>();
+  protected FlexTable table;
   private List<InputParameterWidget> childWidgets = new LinkedList<>();
   private TabWrapper messageReceiver;
   private RadioButton rbCache;
   private RadioButton rbDisk;
   private RadioButton rbCount;
-  protected FlexTable table;
 
   /**
    * Creates a ParameterTable for user input for the given parameters. Prompt and type specific
    * input field are created for each parameter, and a button added at the bottom that triggers
    * algorithm execution.
-   *
-   * @param paramList         the list of parameters asked for by the algorithm.
+   * @param paramList the list of parameters asked for by the algorithm.
    * @param primaryDataSource the primary data source
-   * @param messageReceiver   to send errors to
+   * @param messageReceiver to send errors to
    */
   public ParameterTable(List<ConfigurationRequirement> paramList,
                         ConfigurationSettingDataSource primaryDataSource,
-                        TabWrapper messageReceiver) {
+                        TabWrapper messageReceiver)
+  {
     super();
     this.messageReceiver = messageReceiver;
 
@@ -69,7 +69,8 @@ public class ParameterTable extends FlowPanel {
     for (ConfigurationRequirement param : paramList) {
       if (param.isRequired()) {
         table.setText(row, 0, param.getIdentifier() + " *");
-      } else {
+      }
+      else {
         table.setText(row, 0, param.getIdentifier());
       }
 
@@ -78,17 +79,19 @@ public class ParameterTable extends FlowPanel {
 
       if (currentWidget.isDataSource()) {
         InputParameterDataSourceWidget dataSourceWidget =
-            (InputParameterDataSourceWidget) currentWidget;
+          (InputParameterDataSourceWidget) currentWidget;
         if (dataSourceWidget.accepts(primaryDataSource)) {
           try {
             dataSourceWidget.setDataSource(primaryDataSource);
-          } catch (AlgorithmConfigurationException e) {
+          }
+          catch (AlgorithmConfigurationException e) {
             this.messageReceiver.addError("Could not select " + primaryDataSource.getValueAsString()
-                                          + " as data source. Please choose one of the available ones below.");
+              + " as data source. Please choose one of the available ones below.");
           }
         }
         this.dataSourceChildWidgets.add(dataSourceWidget);
-      } else {
+      }
+      else {
         this.childWidgets.add(currentWidget);
       }
       row++;
@@ -99,7 +102,8 @@ public class ParameterTable extends FlowPanel {
     FlowPanel radioBoxPanel = new FlowPanel();
     radioBoxPanel.addStyleName("radioBoxPanel");
     Label label = new Label("How to handle results?");
-    this.rbCache = new RadioButton("resultReceiver", "Cache result and write it to disk when the algorithm is finished.");
+    this.rbCache = new RadioButton("resultReceiver",
+      "Cache result and write it to disk when the algorithm is finished.");
     this.rbDisk = new RadioButton("resultReceiver", "Write result immediately to disk.");
     this.rbCount = new RadioButton("resultReceiver", "Just count the results.");
     this.rbCache.setValue(true);
@@ -133,9 +137,10 @@ public class ParameterTable extends FlowPanel {
     try {
       List<ConfigurationRequirement> parameters = getConfigurationSpecificationsWithValues();
       List<ConfigurationRequirement> dataSources =
-          getConfigurationSpecificationDataSourcesWithValues();
+        getConfigurationSpecificationDataSourcesWithValues();
       getAlgorithmTab().startExecution(parameters, dataSources, cacheResult, writeResult, countResult);
-    } catch (InputValidationException | AlgorithmConfigurationException e) {
+    }
+    catch (InputValidationException | AlgorithmConfigurationException e) {
       this.messageReceiver.clearErrors();
       // mark required input fields
       for (InputParameterWidget widget : this.childWidgets) {
@@ -159,15 +164,15 @@ public class ParameterTable extends FlowPanel {
 
   /**
    * Iterates over the child widgets that represent data sources and retrieves their user input.
-   *
    * @return The list of {@link InputParameterDataSourceWidget}s of this ParameterTable with their
    * user-set values.
    * @throws de.metanome.frontend.client.helpers.InputValidationException if the child widgets
-   *                                                                      cannot validate their
-   *                                                                      input
+   * cannot validate their
+   * input
    */
   public List<ConfigurationRequirement> getConfigurationSpecificationDataSourcesWithValues()
-      throws InputValidationException, AlgorithmConfigurationException {
+    throws InputValidationException, AlgorithmConfigurationException
+  {
     LinkedList<ConfigurationRequirement> parameterList = new LinkedList<>();
 
     for (InputParameterDataSourceWidget childWidget : this.dataSourceChildWidgets) {
@@ -179,15 +184,15 @@ public class ParameterTable extends FlowPanel {
 
   /**
    * Iterates over the child widgets and retrieves their user input.
-   *
    * @return The list of ConfigurationSpecifications of this ParameterTable with their user-set
    * values.
    * @throws de.metanome.frontend.client.helpers.InputValidationException if the child widgets
-   *                                                                      cannot validate their
-   *                                                                      input
+   * cannot validate their
+   * input
    */
   public List<ConfigurationRequirement> getConfigurationSpecificationsWithValues()
-      throws InputValidationException, AlgorithmConfigurationException {
+    throws InputValidationException, AlgorithmConfigurationException
+  {
     LinkedList<ConfigurationRequirement> parameterList = new LinkedList<>();
 
     for (InputParameterWidget childWidget : this.childWidgets) {
@@ -200,7 +205,6 @@ public class ParameterTable extends FlowPanel {
   /**
    * Gives access to this ParameterTable's {@link InputParameterWidget} child widget whose
    * underlying {@link de.metanome.algorithm_integration.configuration.ConfigurationRequirement} has the given identifier.
-   *
    * @param identifier The identifier of the ConfigurationSpecification of the wanted widget.
    * @return This parameter's child widgets that corresponds to the given identifier, or null if
    * such a child does not exist.
@@ -231,7 +235,6 @@ public class ParameterTable extends FlowPanel {
   /**
    * The AlgorithmTabs implement algorithm type specific methods, which can be called via the
    * AlgorithmTab's interface.
-   *
    * @return the parent AlgorithmTab
    */
   private RunConfigurationPage getAlgorithmTab() {

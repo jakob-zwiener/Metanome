@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,12 @@
 
 package de.metanome.backend.resources;
 
+import java.util.HashMap;
+
 import de.metanome.backend.algorithm_execution.ProgressCache;
 import de.metanome.backend.result_receiver.ResultCache;
 import de.metanome.backend.result_receiver.ResultCounter;
 import de.metanome.backend.result_receiver.ResultPrinter;
-
-import java.util.HashMap;
 
 public class AlgorithmExecutionCache {
 

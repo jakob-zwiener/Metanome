@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,6 @@
 package de.metanome.algorithm_integration;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,10 +25,12 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 /**
  * Logical "and" used in the composite pattern to represent column condition. Contains subcondition
  * that are concatenated by "and".
- *
  * @author Jens Ehrlich
  */
 @JsonTypeName("ColumnConditionAnd")
@@ -94,7 +93,8 @@ public class ColumnConditionAnd implements ColumnCondition {
         }
       }
       return coverage;
-    } else {
+    }
+    else {
       return this.coverage;
     }
   }
@@ -139,7 +139,8 @@ public class ColumnConditionAnd implements ColumnCondition {
       int lengthComparison = this.columnValues.size() - other.columnValues.size();
       if (lengthComparison != 0) {
         return lengthComparison;
-      } else {
+      }
+      else {
         Iterator<ColumnCondition> otherIterator = other.columnValues.iterator();
         int equalCount = 0;
 
@@ -155,12 +156,15 @@ public class ColumnConditionAnd implements ColumnCondition {
           }
         }
 
-        if (equalCount == this.columnValues.size())
+        if (equalCount == this.columnValues.size()) {
           return 0;
-        else
+        }
+        else {
           return 1;
+        }
       }
-    } else {
+    }
+    else {
       //and always last
       return 1;
     }
@@ -179,7 +183,7 @@ public class ColumnConditionAnd implements ColumnCondition {
       builder.append(delimiter);
     }
     return builder.substring(0, builder.length() - delimiter.length())
-        .concat(CLOSE_BRACKET);
+      .concat(CLOSE_BRACKET);
   }
 
   @Override
@@ -196,12 +200,9 @@ public class ColumnConditionAnd implements ColumnCondition {
     if (isNegated != that.isNegated) {
       return false;
     }
-    if (columnValues != null ? !columnValues.equals(that.columnValues)
-                             : that.columnValues != null) {
-      return false;
-    }
+    return !(columnValues != null ? !columnValues.equals(that.columnValues)
+      : that.columnValues != null);
 
-    return true;
   }
 
   @Override

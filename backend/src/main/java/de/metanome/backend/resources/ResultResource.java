@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,16 +16,8 @@
 
 package de.metanome.backend.resources;
 
-import de.metanome.backend.results_db.EntityStorageException;
-import de.metanome.backend.results_db.Execution;
-import de.metanome.backend.results_db.FileInput;
-import de.metanome.backend.results_db.HibernateUtil;
-import de.metanome.backend.results_db.Result;
-import de.metanome.backend.results_db.ResultType;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -34,6 +26,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+
+import de.metanome.backend.results_db.EntityStorageException;
+import de.metanome.backend.results_db.Execution;
+import de.metanome.backend.results_db.FileInput;
+import de.metanome.backend.results_db.HibernateUtil;
+import de.metanome.backend.results_db.Result;
+import de.metanome.backend.results_db.ResultType;
 
 @Path("results")
 public class ResultResource implements Resource<Result> {
@@ -51,7 +50,8 @@ public class ResultResource implements Resource<Result> {
   public Result store(Result result) {
     try {
       HibernateUtil.store(result);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       throw new WebException(e, Response.Status.BAD_REQUEST);
     }
 
@@ -69,14 +69,14 @@ public class ResultResource implements Resource<Result> {
     try {
       Result result = (Result) HibernateUtil.retrieve(Result.class, id);
       HibernateUtil.delete(result);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       throw new WebException(e, Response.Status.BAD_REQUEST);
     }
   }
 
   /**
    * Retrieves a result from the database.
-   *
    * @param id the result's id
    * @return the result
    */
@@ -87,7 +87,8 @@ public class ResultResource implements Resource<Result> {
   public Result get(@PathParam("id") long id) {
     try {
       return (Result) HibernateUtil.retrieve(Result.class, id);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       throw new WebException(e, Response.Status.BAD_REQUEST);
     }
   }
@@ -101,7 +102,8 @@ public class ResultResource implements Resource<Result> {
 
     try {
       results = HibernateUtil.queryCriteria(Result.class);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       // Algorithm should implement Entity, so the exception should not occur.
       throw new WebException(e, Response.Status.BAD_REQUEST);
     }
@@ -122,7 +124,8 @@ public class ResultResource implements Resource<Result> {
   public Result update(Result result) {
     try {
       HibernateUtil.update(result);
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       throw new WebException(e, Response.Status.BAD_REQUEST);
     }
     return result;
@@ -130,7 +133,6 @@ public class ResultResource implements Resource<Result> {
 
   /**
    * Retrieves one result for each result type, which was executed on the given file input.
-   *
    * @param id the id of the file input
    * @return all matching results
    */
@@ -155,7 +157,8 @@ public class ResultResource implements Resource<Result> {
           }
         }
       }
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       // Algorithm should implement Entity, so the exception should not occur.
       e.printStackTrace();
     }

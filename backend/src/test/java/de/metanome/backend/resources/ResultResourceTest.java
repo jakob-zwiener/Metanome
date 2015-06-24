@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,14 @@
 
 package de.metanome.backend.resources;
 
+import static org.junit.Assert.*;
+
+import java.util.Date;
+import java.util.List;
+
+import org.hamcrest.collection.IsIterableContainingInAnyOrder;
+import org.junit.Test;
+
 import de.metanome.backend.algorithm_loading.AlgorithmLoadingException;
 import de.metanome.backend.results_db.Algorithm;
 import de.metanome.backend.results_db.EntityStorageException;
@@ -24,17 +32,6 @@ import de.metanome.backend.results_db.FileInput;
 import de.metanome.backend.results_db.HibernateUtil;
 import de.metanome.backend.results_db.Result;
 import de.metanome.backend.results_db.ResultType;
-
-import org.hamcrest.collection.IsIterableContainingInAnyOrder;
-import org.junit.Test;
-
-import java.util.Date;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 public class ResultResourceTest {
 
@@ -107,7 +104,7 @@ public class ResultResourceTest {
     // Check result
     assertTrue(actualResults.size() == 2);
     assertThat(actualResults,
-               IsIterableContainingInAnyOrder.containsInAnyOrder(expectedResult1, expectedResult2));
+      IsIterableContainingInAnyOrder.containsInAnyOrder(expectedResult1, expectedResult2));
 
     // Cleanup
     HibernateUtil.clear();
@@ -116,12 +113,13 @@ public class ResultResourceTest {
   /**
    * Test method for {@link de.metanome.backend.resources.ResultResource#store(de.metanome.backend.results_db.Result)}
    * and {@link de.metanome.backend.resources.ResultResource#get(long)}
-   *
+   * <p/>
    * Tests persistence of a Result with an attached {@link de.metanome.backend.results_db.Execution}.
    */
   @Test
   public void testPersistenceWithExecution()
-      throws EntityStorageException, AlgorithmLoadingException {
+    throws EntityStorageException, AlgorithmLoadingException
+  {
     // Setup
     HibernateUtil.clear();
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +18,11 @@ package de.metanome.backend.helper;
 
 /**
  * This class builds a detailed exception string.
- *
+ * <p/>
  * GWT does not support wrapper exceptions, so that the original cause of an exception is not
  * known in the frontend. However a string can be passed to the frontend with an exception. To
  * give the user the possibility to understand what went wrong, this class builds a detailed
  * exception string.
- *
  */
 public class ExceptionParser {
 
@@ -33,7 +32,7 @@ public class ExceptionParser {
    * @return the detailed exception string containing the message and a part of the stack trace
    */
   public static String parse(Throwable throwable) {
-    return  ExceptionParser.parse(throwable, "");
+    return ExceptionParser.parse(throwable, "");
   }
 
   /**

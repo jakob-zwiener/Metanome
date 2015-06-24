@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,8 @@ public class ConfigurationSettingInteger extends ConfigurationSettingPrimitive<I
   // Needed for restful serialization
   public String type = "ConfigurationSettingInteger";
 
-  public ConfigurationSettingInteger() {}
+  public ConfigurationSettingInteger() {
+  }
 
   public ConfigurationSettingInteger(Integer value) {
     super(value);

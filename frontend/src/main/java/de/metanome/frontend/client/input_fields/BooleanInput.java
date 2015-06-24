@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import com.google.gwt.user.client.ui.CheckBox;
 /**
  * A wrapper for a checkbox that can contain a remove button. If the remove button is clicked, the
  * checkbox is removed from the parent widget.
- *
  * @author Claudia Exeler
  */
 public class BooleanInput extends InputField {
@@ -30,7 +29,7 @@ public class BooleanInput extends InputField {
 
   /**
    * @param optional If true, a remove button will be rendered, to remove this widget from its
-   *                 parent.
+   * parent.
    * @param required If true, a value has to be set.
    */
   public BooleanInput(boolean optional, boolean required) {
@@ -49,7 +48,6 @@ public class BooleanInput extends InputField {
 
   /**
    * Sets the value of the checkbox
-   *
    * @param value the value to set the checkbox to
    */
   public void setValue(boolean value) {

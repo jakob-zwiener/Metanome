@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,9 @@
 
 package de.metanome.frontend.client.input_fields;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.junit.client.GWTTestCase;
 
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
@@ -26,19 +29,15 @@ import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.TestHelper;
 import de.metanome.frontend.client.helpers.InputValidationException;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Tests for {@link DatabaseConnectionInput}
- *
  * @author Jakob Zwiener
  */
 public class GwtTestDatabaseConnectionInput extends GWTTestCase {
 
   /**
    * Test method for {@link DatabaseConnectionInput#DatabaseConnectionInput(
-   * boolean, boolean, de.metanome.frontend.client.TabWrapper, java.util.List)}
+   *boolean, boolean, de.metanome.frontend.client.TabWrapper, java.util.List)}
    * <p/> After calling the constructor the optional
    * parameter should be set correctly and all widgets should be initialized.
    */
@@ -53,8 +52,8 @@ public class GwtTestDatabaseConnectionInput extends GWTTestCase {
 
     // Execute functionality
     DatabaseConnectionInput
-        actualDatabaseConnectionInput = new DatabaseConnectionInput(
-          expectedOptional, false, tabWrapper, new ArrayList<String>());
+      actualDatabaseConnectionInput = new DatabaseConnectionInput(
+      expectedOptional, false, tabWrapper, new ArrayList<String>());
 
     // Check result
     assertEquals(expectedOptional, actualDatabaseConnectionInput.isOptional);
@@ -84,12 +83,12 @@ public class GwtTestDatabaseConnectionInput extends GWTTestCase {
 
     // Expected values
     ConfigurationSettingDatabaseConnection expectedSetting =
-        new ConfigurationSettingDatabaseConnection("url", "username", "password", DbSystem.DB2);
+      new ConfigurationSettingDatabaseConnection("url", "username", "password", DbSystem.DB2);
 
     // Initialize DatabaseConnectionInput (waiting for fetching all current database connections)
     DatabaseConnectionInput
-        databaseConnectionInput =
-        new DatabaseConnectionInput(false, false, tabWrapper, new ArrayList<String>());
+      databaseConnectionInput =
+      new DatabaseConnectionInput(false, false, tabWrapper, new ArrayList<String>());
 
     databaseConnectionInput.databaseConnections.put("url", dbConnection);
     databaseConnectionInput.listBox.addValue("--");
@@ -101,7 +100,8 @@ public class GwtTestDatabaseConnectionInput extends GWTTestCase {
     ConfigurationSettingDatabaseConnection actualSetting = null;
     try {
       actualSetting = databaseConnectionInput.getValues();
-    } catch (InputValidationException e) {
+    }
+    catch (InputValidationException e) {
       fail();
     }
 
@@ -141,8 +141,8 @@ public class GwtTestDatabaseConnectionInput extends GWTTestCase {
     acceptedSystems.add(DbSystem.Oracle.name());
 
     DatabaseConnectionInput
-        databaseConnectionInput =
-        new DatabaseConnectionInput(false, false, new TabWrapper(), acceptedSystems);
+      databaseConnectionInput =
+      new DatabaseConnectionInput(false, false, new TabWrapper(), acceptedSystems);
 
     // Expected
     // Execute
@@ -179,8 +179,8 @@ public class GwtTestDatabaseConnectionInput extends GWTTestCase {
     acceptedSystems.add(DbSystem.HANA.name());
 
     DatabaseConnectionInput
-        databaseConnectionInput =
-        new DatabaseConnectionInput(false, false, new TabWrapper(), acceptedSystems);
+      databaseConnectionInput =
+      new DatabaseConnectionInput(false, false, new TabWrapper(), acceptedSystems);
 
     // Expected
     // Execute
@@ -205,12 +205,13 @@ public class GwtTestDatabaseConnectionInput extends GWTTestCase {
 
     // Initialize DatabaseConnectionInput (waiting for fetching all current database connections)
     DatabaseConnectionInput
-        databaseConnectionInput =
-        new DatabaseConnectionInput(false, false, tabWrapper, new ArrayList<String>());
+      databaseConnectionInput =
+      new DatabaseConnectionInput(false, false, tabWrapper, new ArrayList<String>());
 
     try {
       databaseConnectionInput.getValues();
-    } catch (InputValidationException e) {
+    }
+    catch (InputValidationException e) {
       // should throw an exception
     }
 

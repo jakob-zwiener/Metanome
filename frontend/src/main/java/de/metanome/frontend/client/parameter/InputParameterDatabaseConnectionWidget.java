@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,9 @@
 
 package de.metanome.frontend.client.parameter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirementDatabaseConnection;
@@ -25,9 +28,6 @@ import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.helpers.InputValidationException;
 import de.metanome.frontend.client.input_fields.DatabaseConnectionInput;
 import de.metanome.frontend.client.input_fields.InputField;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class InputParameterDatabaseConnectionWidget extends InputParameterDataSourceWidget {
 
@@ -39,7 +39,8 @@ public class InputParameterDatabaseConnectionWidget extends InputParameterDataSo
   private ConfigurationRequirementDatabaseConnection specification;
 
   public InputParameterDatabaseConnectionWidget(ConfigurationRequirementDatabaseConnection config,
-                                                TabWrapper wrapper) {
+                                                TabWrapper wrapper)
+  {
     super(config, wrapper);
 
   }
@@ -47,18 +48,19 @@ public class InputParameterDatabaseConnectionWidget extends InputParameterDataSo
   @Override
   protected void addInputField(boolean optional, boolean required, int settingIndex) {
     DatabaseConnectionInput widget = new DatabaseConnectionInput(
-        optional, required, messageReceiver, this.specification.getAcceptedDBSystems());
+      optional, required, messageReceiver, this.specification.getAcceptedDBSystems());
     this.inputWidgets.add(widget);
     this.add(widget);
   }
 
   @Override
   public ConfigurationRequirement getUpdatedSpecification()
-      throws InputValidationException, AlgorithmConfigurationException {
+    throws InputValidationException, AlgorithmConfigurationException
+  {
     // Build an array with the actual number of set values.
     List<ConfigurationSettingDatabaseConnection>
-        values =
-        new ArrayList<>();
+      values =
+      new ArrayList<>();
 
     for (DatabaseConnectionInput inputWidget : inputWidgets) {
       ConfigurationSettingDatabaseConnection current = inputWidget.getValues();
@@ -74,7 +76,8 @@ public class InputParameterDatabaseConnectionWidget extends InputParameterDataSo
 
   @Override
   public void setDataSource(ConfigurationSettingDataSource dataSource)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     this.inputWidgets.get(0).setValues((ConfigurationSettingDatabaseConnection) dataSource);
   }
 

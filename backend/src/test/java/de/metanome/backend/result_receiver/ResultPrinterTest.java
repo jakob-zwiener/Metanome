@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,21 @@
 
 package de.metanome.backend.result_receiver;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.List;
+
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
+
+import org.apache.commons.io.FileUtils;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import de.metanome.algorithm_integration.ColumnCombination;
 import de.metanome.algorithm_integration.ColumnIdentifier;
@@ -34,23 +47,8 @@ import de.metanome.algorithm_integration.results.Result;
 import de.metanome.algorithm_integration.results.UniqueColumnCombination;
 import de.metanome.backend.results_db.ResultType;
 
-import org.apache.commons.io.FileUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.util.List;
-
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
 /**
  * Test for {@link ResultPrinter}
- *
  * @author Jakob Zwiener
  */
 public class ResultPrinterTest {
@@ -78,8 +76,8 @@ public class ResultPrinterTest {
   public void testWriteBasicStatistic() throws CouldNotReceiveResultException, IOException {
     // Expected values
     BasicStatistic
-        expectedStat =
-        new BasicStatistic("Min", "minValue", new ColumnIdentifier("table1", "column2"));
+      expectedStat =
+      new BasicStatistic("Min", "minValue", new ColumnIdentifier("table1", "column2"));
 
     // Check precondition
     assertTrue(!printer.openStreams.containsKey(ResultType.STAT));
@@ -111,9 +109,9 @@ public class ResultPrinterTest {
   public void testWriteFunctionalDependency() throws CouldNotReceiveResultException, IOException {
     // Expected values
     FunctionalDependency expectedFd = new FunctionalDependency(
-        new ColumnCombination(
-            new ColumnIdentifier("table1", "column2")),
-        new ColumnIdentifier("table1", "column23")
+      new ColumnCombination(
+        new ColumnIdentifier("table1", "column2")),
+      new ColumnIdentifier("table1", "column23")
     );
 
     // Check precondition
@@ -146,10 +144,10 @@ public class ResultPrinterTest {
   public void testWriteInclusionDependency() throws CouldNotReceiveResultException, IOException {
     // Expected values
     InclusionDependency expectedInd = new InclusionDependency(
-        new ColumnPermutation(
-            new ColumnIdentifier("table1", "column2")),
-        new ColumnPermutation(
-            new ColumnIdentifier("table2", "column23"))
+      new ColumnPermutation(
+        new ColumnIdentifier("table1", "column2")),
+      new ColumnPermutation(
+        new ColumnIdentifier("table2", "column23"))
     );
 
     // Check precondition
@@ -180,11 +178,12 @@ public class ResultPrinterTest {
    */
   @Test
   public void testWriteUniqueColumnCombination()
-      throws CouldNotReceiveResultException, IOException {
+    throws CouldNotReceiveResultException, IOException
+  {
     // Expected values
     UniqueColumnCombination
-        expectedUcc =
-        new UniqueColumnCombination(new ColumnIdentifier("table1", "column2"));
+      expectedUcc =
+      new UniqueColumnCombination(new ColumnIdentifier("table1", "column2"));
 
     // Check precondition
     assertTrue(!printer.openStreams.containsKey(ResultType.UCC));
@@ -216,10 +215,10 @@ public class ResultPrinterTest {
   public void testWriteOrderDependency() throws CouldNotReceiveResultException, IOException {
     // Expected values
     OrderDependency expectedOd =
-        new OrderDependency(new ColumnPermutation(
-            new ColumnIdentifier("table1", "column2")),
+      new OrderDependency(new ColumnPermutation(
+        new ColumnIdentifier("table1", "column2")),
         new ColumnPermutation(
-            new ColumnIdentifier("table1", "column23")),
+          new ColumnIdentifier("table1", "column23")),
         OrderType.LEXICOGRAPHICAL,
         ComparisonOperator.SMALLER_EQUAL);
 
@@ -244,7 +243,7 @@ public class ResultPrinterTest {
     // Cleanup
     actualFile.delete();
   }
-  
+
   /**
    * Test method for {@link ResultPrinter#close()} <p/> Even if no streams are set the {@link
    * ResultPrinter} should be closeable.

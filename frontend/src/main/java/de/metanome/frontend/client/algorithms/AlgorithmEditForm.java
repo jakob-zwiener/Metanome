@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,9 @@
 
 package de.metanome.frontend.client.algorithms;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
@@ -23,17 +26,14 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
+
 import de.metanome.backend.results_db.Algorithm;
 import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.helpers.InputValidationException;
 import de.metanome.frontend.client.input_fields.ListBoxInput;
 import de.metanome.frontend.client.services.AlgorithmRestService;
-
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Claudia Exeler
@@ -139,8 +139,9 @@ public class AlgorithmEditForm extends Grid {
       public void onSuccess(Method method, List<Algorithm> result) {
         List<String> algorithmNames = new ArrayList<>();
 
-        for (Algorithm algorithm : result)
+        for (Algorithm algorithm : result) {
           algorithmsInDatabase.add(algorithm.getFileName());
+        }
 
         for (String name : algorithmsOnStorage) {
           if (!algorithmsInDatabase.contains(name)) {
@@ -163,7 +164,7 @@ public class AlgorithmEditForm extends Grid {
       @Override
       public void onFailure(Method method, Throwable throwable) {
         messageReceiver.addError(
-            "Could not find any algorithms. Please add your algorithms to the algorithm folder.");
+          "Could not find any algorithms. Please add your algorithms to the algorithm folder.");
         throwable.printStackTrace();
       }
 
@@ -173,7 +174,7 @@ public class AlgorithmEditForm extends Grid {
 
         if (result.size() == 0) {
           messageReceiver
-              .addError("Could not find any algorithms. Please add your algorithms to the algorithm folder.");
+            .addError("Could not find any algorithms. Please add your algorithms to the algorithm folder.");
           return;
         }
 
@@ -196,8 +197,9 @@ public class AlgorithmEditForm extends Grid {
   protected void saveSubmit() {
     messageReceiver.clearErrors();
     try {
-        algorithmsPage.callAddAlgorithm(retrieveInputValues());
-    } catch (InputValidationException e) {
+      algorithmsPage.callAddAlgorithm(retrieveInputValues());
+    }
+    catch (InputValidationException e) {
       messageReceiver.addError(e.getMessage());
     }
   }
@@ -211,7 +213,8 @@ public class AlgorithmEditForm extends Grid {
       Algorithm updatedAlgorithm = retrieveInputValues();
       updatedAlgorithm.setId(oldAlgorithm.getId());
       algorithmsPage.callUpdateAlgorithm(updatedAlgorithm, oldAlgorithm);
-    } catch (InputValidationException e) {
+    }
+    catch (InputValidationException e) {
       messageReceiver.addError(e.getMessage());
     }
   }
@@ -221,7 +224,8 @@ public class AlgorithmEditForm extends Grid {
    * @throws InputValidationException if the algorithm name is not set
    */
   protected Algorithm retrieveInputValues()
-      throws InputValidationException {
+    throws InputValidationException
+  {
     String algorithmFile = this.fileListBox.getSelectedValue();
 
     Algorithm algorithm = new Algorithm(algorithmFile);

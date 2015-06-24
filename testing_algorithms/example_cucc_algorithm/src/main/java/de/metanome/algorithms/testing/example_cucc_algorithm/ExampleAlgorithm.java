@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 
 package de.metanome.algorithms.testing.example_cucc_algorithm;
+
+import java.util.ArrayList;
 
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.ColumnCombination;
@@ -33,14 +35,13 @@ import de.metanome.algorithm_integration.result_receiver.ConditionalUniqueColumn
 import de.metanome.algorithm_integration.result_receiver.CouldNotReceiveResultException;
 import de.metanome.algorithm_integration.results.ConditionalUniqueColumnCombination;
 
-import java.util.ArrayList;
-
 /**
  * @author Jens Ehrlich
  */
 public class ExampleAlgorithm implements ConditionalUniqueColumnCombinationAlgorithm,
-                                         StringParameterAlgorithm, FileInputParameterAlgorithm,
-                                         ProgressEstimatingAlgorithm {
+  StringParameterAlgorithm, FileInputParameterAlgorithm,
+  ProgressEstimatingAlgorithm
+{
 
   protected String path1, path2 = null;
   protected ConditionalUniqueColumnCombinationResultReceiver resultReceiver;
@@ -51,9 +52,9 @@ public class ExampleAlgorithm implements ConditionalUniqueColumnCombinationAlgor
     ArrayList<ConfigurationRequirement> configurationRequirement = new ArrayList<>();
 
     configurationRequirement.add(new ConfigurationRequirementString(
-        "pathToInputFile", 2));
+      "pathToInputFile", 2));
     configurationRequirement.add(new ConfigurationRequirementFileInput(
-        "input file", 2));
+      "input file", 2));
 
     return configurationRequirement;
   }
@@ -64,10 +65,11 @@ public class ExampleAlgorithm implements ConditionalUniqueColumnCombinationAlgor
       System.out.println("CUCC Algorithm executing");
       try {
         resultReceiver.receiveResult(new ConditionalUniqueColumnCombination(
-            new ColumnCombination(new ColumnIdentifier("table1", "column1")),
-            new ColumnConditionValue(new ColumnIdentifier("table2", "column2"), "hello world")));
+          new ColumnCombination(new ColumnIdentifier("table1", "column1")),
+          new ColumnConditionValue(new ColumnIdentifier("table2", "column2"), "hello world")));
 
-      } catch (CouldNotReceiveResultException e) {
+      }
+      catch (CouldNotReceiveResultException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
       }
@@ -77,7 +79,8 @@ public class ExampleAlgorithm implements ConditionalUniqueColumnCombinationAlgor
         Thread.sleep(500);
         progressReceiver.updateProgress(1f / (10 - i));
       }
-    } catch (InterruptedException ex) {
+    }
+    catch (InterruptedException ex) {
       Thread.currentThread().interrupt();
     }
 
@@ -86,19 +89,22 @@ public class ExampleAlgorithm implements ConditionalUniqueColumnCombinationAlgor
 
   @Override
   public void setStringConfigurationValue(String identifier, String... values)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     System.out.println("setting value for " + identifier);
     if ((identifier.equals("pathToInputFile")) && (values.length == 2)) {
       path1 = values[0];
       path2 = values[1];
-    } else {
+    }
+    else {
       throw new AlgorithmConfigurationException("Incorrect identifier or value list length.");
     }
   }
 
   @Override
   public void setFileInputConfigurationValue(String identifier, FileInputGenerator... values)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     if (identifier.equals("input file")) {
       System.out.println("Input file is not being set on algorithm.");
     }

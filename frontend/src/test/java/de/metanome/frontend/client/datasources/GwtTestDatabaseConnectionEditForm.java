@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 package de.metanome.frontend.client.datasources;
 
+import java.util.Arrays;
+
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.Button;
 
@@ -24,8 +26,6 @@ import de.metanome.backend.results_db.DatabaseConnection;
 import de.metanome.frontend.client.BasePage;
 import de.metanome.frontend.client.TestHelper;
 import de.metanome.frontend.client.helpers.InputValidationException;
-
-import java.util.Arrays;
 
 
 public class GwtTestDatabaseConnectionEditForm extends GWTTestCase {
@@ -42,9 +42,9 @@ public class GwtTestDatabaseConnectionEditForm extends GWTTestCase {
     String expectedSystem = DbSystem.DB2.name();
 
     DatabaseConnectionEditForm
-        input =
-        new DatabaseConnectionEditForm(
-            new DatabaseConnectionTab(new DataSourcePage(new BasePage())));
+      input =
+      new DatabaseConnectionEditForm(
+        new DatabaseConnectionTab(new DataSourcePage(new BasePage())));
 
     // Execute
     input.setValues(expectedUrl, expectedSystem, expectedUser, expectedPassword, expectedComment);
@@ -69,9 +69,9 @@ public class GwtTestDatabaseConnectionEditForm extends GWTTestCase {
     String expectedSystem = DbSystem.DB2.name();
 
     DatabaseConnectionEditForm
-        input =
-        new DatabaseConnectionEditForm(
-            new DatabaseConnectionTab(new DataSourcePage(new BasePage())));
+      input =
+      new DatabaseConnectionEditForm(
+        new DatabaseConnectionTab(new DataSourcePage(new BasePage())));
 
     // Execute
     input.setValues(expectedUrl, expectedSystem, expectedUser, expectedPassword, "");
@@ -79,7 +79,8 @@ public class GwtTestDatabaseConnectionEditForm extends GWTTestCase {
     //Check
     try {
       input.getValue();
-    } catch (InputValidationException e) {
+    }
+    catch (InputValidationException e) {
       assertTrue(true);
     }
   }
@@ -90,9 +91,9 @@ public class GwtTestDatabaseConnectionEditForm extends GWTTestCase {
   public void testResetValues() throws InputValidationException {
     //Setup
     DatabaseConnectionEditForm
-        input =
-        new DatabaseConnectionEditForm(
-            new DatabaseConnectionTab(new DataSourcePage(new BasePage())));
+      input =
+      new DatabaseConnectionEditForm(
+        new DatabaseConnectionTab(new DataSourcePage(new BasePage())));
     input.setValues("url", DbSystem.DB2.name(), "user", "password", "some comment");
 
     // Execute
@@ -115,7 +116,7 @@ public class GwtTestDatabaseConnectionEditForm extends GWTTestCase {
   /**
    * Test method for {@link de.metanome.frontend.client.datasources.DatabaseConnectionEditForm#updateDatabaseConnection(de.metanome.backend.results_db.DatabaseConnection)}
    * and test method for {@link DatabaseConnectionEditForm#showSaveButton()}
-   *
+   * <p/>
    * If the edit button for a database connection is clicked, the edit form should contain the values
    * of that database connection and the edit form should show a update button instead of an save button.
    * If the method 'show save button' is called, the save button should be visible again.
@@ -125,9 +126,9 @@ public class GwtTestDatabaseConnectionEditForm extends GWTTestCase {
     TestHelper.resetDatabaseSync();
 
     DatabaseConnectionEditForm
-        editForm =
-        new DatabaseConnectionEditForm(
-            new DatabaseConnectionTab(new DataSourcePage(new BasePage())));
+      editForm =
+      new DatabaseConnectionEditForm(
+        new DatabaseConnectionTab(new DataSourcePage(new BasePage())));
 
     // Expected Values
     String expectedUrl = "url";
@@ -136,11 +137,11 @@ public class GwtTestDatabaseConnectionEditForm extends GWTTestCase {
     DbSystem expectedSystem = DbSystem.DB2;
     String expectedComment = "comment";
     DatabaseConnection connection = new DatabaseConnection()
-        .setUrl(expectedUrl)
-        .setComment(expectedComment)
-        .setPassword(expectedPassword)
-        .setSystem(expectedSystem)
-        .setUsername(expectedUser);
+      .setUrl(expectedUrl)
+      .setComment(expectedComment)
+      .setPassword(expectedPassword)
+      .setSystem(expectedSystem)
+      .setUsername(expectedUser);
 
     // Execute
     editForm.updateDatabaseConnection(connection);

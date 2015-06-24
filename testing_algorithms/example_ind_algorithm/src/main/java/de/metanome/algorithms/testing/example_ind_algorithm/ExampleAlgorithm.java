@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,14 @@
  */
 
 package de.metanome.algorithms.testing.example_ind_algorithm;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
+import org.apache.commons.io.FileUtils;
 
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.AlgorithmExecutionException;
@@ -34,17 +42,10 @@ import de.metanome.algorithm_integration.input.FileInputGenerator;
 import de.metanome.algorithm_integration.result_receiver.InclusionDependencyResultReceiver;
 import de.metanome.algorithm_integration.results.InclusionDependency;
 
-import org.apache.commons.io.FileUtils;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-
 public class ExampleAlgorithm
-    implements InclusionDependencyAlgorithm, TempFileAlgorithm, StringParameterAlgorithm,
-               FileInputParameterAlgorithm, IntegerParameterAlgorithm {
+  implements InclusionDependencyAlgorithm, TempFileAlgorithm, StringParameterAlgorithm,
+  FileInputParameterAlgorithm, IntegerParameterAlgorithm
+{
 
   public final static String CSV_FILE_IDENTIFIER = "input file";
   public final static String STRING_IDENTIFIER = "tableName";
@@ -61,13 +62,14 @@ public class ExampleAlgorithm
 
     ConfigurationRequirementFileInput requirementFileInput = new ConfigurationRequirementFileInput(CSV_FILE_IDENTIFIER);
     ConfigurationRequirementString
-        requirementString = new ConfigurationRequirementString(STRING_IDENTIFIER);
+      requirementString = new ConfigurationRequirementString(STRING_IDENTIFIER);
     ConfigurationRequirementInteger
-        requirementInteger = new ConfigurationRequirementInteger(INTEGER_IDENTIFIER);
+      requirementInteger = new ConfigurationRequirementInteger(INTEGER_IDENTIFIER);
     try {
       requirementString.checkAndSetDefaultValues("test");
       requirementInteger.checkAndSetDefaultValues(5);
-    } catch (AlgorithmConfigurationException e) {
+    }
+    catch (AlgorithmConfigurationException e) {
       e.printStackTrace();
     }
 
@@ -88,7 +90,8 @@ public class ExampleAlgorithm
     PrintWriter tempWriter;
     try {
       tempWriter = new PrintWriter(tempFile);
-    } catch (FileNotFoundException e) {
+    }
+    catch (FileNotFoundException e) {
       throw new AlgorithmExecutionException("File not found.");
     }
     tempWriter.write("table1");
@@ -97,20 +100,21 @@ public class ExampleAlgorithm
     String tableName1;
     try {
       tableName1 = FileUtils.readFileToString(tempFile);
-    } catch (IOException e) {
+    }
+    catch (IOException e) {
       throw new AlgorithmExecutionException("Could not read from file.");
     }
 
     if ((tableName != null) && fileInputSet && (numberOfTables != -1)) {
       resultReceiver.receiveResult(
-          new InclusionDependency(
-              new ColumnPermutation(
-                  new ColumnIdentifier(tableName1, "column1"),
-                  new ColumnIdentifier("table1", "column2")),
-              new ColumnPermutation(
-                  new ColumnIdentifier("table2", "column3"),
-                  new ColumnIdentifier("table2", "column2"))
-          )
+        new InclusionDependency(
+          new ColumnPermutation(
+            new ColumnIdentifier(tableName1, "column1"),
+            new ColumnIdentifier("table1", "column2")),
+          new ColumnPermutation(
+            new ColumnIdentifier("table2", "column3"),
+            new ColumnIdentifier("table2", "column2"))
+        )
       );
     }
   }
@@ -128,31 +132,37 @@ public class ExampleAlgorithm
 
   @Override
   public void setStringConfigurationValue(String identifier, String... values)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     if ((identifier.equals("tableName")) && (values.length == 1)) {
       tableName = values[0];
-    } else {
+    }
+    else {
       throw new AlgorithmConfigurationException("Incorrect identifier or value list length.");
     }
   }
 
   @Override
   public void setFileInputConfigurationValue(String identifier, FileInputGenerator... values)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     if ((identifier.equals(CSV_FILE_IDENTIFIER)) && (values.length == 1)) {
       System.out.println("Input file is not being set on algorithm.");
       fileInputSet = true;
-    } else {
+    }
+    else {
       throw new AlgorithmConfigurationException("Incorrect configuration.");
     }
   }
 
   @Override
   public void setIntegerConfigurationValue(String identifier, Integer... values)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     if ((identifier.equals(INTEGER_IDENTIFIER)) && (values.length == 1)) {
       numberOfTables = values[0];
-    } else {
+    }
+    else {
       throw new AlgorithmConfigurationException("Incorrect identifier or value list length.");
     }
   }

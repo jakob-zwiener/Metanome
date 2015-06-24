@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,23 +16,21 @@
 
 package de.metanome.backend.configuration;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.junit.Test;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.algorithm_types.ProgressEstimatingAlgorithm;
 import de.metanome.algorithm_integration.algorithm_types.TableInputParameterAlgorithm;
 import de.metanome.algorithm_integration.input.TableInputGenerator;
 
-import org.junit.Test;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
 /**
  * Tests for {@link ConfigurationValueTableInputGenerator}
- *
  * @author Jakob Zwiener
  */
 public class ConfigurationValueTableInputGeneratorTest {
@@ -51,19 +49,19 @@ public class ConfigurationValueTableInputGeneratorTest {
     // Expected values
     String expectedIdentifier = "configId1";
     TableInputGenerator[]
-        expectedConfigurationValue =
-        {mock(TableInputGenerator.class), mock(TableInputGenerator.class)};
+      expectedConfigurationValue =
+      { mock(TableInputGenerator.class), mock(TableInputGenerator.class) };
 
     // Execute functionality
     ConfigurationValueTableInputGenerator
-        configValue =
-        new ConfigurationValueTableInputGenerator(expectedIdentifier,
-                                                  expectedConfigurationValue);
+      configValue =
+      new ConfigurationValueTableInputGenerator(expectedIdentifier,
+        expectedConfigurationValue);
     configValue.triggerSetValue(algorithm, interfaces);
 
     // Check result
     verify(algorithm)
-        .setTableInputConfigurationValue(expectedIdentifier, expectedConfigurationValue);
+      .setTableInputConfigurationValue(expectedIdentifier, expectedConfigurationValue);
   }
 
   /**
@@ -81,18 +79,19 @@ public class ConfigurationValueTableInputGeneratorTest {
     // Expected values
     String expectedIdentifier = "configId1";
     TableInputGenerator[]
-        expectedConfigurationValues =
-        {mock(TableInputGenerator.class), mock(TableInputGenerator.class)};
+      expectedConfigurationValues =
+      { mock(TableInputGenerator.class), mock(TableInputGenerator.class) };
 
     // Execute functionality
     ConfigurationValueTableInputGenerator
-        configValue =
-        new ConfigurationValueTableInputGenerator(expectedIdentifier,
-                                                  expectedConfigurationValues);
+      configValue =
+      new ConfigurationValueTableInputGenerator(expectedIdentifier,
+        expectedConfigurationValues);
     try {
       configValue.triggerSetValue(algorithm, interfaces);
       fail("No exception was thrown.");
-    } catch (AlgorithmConfigurationException e) {
+    }
+    catch (AlgorithmConfigurationException e) {
       // Intentionally left blank
     }
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,11 +22,11 @@ import de.metanome.algorithm_integration.algorithm_types.UniqueColumnCombination
 
 /**
  * An abstract superclass implementing the metanome interfaces.
- *
  * @author Jakob Zwiener
  */
 public abstract class AlgorithmSuperclass
-    implements UniqueColumnCombinationsAlgorithm, ProgressEstimatingAlgorithm,
-               RelationalInputParameterAlgorithm {
+  implements UniqueColumnCombinationsAlgorithm, ProgressEstimatingAlgorithm,
+  RelationalInputParameterAlgorithm
+{
 
 }

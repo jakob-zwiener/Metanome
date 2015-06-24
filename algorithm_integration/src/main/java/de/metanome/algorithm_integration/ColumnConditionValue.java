@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,18 +17,17 @@
 package de.metanome.algorithm_integration;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 /**
  * This is the leaf node class for the {@link ColumnCondition} using the composite pattern.
- *
  * @author Jens Ehrlich
  */
 @JsonTypeName("ColumnConditionValue")
@@ -63,7 +62,8 @@ public class ColumnConditionValue implements ColumnCondition {
    * java.lang.String }, and a boolean which indicates the negation of the condition.
    */
   public ColumnConditionValue(ColumnIdentifier columnIdentifier, String columnValue,
-                              boolean isNegated) {
+                              boolean isNegated)
+  {
     this(columnIdentifier, columnValue);
     this.isNegated = isNegated;
   }
@@ -153,10 +153,7 @@ public class ColumnConditionValue implements ColumnCondition {
     if (!columnIdentifier.equals(that.columnIdentifier)) {
       return false;
     }
-    if (!columnValue.equals(that.columnValue)) {
-      return false;
-    }
-    return true;
+    return columnValue.equals(that.columnValue);
   }
 
   @Override
@@ -175,13 +172,16 @@ public class ColumnConditionValue implements ColumnCondition {
         int columnComparison = this.columnIdentifier.compareTo(other.columnIdentifier);
         if (columnComparison != 0) {
           return columnComparison;
-        } else {
+        }
+        else {
           return this.columnValue.compareTo(other.columnValue);
         }
-      } else {
+      }
+      else {
         if (this.isNegated) {
           return 1;
-        } else {
+        }
+        else {
           return -1;
         }
       }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,17 +16,14 @@
 
 package de.metanome.backend.resources;
 
-import de.metanome.algorithm_integration.AlgorithmExecutionException;
-import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
-
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
-import javax.ws.rs.Path;
+import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import de.metanome.algorithm_integration.AlgorithmExecutionException;
+import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
 
 public class ParameterResourceTest {
 
@@ -37,8 +34,8 @@ public class ParameterResourceTest {
 
     //Execute
     List<ConfigurationRequirement>
-        inputParameters =
-        parameterService.retrieveParameters("example_ucc_algorithm.jar");
+      inputParameters =
+      parameterService.retrieveParameters("example_ucc_algorithm.jar");
 
     //Check
     assertNotNull(inputParameters);

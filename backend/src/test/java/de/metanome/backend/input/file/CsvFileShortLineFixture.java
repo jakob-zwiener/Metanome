@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 package de.metanome.backend.input.file;
 
+import java.io.StringReader;
+
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 
@@ -23,12 +25,9 @@ import de.metanome.algorithm_integration.configuration.ConfigurationSettingFileI
 import de.metanome.algorithm_integration.input.InputGenerationException;
 import de.metanome.algorithm_integration.input.InputIterationException;
 
-import java.io.StringReader;
-
 /**
  * A fixture generating a file file with 4 rows. Rows 2 and 4 have differing lengths (2 (short) and 4
  * (long)).
- *
  * @author Jakob Zwiener
  */
 public class CsvFileShortLineFixture {
@@ -46,24 +45,25 @@ public class CsvFileShortLineFixture {
   }
 
   public FileIterator getTestData(boolean skipDifferingLines)
-      throws InputIterationException, InputGenerationException {
+    throws InputIterationException, InputGenerationException
+  {
     ConfigurationSettingFileInput setting = new ConfigurationSettingFileInput("some_file")
-        .setSeparatorChar(String.valueOf(SEPARATOR))
-        .setHeader(HAS_HEADER)
-        .setIgnoreLeadingWhiteSpace(IGNORE_LEADING_WHITESPACES)
-        .setStrictQuotes(STRICT_QUOTES)
-        .setEscapeChar(String.valueOf(ESCAPE))
-        .setQuoteChar(String.valueOf(QUOTE_CHAR))
-        .setSkipLines(SKIP_LINES)
-        .setSkipDifferingLines(skipDifferingLines);
+      .setSeparatorChar(String.valueOf(SEPARATOR))
+      .setHeader(HAS_HEADER)
+      .setIgnoreLeadingWhiteSpace(IGNORE_LEADING_WHITESPACES)
+      .setStrictQuotes(STRICT_QUOTES)
+      .setEscapeChar(String.valueOf(ESCAPE))
+      .setQuoteChar(String.valueOf(QUOTE_CHAR))
+      .setSkipLines(SKIP_LINES)
+      .setSkipDifferingLines(skipDifferingLines);
 
     return new FileIterator("some_file",
-                            new StringReader(
-                                Joiner.on(',').join(getExpectedFirstParsableLine()) +
-                                "\nfour,five\n" +
-                                Joiner.on(',').join(getExpectedSecondParsableLine()) +
-                                "\nnine,ten,eleven,twelve"),
-                            setting);
+      new StringReader(
+        Joiner.on(',').join(getExpectedFirstParsableLine()) +
+          "\nfour,five\n" +
+          Joiner.on(',').join(getExpectedSecondParsableLine()) +
+          "\nnine,ten,eleven,twelve"),
+      setting);
   }
 
   public ImmutableList<String> getExpectedFirstParsableLine() {

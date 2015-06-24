@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,11 @@
 
 package de.metanome.algorithm_integration.results;
 
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
+import javax.xml.bind.annotation.XmlTransient;
+
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import de.metanome.algorithm_integration.ColumnCombination;
@@ -25,15 +30,8 @@ import de.metanome.algorithm_integration.ColumnIdentifier;
 import de.metanome.algorithm_integration.result_receiver.CouldNotReceiveResultException;
 import de.metanome.algorithm_integration.result_receiver.OmniscientResultReceiver;
 
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
-
-import javax.xml.bind.annotation.XmlTransient;
-
 /**
  * Represents a conditional unique column combination
- *
  * @author Jens Ehrlich
  */
 @JsonTypeName("ConditionalUniqueColumnCombination")
@@ -56,12 +54,12 @@ public class ConditionalUniqueColumnCombination implements Result {
   /**
    * Constructs a {@link de.metanome.algorithm_integration.results.ConditionalUniqueColumnCombination}
    * from a {@link ColumnCombination} and an array of {@link de.metanome.algorithm_integration.ColumnConditionAnd}s.
-   *
    * @param columnCombination a supposedly unique column combination
-   * @param columnCondition   array of conditions for the CUCC
+   * @param columnCondition array of conditions for the CUCC
    */
   public ConditionalUniqueColumnCombination(ColumnCombination columnCombination,
-                                            ColumnCondition columnCondition) {
+                                            ColumnCondition columnCondition)
+  {
     this.columnCombination = columnCombination;
     this.condition = columnCondition;
 
@@ -92,7 +90,8 @@ public class ConditionalUniqueColumnCombination implements Result {
   @XmlTransient
   @Override
   public void sendResultTo(OmniscientResultReceiver resultReceiver)
-      throws CouldNotReceiveResultException {
+    throws CouldNotReceiveResultException
+  {
     resultReceiver.receiveResult(this);
   }
 
@@ -115,11 +114,13 @@ public class ConditionalUniqueColumnCombination implements Result {
             builder.append(whitespaceBuilder);
             builder.append(value);
             builder.append(whitespaceBuilder);
-          } else {
+          }
+          else {
             builder.append(value);
             builder.append(" ");
           }
-        } else {
+        }
+        else {
           StringBuilder whitespaceBuilder = new StringBuilder();
           for (int i = 0; i < column.toString().length() / 2; i++) {
             whitespaceBuilder.append(" ");
@@ -170,14 +171,11 @@ public class ConditionalUniqueColumnCombination implements Result {
     ConditionalUniqueColumnCombination that = (ConditionalUniqueColumnCombination) o;
 
     if (columnCombination != null ? !columnCombination.equals(that.columnCombination)
-                                  : that.columnCombination != null) {
+      : that.columnCombination != null) {
       return false;
     }
-    if (condition != null ? !condition.equals(that.condition) : that.condition != null) {
-      return false;
-    }
+    return !(condition != null ? !condition.equals(that.condition) : that.condition != null);
 
-    return true;
   }
 
   @Override

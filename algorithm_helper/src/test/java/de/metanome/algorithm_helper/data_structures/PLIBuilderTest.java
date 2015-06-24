@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,20 +16,18 @@
 
 package de.metanome.algorithm_helper.data_structures;
 
-import de.metanome.algorithm_integration.input.InputGenerationException;
-import de.metanome.algorithm_integration.input.InputIterationException;
+import static org.junit.Assert.*;
+
+import java.util.List;
+import java.util.TreeSet;
 
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-import java.util.TreeSet;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import de.metanome.algorithm_integration.input.InputGenerationException;
+import de.metanome.algorithm_integration.input.InputIterationException;
 
 /**
  * Tests for {@link de.metanome.algorithm_helper.data_structures.PLIBuilder}
@@ -59,8 +57,8 @@ public class PLIBuilderTest {
     // Expected values
     List<PositionListIndex> expectedPLIList = fixture.getExpectedPLIList(true);
     PositionListIndex[]
-        expectedPLIArray =
-        expectedPLIList.toArray(new PositionListIndex[expectedPLIList.size()]);
+      expectedPLIArray =
+      expectedPLIList.toArray(new PositionListIndex[expectedPLIList.size()]);
 
     // Execute functionality
     List<PositionListIndex> actualPLIList = builder.getPLIList();
@@ -75,14 +73,15 @@ public class PLIBuilderTest {
    */
   @Test
   public void testCalculatePLINullNotEqualsNull()
-      throws InputIterationException, InputGenerationException {
+    throws InputIterationException, InputGenerationException
+  {
     // Setup
     this.builder = new PLIBuilder(fixture.getInputGenerator().generateNewCopy(), false);
     // Expected values
     List<PositionListIndex> expectedPLIList = fixture.getExpectedPLIList(false);
     PositionListIndex[]
-        expectedPLIArray =
-        expectedPLIList.toArray(new PositionListIndex[expectedPLIList.size()]);
+      expectedPLIArray =
+      expectedPLIList.toArray(new PositionListIndex[expectedPLIList.size()]);
 
     // Execute functionality
     List<PositionListIndex> actualPLIList = builder.getPLIList();
@@ -100,8 +99,8 @@ public class PLIBuilderTest {
     // Setup
     // Expected values
     List<TreeSet<String>>
-        expectedDistinctSortedColumns =
-        fixture.getExpectedDistinctSortedColumns();
+      expectedDistinctSortedColumns =
+      fixture.getExpectedDistinctSortedColumns();
 
     // Execute functionality
     List<TreeSet<String>> actualDistinctSortedColumns = builder.getDistinctSortedColumns();
@@ -123,7 +122,8 @@ public class PLIBuilderTest {
     try {
       builder.getNumberOfTuples();
       fail();
-    } catch (InputIterationException e) {
+    }
+    catch (InputIterationException e) {
       //Intentionally left blank
     }
     builder.getPLIList();

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,18 @@
 
 package de.metanome.frontend.client.algorithms;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
+
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
+import org.fusesource.restygwt.client.Resource;
 
 import de.metanome.backend.results_db.Algorithm;
 import de.metanome.frontend.client.BasePage;
@@ -27,19 +35,11 @@ import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.TestHelper;
 import de.metanome.frontend.client.helpers.InputValidationException;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-import org.fusesource.restygwt.client.Resource;
-
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
 public class GwtTestAlgorithmsPage extends GWTTestCase {
 
   /**
    * Test method for {@link de.metanome.frontend.client.algorithms.AlgorithmsPage}
-   *
+   * <p/>
    * When a new AlgorithmsPage is created, an edit form should be present, and service as well as
    * parent set.
    */
@@ -70,7 +70,7 @@ public class GwtTestAlgorithmsPage extends GWTTestCase {
 
   /**
    * Test method for {@link de.metanome.frontend.client.algorithms.AlgorithmsPage#getRetrieveCallback(com.google.gwt.user.client.ui.FlexTable)}
-   *
+   * <p/>
    * After failure is called on the constructed callback, the tab should be in error.
    */
   public void testRetrieveCallbackFailure() {
@@ -94,7 +94,7 @@ public class GwtTestAlgorithmsPage extends GWTTestCase {
 
   /**
    * Test method for {@link de.metanome.frontend.client.algorithms.AlgorithmsPage#getRetrieveCallback(FlexTable)}
-   *
+   * <p/>
    * After success is called on the constructed callback, the UI element given as argument should
    * contain all the elements of the result.
    */
@@ -121,7 +121,7 @@ public class GwtTestAlgorithmsPage extends GWTTestCase {
 
   /**
    * Test method for {@link de.metanome.frontend.client.algorithms.AlgorithmsPage#getRetrieveCallback(FlexTable)}
-   *
+   * <p/>
    * After failure is called on the constructed callback, the tab should be in error.
    */
   public void testAddCallbackFailure() {
@@ -145,7 +145,7 @@ public class GwtTestAlgorithmsPage extends GWTTestCase {
 
   /**
    * Test method for {@link de.metanome.frontend.client.algorithms.AlgorithmsPage#getRetrieveCallback(FlexTable)}
-   *
+   * <p/>
    * After success is called on the constructed callback, the UI element given as argument should
    * contain all the elements of the result.
    */
@@ -234,9 +234,9 @@ public class GwtTestAlgorithmsPage extends GWTTestCase {
     // Expected Values
     String expectedValue = "updated";
     Algorithm updatedAlgorithm = new Algorithm(expectedValue)
-        .setName(expectedValue)
-        .setDescription(expectedValue)
-        .setAuthor(expectedValue);
+      .setName(expectedValue)
+      .setDescription(expectedValue)
+      .setAuthor(expectedValue);
 
     // Execute
     algorithmsPage.updateRow(algorithmsPage.uccList, updatedAlgorithm, "old");

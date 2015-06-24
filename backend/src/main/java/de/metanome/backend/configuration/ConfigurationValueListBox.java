@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,13 @@
 
 package de.metanome.backend.configuration;
 
+import java.util.Set;
+
 import de.metanome.algorithm_integration.Algorithm;
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.algorithm_types.ListBoxParameterAlgorithm;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirementListBox;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingListBox;
-
-import java.util.Set;
 
 
 public class ConfigurationValueListBox extends ConfigurationValue<String, ConfigurationRequirementListBox> {
@@ -32,13 +32,15 @@ public class ConfigurationValueListBox extends ConfigurationValue<String, Config
   }
 
   public ConfigurationValueListBox(ConfigurationRequirementListBox requirement)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     super(requirement);
   }
 
   @Override
   protected String[] convertToValues(ConfigurationRequirementListBox requirement)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     ConfigurationSettingListBox[] settings = requirement.getSettings();
     String[] configValues = new String[settings.length];
     int i = 0;
@@ -51,10 +53,11 @@ public class ConfigurationValueListBox extends ConfigurationValue<String, Config
 
   @Override
   public void triggerSetValue(Algorithm algorithm, Set<Class<?>> algorithmInterfaces)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     if (!algorithmInterfaces.contains(ListBoxParameterAlgorithm.class)) {
       throw new AlgorithmConfigurationException(
-          "Algorithm does not accept arraylist configuration values.");
+        "Algorithm does not accept arraylist configuration values.");
     }
 
     ListBoxParameterAlgorithm listBoxParameterAlgorithm = (ListBoxParameterAlgorithm) algorithm;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,19 @@
 
 package de.metanome.algorithms.testing.example_basic_stat_algorithm;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.isA;
+import static org.hamcrest.core.IsCollectionContaining.*;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+import java.io.File;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.AlgorithmExecutionException;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
@@ -24,24 +37,8 @@ import de.metanome.algorithm_integration.input.FileInputGenerator;
 import de.metanome.algorithm_integration.result_receiver.BasicStatisticsResultReceiver;
 import de.metanome.algorithm_integration.results.BasicStatistic;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.io.File;
-import java.util.List;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.isA;
-import static org.hamcrest.core.IsCollectionContaining.hasItem;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 /**
  * Tests for {@link de.metanome.algorithms.testing.example_basic_stat_algorithm.BasicStatAlgorithm}
- *
  * @author Jakob Zwiener
  */
 public class BasicStatAlgorithmTest {
@@ -89,7 +86,8 @@ public class BasicStatAlgorithmTest {
     try {
       algorithm.execute();
       fail("No exception was thrown.");
-    } catch (AlgorithmExecutionException e) {
+    }
+    catch (AlgorithmExecutionException e) {
       // Intentionally left blank
     }
   }
@@ -108,7 +106,8 @@ public class BasicStatAlgorithmTest {
     try {
       algorithm.execute();
       fail("No exception was thrown.");
-    } catch (AlgorithmExecutionException e) {
+    }
+    catch (AlgorithmExecutionException e) {
       // Intentionally left blank
     }
   }
@@ -137,8 +136,8 @@ public class BasicStatAlgorithmTest {
 
     // Check result
     verify(resultReceiver).receiveResult(
-        new BasicStatistic(BasicStatAlgorithm.STATISTIC_NAME, expectedFileName,
-                           BasicStatAlgorithm.COLUMN_IDENTIFIER));
+      new BasicStatistic(BasicStatAlgorithm.STATISTIC_NAME, expectedFileName,
+        BasicStatAlgorithm.COLUMN_IDENTIFIER));
   }
 
   /**
@@ -152,9 +151,10 @@ public class BasicStatAlgorithmTest {
     // Check result
     try {
       algorithm
-          .setFileInputConfigurationValue("some other identifier", mock(FileInputGenerator.class));
+        .setFileInputConfigurationValue("some other identifier", mock(FileInputGenerator.class));
       fail("No exception was thrown.");
-    } catch (AlgorithmConfigurationException e) {
+    }
+    catch (AlgorithmConfigurationException e) {
       // Intentionally left blank
     }
   }
@@ -170,9 +170,10 @@ public class BasicStatAlgorithmTest {
     // Check result
     try {
       algorithm.setFileInputConfigurationValue(BasicStatAlgorithm.INPUT_FILE_IDENTIFIER,
-                                               mock(FileInputGenerator.class));
+        mock(FileInputGenerator.class));
       fail("No exception was thrown.");
-    } catch (AlgorithmConfigurationException e) {
+    }
+    catch (AlgorithmConfigurationException e) {
       // Intentionally left blank
     }
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,18 +17,7 @@
 package de.metanome.backend.resources;
 
 
-import de.metanome.backend.algorithm_loading.AlgorithmLoadingException;
-import de.metanome.backend.results_db.Algorithm;
-import de.metanome.backend.results_db.EntityStorageException;
-import de.metanome.backend.results_db.Execution;
-import de.metanome.backend.results_db.FileInput;
-import de.metanome.backend.results_db.HibernateUtil;
-import de.metanome.backend.results_db.Input;
-import de.metanome.backend.results_db.Result;
-import de.metanome.backend.results_db.TableInput;
-
-import org.hamcrest.collection.IsIterableContainingInAnyOrder;
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,11 +27,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import org.hamcrest.collection.IsIterableContainingInAnyOrder;
+import org.junit.Test;
+
+import de.metanome.backend.algorithm_loading.AlgorithmLoadingException;
+import de.metanome.backend.results_db.Algorithm;
+import de.metanome.backend.results_db.EntityStorageException;
+import de.metanome.backend.results_db.Execution;
+import de.metanome.backend.results_db.FileInput;
+import de.metanome.backend.results_db.HibernateUtil;
+import de.metanome.backend.results_db.Input;
+import de.metanome.backend.results_db.Result;
+import de.metanome.backend.results_db.TableInput;
 
 public class ExecutionResourceTest {
 
@@ -54,7 +50,7 @@ public class ExecutionResourceTest {
   /**
    * Test method for {@link de.metanome.backend.resources.ExecutionResource#store(de.metanome.backend.results_db.Execution)}
    * and {@link de.metanome.backend.resources.ExecutionResource#get(long)}
-   *
+   * <p/>
    * Executions should be storable and retrievable by id.
    */
   @Test
@@ -106,7 +102,7 @@ public class ExecutionResourceTest {
 
     // Check result
     assertThat(actualExecutions, IsIterableContainingInAnyOrder
-        .containsInAnyOrder(expectedExecution1, expectedExecution2));
+      .containsInAnyOrder(expectedExecution1, expectedExecution2));
 
     // Cleanup
     HibernateUtil.clear();
@@ -116,13 +112,14 @@ public class ExecutionResourceTest {
   /**
    * Test method for {@link de.metanome.backend.resources.ExecutionResource#store(de.metanome.backend.results_db.Execution)}
    * and {@link de.metanome.backend.resources.ExecutionResource#get(long)}
-   *
+   * <p/>
    * After roundtripping an execution all its {@link de.metanome.backend.results_db.Input}s should be
    * retrievable from it.
    */
   @Test
   public void testPersistenceMultipleInputs()
-      throws EntityStorageException, AlgorithmLoadingException {
+    throws EntityStorageException, AlgorithmLoadingException
+  {
     // Setup
     HibernateUtil.clear();
 
@@ -142,7 +139,7 @@ public class ExecutionResourceTest {
     // Expected values
     long begin = new Date().getTime();
     Execution expectedExecution = new Execution(algorithm, begin)
-        .setInputs(inputs);
+      .setInputs(inputs);
 
     // Execute functionality
     expectedExecution = executionResource.store(expectedExecution);
@@ -158,17 +155,17 @@ public class ExecutionResourceTest {
   }
 
 
-
   /**
    * Test method for {@link de.metanome.backend.resources.ExecutionResource#store(de.metanome.backend.results_db.Execution)}
    * and {@link de.metanome.backend.resources.ExecutionResource#get(long)}
-   *
+   * <p/>
    * Test the database roundtrip of an Execution with multiple {@link de.metanome.backend.results_db.Input}s
    * and {@link de.metanome.backend.results_db.Result}s.
    */
   @Test
   public void testPersistenceWithAlgorithmAndResultAndInputs()
-      throws EntityStorageException, AlgorithmLoadingException {
+    throws EntityStorageException, AlgorithmLoadingException
+  {
     // Setup
     HibernateUtil.clear();
 
@@ -201,7 +198,7 @@ public class ExecutionResourceTest {
 
     Execution actualExecution = executionResource.get(expectedExecution.getId());
 
-    Input[] expectedInputs = {expectedTableInput, expectedFileInput, expectedFileInput};
+    Input[] expectedInputs = { expectedTableInput, expectedFileInput, expectedFileInput };
 
     Set<Result> actualResults = actualExecution.getResults();
     Collection<Input> actualInputs = actualExecution.getInputs();
@@ -215,7 +212,7 @@ public class ExecutionResourceTest {
     // Verify input list
     assertEquals(3, actualInputs.size());
     assertThat(actualInputs, IsIterableContainingInAnyOrder
-        .containsInAnyOrder(expectedInputs));
+      .containsInAnyOrder(expectedInputs));
 
     // Cleanup
     HibernateUtil.clear();
@@ -229,7 +226,8 @@ public class ExecutionResourceTest {
    */
   @Test
   public void testPersistenceGetResults()
-      throws EntityStorageException, AlgorithmLoadingException, InterruptedException {
+    throws EntityStorageException, AlgorithmLoadingException, InterruptedException
+  {
     // Setup
     HibernateUtil.clear();
 

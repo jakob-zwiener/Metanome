@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,24 +16,22 @@
 
 package de.metanome.backend.configuration;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.junit.Test;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.algorithm_types.ProgressEstimatingAlgorithm;
 import de.metanome.algorithm_integration.algorithm_types.RelationalInputParameterAlgorithm;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirementFileInput;
 import de.metanome.algorithm_integration.input.RelationalInputGenerator;
 
-import org.junit.Test;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
 /**
  * Tests for {@link ConfigurationValueRelationalInputGenerator}
- *
  * @author Jakob Zwiener
  */
 public class ConfigurationValueRelationalInputGeneratorTest {
@@ -52,20 +50,20 @@ public class ConfigurationValueRelationalInputGeneratorTest {
     // Expected values
     String expectedIdentifier = "configId1";
     RelationalInputGenerator[]
-        expectedConfigurationValue =
-        {mock(RelationalInputGenerator.class), mock(RelationalInputGenerator.class)};
+      expectedConfigurationValue =
+      { mock(RelationalInputGenerator.class), mock(RelationalInputGenerator.class) };
 
     // Execute functionality
     ConfigurationValueRelationalInputGenerator
-        configValue =
-        new ConfigurationValueRelationalInputGenerator(
-            new ConfigurationRequirementFileInput(expectedIdentifier).getIdentifier(),
-            expectedConfigurationValue);
+      configValue =
+      new ConfigurationValueRelationalInputGenerator(
+        new ConfigurationRequirementFileInput(expectedIdentifier).getIdentifier(),
+        expectedConfigurationValue);
     configValue.triggerSetValue(algorithm, interfaces);
 
     // Check result
     verify(algorithm)
-        .setRelationalInputConfigurationValue(expectedIdentifier, expectedConfigurationValue);
+      .setRelationalInputConfigurationValue(expectedIdentifier, expectedConfigurationValue);
   }
 
   /**
@@ -83,19 +81,20 @@ public class ConfigurationValueRelationalInputGeneratorTest {
     // Expected values
     String expectedIdentifier = "configId1";
     RelationalInputGenerator[]
-        expectedConfigurationValues =
-        {mock(RelationalInputGenerator.class), mock(RelationalInputGenerator.class)};
+      expectedConfigurationValues =
+      { mock(RelationalInputGenerator.class), mock(RelationalInputGenerator.class) };
 
     // Execute functionality
     ConfigurationValueRelationalInputGenerator
-        configValue =
-        new ConfigurationValueRelationalInputGenerator(
-            new ConfigurationRequirementFileInput(expectedIdentifier).getIdentifier(),
-            expectedConfigurationValues);
+      configValue =
+      new ConfigurationValueRelationalInputGenerator(
+        new ConfigurationRequirementFileInput(expectedIdentifier).getIdentifier(),
+        expectedConfigurationValues);
     try {
       configValue.triggerSetValue(algorithm, interfaces);
       fail("No exception was thrown.");
-    } catch (AlgorithmConfigurationException e) {
+    }
+    catch (AlgorithmConfigurationException e) {
       // Intentionally left blank
     }
   }

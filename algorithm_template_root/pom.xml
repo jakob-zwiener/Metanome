@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2014 by the Metanome project
+  ~ Copyright 2015 by the Metanome project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -17,23 +17,23 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>algorithm_template_root</artifactId>
-    <packaging>pom</packaging>
+  <artifactId>algorithm_template_root</artifactId>
+  <packaging>pom</packaging>
 
-    <name>algorithm_template_root</name>
+  <name>algorithm_template_root</name>
 
-    <parent>
-        <groupId>de.metanome</groupId>
-        <artifactId>metanome</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
+  <parent>
+    <groupId>de.metanome</groupId>
+    <artifactId>metanome</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
 
-    <modules>
-        <module>algorithm_template</module>
-        <module>algorithm_template_packaging</module>
-    </modules>
+  <modules>
+    <module>algorithm_template</module>
+    <module>algorithm_template_packaging</module>
+  </modules>
 
 </project>

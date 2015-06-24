@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,17 @@
 
 package de.metanome.frontend.client.datasources;
 
+import java.util.List;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
 
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingDataSource;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingDatabaseConnection;
@@ -31,11 +36,6 @@ import de.metanome.backend.results_db.TableInput;
 import de.metanome.frontend.client.TabContent;
 import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.services.TableInputRestService;
-
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
-import java.util.List;
 
 public class TableInputTab extends FlowPanel implements TabContent {
 
@@ -69,7 +69,6 @@ public class TableInputTab extends FlowPanel implements TabContent {
 
   /**
    * Gets all Table Inputs available in the database and adds them to the table.
-   *
    * @param panel the parent widget of the table
    */
   private void addTableInputsToList(final FlowPanel panel) {
@@ -77,7 +76,7 @@ public class TableInputTab extends FlowPanel implements TabContent {
       @Override
       public void onFailure(Method method, Throwable throwable) {
         messageReceiver.addError(
-            "There are no table inputs in the database: " + method.getResponse().getText());
+          "There are no table inputs in the database: " + method.getResponse().getText());
         addEditForm();
       }
 
@@ -91,7 +90,6 @@ public class TableInputTab extends FlowPanel implements TabContent {
 
   /**
    * Lists all given table inputs in a table.
-   *
    * @param inputs the table inputs
    */
   protected void listTableInputs(List<TableInput> inputs) {
@@ -109,7 +107,6 @@ public class TableInputTab extends FlowPanel implements TabContent {
 
   /**
    * Adds the given table input to the table.
-   *
    * @param input the table input, which should be added.
    */
   public void addTableInputToTable(final TableInput input) {
@@ -153,7 +150,7 @@ public class TableInputTab extends FlowPanel implements TabContent {
   /**
    * Find the row of the old table input and updates the values.
    * @param updatedInput the updated table input
-   * @param oldInput     the old table input
+   * @param oldInput the old table input
    */
   public void updateTableInputInTable(final TableInput updatedInput, TableInput oldInput) {
     int row = findRow(oldInput);
@@ -174,23 +171,21 @@ public class TableInputTab extends FlowPanel implements TabContent {
 
   /**
    * Converts a table input into a ConfigurationSettingDataSource
-   *
    * @param input the table input
    * @return the ConfigurationSettingDataSource from the given table input
    */
   private ConfigurationSettingDataSource convertTableInputToDataSource(TableInput input) {
     ConfigurationSettingDatabaseConnection settingDatabaseConnection =
-        new ConfigurationSettingDatabaseConnection(input.getDatabaseConnection().getUrl(),
-                                                   input.getDatabaseConnection().getUsername(),
-                                                   input.getDatabaseConnection().getPassword(),
-                                                   input.getDatabaseConnection().getSystem());
+      new ConfigurationSettingDatabaseConnection(input.getDatabaseConnection().getUrl(),
+        input.getDatabaseConnection().getUsername(),
+        input.getDatabaseConnection().getPassword(),
+        input.getDatabaseConnection().getSystem());
 
     return new ConfigurationSettingTableInput(input.getTableName(), settingDatabaseConnection);
   }
 
   /**
    * Forwards the add-database-connection-command to the edit form.
-   *
    * @param connection the new database connection
    */
   public void addDatabaseConnection(DatabaseConnection connection) {
@@ -199,8 +194,7 @@ public class TableInputTab extends FlowPanel implements TabContent {
 
   /**
    * Updates a database connection.
-   *
-   * @param connection    the updated database connection
+   * @param connection the updated database connection
    * @param oldConnection the old database connection
    */
   public void updateDatabaseConnection(DatabaseConnection connection, DatabaseConnection oldConnection) {
@@ -210,7 +204,6 @@ public class TableInputTab extends FlowPanel implements TabContent {
 
   /**
    * Forwards the remove-database-connection-command to the edit form.
-   *
    * @param connection the database connection
    */
   public void removeDatabaseConnection(DatabaseConnection connection) {
@@ -227,7 +220,6 @@ public class TableInputTab extends FlowPanel implements TabContent {
 
   /**
    * Creates the callback for the delete call.
-   *
    * @param input the table input, which should be deleted.
    * @return The callback
    */
@@ -265,8 +257,8 @@ public class TableInputTab extends FlowPanel implements TabContent {
       HTML tableWidget = (HTML) this.tableInputList.getWidget(row, 1);
 
       if (connectionWidget != null && identifierConnection.equals(
-          connectionWidget.getText()) &&
-          tableWidget != null && input.getTableName().equals(tableWidget.getText())) {
+        connectionWidget.getText()) &&
+        tableWidget != null && input.getTableName().equals(tableWidget.getText())) {
         return row;
       }
       row++;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 package de.metanome.algorithms.testing.example_holistic_algorithm;
 
+import java.util.ArrayList;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.ColumnCombination;
 import de.metanome.algorithm_integration.ColumnIdentifier;
@@ -30,11 +32,10 @@ import de.metanome.algorithm_integration.result_receiver.UniqueColumnCombination
 import de.metanome.algorithm_integration.results.FunctionalDependency;
 import de.metanome.algorithm_integration.results.UniqueColumnCombination;
 
-import java.util.ArrayList;
-
 public class ExampleAlgorithm
-    implements FunctionalDependencyAlgorithm, UniqueColumnCombinationsAlgorithm,
-               StringParameterAlgorithm {
+  implements FunctionalDependencyAlgorithm, UniqueColumnCombinationsAlgorithm,
+  StringParameterAlgorithm
+{
 
   protected String path = null;
   protected FunctionalDependencyResultReceiver fdResultReceiver;
@@ -45,8 +46,8 @@ public class ExampleAlgorithm
     ArrayList<ConfigurationRequirement> configurationRequirement = new ArrayList<>();
 
     ConfigurationRequirementString
-        requirementString = new ConfigurationRequirementString(
-        "pathToOutputFile", 2);
+      requirementString = new ConfigurationRequirementString(
+      "pathToOutputFile", 2);
     requirementString.setRequired(true);
 
     configurationRequirement.add(requirementString);
@@ -59,45 +60,51 @@ public class ExampleAlgorithm
     if (path != null) {
       try {
         fdResultReceiver.receiveResult(
-            new FunctionalDependency(
-                new ColumnCombination(
-                    new ColumnIdentifier("table1", "column1"),
-                    new ColumnIdentifier("table1", "column2")),
-                new ColumnIdentifier("table1", "column5")
-            )
+          new FunctionalDependency(
+            new ColumnCombination(
+              new ColumnIdentifier("table1", "column1"),
+              new ColumnIdentifier("table1", "column2")),
+            new ColumnIdentifier("table1", "column5")
+          )
         );
-      } catch (CouldNotReceiveResultException e) {
+      }
+      catch (CouldNotReceiveResultException e) {
         throw new AlgorithmConfigurationException("Could not write result.");
       }
       try {
         uccResultReceiver.receiveResult(new UniqueColumnCombination(
-            new ColumnIdentifier("table1", "column5"),
-            new ColumnIdentifier("table1", "column6")));
-      } catch (CouldNotReceiveResultException e) {
-       throw new AlgorithmConfigurationException("Could not write result.");
+          new ColumnIdentifier("table1", "column5"),
+          new ColumnIdentifier("table1", "column6")));
+      }
+      catch (CouldNotReceiveResultException e) {
+        throw new AlgorithmConfigurationException("Could not write result.");
       }
     }
   }
 
   @Override
   public void setResultReceiver(
-      FunctionalDependencyResultReceiver resultReceiver) {
+    FunctionalDependencyResultReceiver resultReceiver)
+  {
     this.fdResultReceiver = resultReceiver;
   }
 
   @Override
   public void setResultReceiver(
-      UniqueColumnCombinationResultReceiver resultReceiver) {
+    UniqueColumnCombinationResultReceiver resultReceiver)
+  {
     this.uccResultReceiver = resultReceiver;
 
   }
 
   @Override
   public void setStringConfigurationValue(String identifier, String... values)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     if ((identifier.equals("pathToOutputFile")) && (values.length == 2)) {
       path = values[0];
-    } else {
+    }
+    else {
       throw new AlgorithmConfigurationException("Incorrect identifier or value list length.");
     }
   }

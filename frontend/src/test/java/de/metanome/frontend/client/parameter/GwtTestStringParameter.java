@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,13 +36,13 @@ public class GwtTestStringParameter extends GWTTestCase {
     //Setup
     int noOfValues = 3;
     ConfigurationRequirementString
-        specification =
-        new ConfigurationRequirementString("string", noOfValues);
+      specification =
+      new ConfigurationRequirementString("string", noOfValues);
 
     //Execute
     InputParameterStringWidget
-        widget =
-        new InputParameterStringWidget(specification, new TabWrapper());
+      widget =
+      new InputParameterStringWidget(specification, new TabWrapper());
 
     //Check
     assertEquals(noOfValues, widget.inputWidgets.size());
@@ -58,13 +58,13 @@ public class GwtTestStringParameter extends GWTTestCase {
     //Setup
     int noOfValues = ConfigurationRequirement.ARBITRARY_NUMBER_OF_VALUES;
     ConfigurationRequirementString
-        specification =
-        new ConfigurationRequirementString("string", noOfValues);
+      specification =
+      new ConfigurationRequirementString("string", noOfValues);
 
     //Execute
     InputParameterStringWidget
-        widget =
-        new InputParameterStringWidget(specification, new TabWrapper());
+      widget =
+      new InputParameterStringWidget(specification, new TabWrapper());
 
     //Check
     assertEquals(1, widget.inputWidgets.size());        //expecting one default input field
@@ -76,13 +76,13 @@ public class GwtTestStringParameter extends GWTTestCase {
     //Setup
     int maxValue = 5;
     ConfigurationRequirementString
-        specification =
-        new ConfigurationRequirementString("string", 3, maxValue);
+      specification =
+      new ConfigurationRequirementString("string", 3, maxValue);
 
     //Execute
     InputParameterStringWidget
-        widget =
-        new InputParameterStringWidget(specification, new TabWrapper());
+      widget =
+      new InputParameterStringWidget(specification, new TabWrapper());
 
     //Check
     assertEquals(maxValue, widget.inputWidgets.size());
@@ -101,11 +101,11 @@ public class GwtTestStringParameter extends GWTTestCase {
     //Setup
     String expectedValue = "test";
     ConfigurationRequirementString specification = new ConfigurationRequirementString("bool",
-                                                                                          ConfigurationRequirement.ARBITRARY_NUMBER_OF_VALUES);
+      ConfigurationRequirement.ARBITRARY_NUMBER_OF_VALUES);
     specification.checkAndSetDefaultValues(expectedValue);
     InputParameterStringWidget
-        widget =
-        new InputParameterStringWidget(specification, new TabWrapper());
+      widget =
+      new InputParameterStringWidget(specification, new TabWrapper());
     int previousCount = widget.getWidgetCount();
     int listCount = widget.inputWidgets.size();
 
@@ -124,10 +124,10 @@ public class GwtTestStringParameter extends GWTTestCase {
   public void testRemoveInput() throws AlgorithmConfigurationException {
     //Setup
     ConfigurationRequirementString specification = new ConfigurationRequirementString("bool",
-                                                                                          ConfigurationRequirement.ARBITRARY_NUMBER_OF_VALUES);
+      ConfigurationRequirement.ARBITRARY_NUMBER_OF_VALUES);
     InputParameterStringWidget
-        widget =
-        new InputParameterStringWidget(specification, new TabWrapper());
+      widget =
+      new InputParameterStringWidget(specification, new TabWrapper());
     int previousCount = widget.getWidgetCount();
     int listCount = widget.inputWidgets.size();
 
@@ -143,14 +143,15 @@ public class GwtTestStringParameter extends GWTTestCase {
    * Test method for {@link InputParameterStringWidget#getUpdatedSpecification()}
    */
   public void testRetrieveValues() throws AlgorithmConfigurationException,
-                                          InputValidationException {
+    InputValidationException
+  {
     //Setup
     String value = "something";
     ConfigurationRequirementString specification = new ConfigurationRequirementString("bool",
-                                                                                          ConfigurationRequirement.ARBITRARY_NUMBER_OF_VALUES);
+      ConfigurationRequirement.ARBITRARY_NUMBER_OF_VALUES);
     InputParameterStringWidget
-        widget =
-        new InputParameterStringWidget(specification, new TabWrapper());
+      widget =
+      new InputParameterStringWidget(specification, new TabWrapper());
 
     //Execute
     ((StringInput) widget.getWidget(0)).textbox.setValue(value, true);

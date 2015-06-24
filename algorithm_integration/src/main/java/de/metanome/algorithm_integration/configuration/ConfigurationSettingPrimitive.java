@@ -25,14 +25,14 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
  * @param <T>
  */
 @JsonTypeInfo(
-    use = JsonTypeInfo.Id.NAME,
-    include = JsonTypeInfo.As.PROPERTY,
-    property = "type")
+  use = JsonTypeInfo.Id.NAME,
+  include = JsonTypeInfo.As.PROPERTY,
+  property = "type")
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = ConfigurationSettingBoolean.class, name = "ConfigurationSettingBoolean"),
-    @JsonSubTypes.Type(value = ConfigurationSettingInteger.class, name = "ConfigurationSettingInteger"),
-    @JsonSubTypes.Type(value = ConfigurationSettingListBox.class, name = "ConfigurationSettingListBox"),
-    @JsonSubTypes.Type(value = ConfigurationSettingString.class, name = "ConfigurationSettingString")
+  @JsonSubTypes.Type(value = ConfigurationSettingBoolean.class, name = "ConfigurationSettingBoolean"),
+  @JsonSubTypes.Type(value = ConfigurationSettingInteger.class, name = "ConfigurationSettingInteger"),
+  @JsonSubTypes.Type(value = ConfigurationSettingListBox.class, name = "ConfigurationSettingListBox"),
+  @JsonSubTypes.Type(value = ConfigurationSettingString.class, name = "ConfigurationSettingString")
 })
 public abstract class ConfigurationSettingPrimitive<T> extends ConfigurationSetting {
 
@@ -41,7 +41,8 @@ public abstract class ConfigurationSettingPrimitive<T> extends ConfigurationSett
   /**
    * Exists for GWT serialization.
    */
-  public ConfigurationSettingPrimitive() {}
+  public ConfigurationSettingPrimitive() {
+  }
 
   public ConfigurationSettingPrimitive(T value) {
     this.value = value;

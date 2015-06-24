@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,14 +22,12 @@ import de.metanome.algorithm_integration.result_receiver.UniqueColumnCombination
 
 /**
  * An {@link Algorithm} that discovers unique {@link ColumnCombination}s.
- *
  * @author Jakob Zwiener
  */
 public interface UniqueColumnCombinationsAlgorithm extends Algorithm {
 
   /**
    * Sets a {@link UniqueColumnCombinationResultReceiver} to send the results to.
-   *
    * @param resultReceiver the result receiver for {@link de.metanome.algorithm_integration.results.UniqueColumnCombination}s
    */
   void setResultReceiver(UniqueColumnCombinationResultReceiver resultReceiver);

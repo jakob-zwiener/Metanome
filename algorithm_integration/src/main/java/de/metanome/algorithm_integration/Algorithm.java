@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,9 @@
 
 package de.metanome.algorithm_integration;
 
-import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
-
 import java.util.ArrayList;
+
+import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
 
 /**
  * An algorithm should supply the configuration requirements, should initiate double dispatch with
@@ -29,14 +29,12 @@ public interface Algorithm {
 
   /**
    * Algorithms should supply a list of needed configuration parameters.
-   *
    * @return a list of ConfigurationSpecifications
    */
   ArrayList<ConfigurationRequirement> getConfigurationRequirements();
 
   /**
    * Starts the execution of the algorithm.
-   *
    * @throws AlgorithmExecutionException if the algorithm's execution fails
    */
   void execute() throws AlgorithmExecutionException;

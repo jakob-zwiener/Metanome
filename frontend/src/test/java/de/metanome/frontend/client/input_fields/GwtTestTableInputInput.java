@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ public class GwtTestTableInputInput extends GWTTestCase {
 
   /**
    * Test method for {@link de.metanome.frontend.client.input_fields.TableInputInput#TableInputInput(
-   * boolean, boolean, TabWrapper)} <p/> After calling the constructor the optional
+   *boolean, boolean, TabWrapper)} <p/> After calling the constructor the optional
    * parameter should be set correctly and all widgets should be initialized.
    */
   public void testConstructor() {
@@ -79,10 +79,10 @@ public class GwtTestTableInputInput extends GWTTestCase {
 
     // Expected values
     final ConfigurationSettingTableInput expectedSetting =
-        new ConfigurationSettingTableInput();
+      new ConfigurationSettingTableInput();
     expectedSetting.setTable("table");
     expectedSetting.setDatabaseConnection(new ConfigurationSettingDatabaseConnection("url", "user", "pwd",
-                                                                                     DbSystem.DB2));
+      DbSystem.DB2));
 
     // Initialize TableInputInput (waiting for fetching all current file inputs)
     final TableInputInput tableInputInputs = new TableInputInput(false, false, new TabWrapper());
@@ -92,14 +92,16 @@ public class GwtTestTableInputInput extends GWTTestCase {
 
     try {
       tableInputInputs.setValue(expectedSetting);
-    } catch (AlgorithmConfigurationException e) {
+    }
+    catch (AlgorithmConfigurationException e) {
       fail();
     }
 
     ConfigurationSettingTableInput actualSetting = null;
     try {
       actualSetting = tableInputInputs.getValue();
-    } catch (InputValidationException e) {
+    }
+    catch (InputValidationException e) {
       fail();
     }
 
@@ -124,7 +126,8 @@ public class GwtTestTableInputInput extends GWTTestCase {
 
     try {
       tableInputInputs.getValue();
-    } catch (InputValidationException e) {
+    }
+    catch (InputValidationException e) {
       // should throw an exception
     }
 

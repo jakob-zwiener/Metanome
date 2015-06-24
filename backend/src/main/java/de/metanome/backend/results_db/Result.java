@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package de.metanome.backend.results_db;
 
 
 import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,7 +28,6 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Represents a Result in the database.
- *
  * @author Jakob Zwiener
  */
 @Entity
@@ -46,7 +44,10 @@ public class Result implements Serializable {
   protected Result() {
 
   }
-  public Result(String fileName){ this.fileName = fileName; }
+
+  public Result(String fileName) {
+    this.fileName = fileName;
+  }
 
   /**
    * @param resultPathPrefix the path to the result file
@@ -90,7 +91,6 @@ public class Result implements Serializable {
    * A bidirectional association should be created with the {@link de.metanome.backend.results_db.Execution}.
    * Use {@link de.metanome.backend.results_db.Execution#addResult(Result)} to create proper
    * associations.
-   *
    * @param execution the Execution to add
    */
   @XmlTransient
@@ -100,7 +100,7 @@ public class Result implements Serializable {
     return this;
   }
 
-  public ResultType getType(){
+  public ResultType getType() {
     return type;
   }
 
@@ -119,11 +119,8 @@ public class Result implements Serializable {
 
     Result result = (Result) o;
 
-    if (fileName != null ? !fileName.equals(result.fileName) : result.fileName != null) {
-      return false;
-    }
+    return !(fileName != null ? !fileName.equals(result.fileName) : result.fileName != null);
 
-    return true;
   }
 
   @Override

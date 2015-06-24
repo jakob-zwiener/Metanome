@@ -22,24 +22,27 @@ import java.io.FileNotFoundException;
 public abstract class ResultReceiver implements CloseableOmniscientResultReceiver {
 
   public static final String RESULT_TEST_DIR = "results" + File.separator + "test";
-  public static final String RESULT_DIR   = "results";
+  public static final String RESULT_DIR = "results";
 
   protected String algorithmExecutionIdentifier;
   protected String directory;
   protected Boolean testDirectory;
 
   public ResultReceiver(String algorithmExecutionIdentifier)
-      throws FileNotFoundException {
+    throws FileNotFoundException
+  {
     this(algorithmExecutionIdentifier, false);
   }
 
   protected ResultReceiver(String algorithmExecutionIdentifier, Boolean testDirectory)
-      throws FileNotFoundException {
+    throws FileNotFoundException
+  {
     this.testDirectory = testDirectory;
 
     if (testDirectory) {
       this.directory = RESULT_TEST_DIR;
-    } else {
+    }
+    else {
       this.directory = RESULT_DIR;
     }
 

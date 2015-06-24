@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,9 @@
 
 package de.metanome.frontend.client.algorithms;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.Button;
 
@@ -25,14 +28,11 @@ import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.TestHelper;
 import de.metanome.frontend.client.helpers.InputValidationException;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GwtTestAlgorithmEditForm extends GWTTestCase {
 
   /**
    * Test method for {@link de.metanome.frontend.client.algorithms.AlgorithmEditForm}
-   *
+   * <p/>
    * When a new AlgorithmEditForm is created, the algorithmsPage and messageReceiver should be set
    */
   public void testSetup() {
@@ -73,7 +73,8 @@ public class GwtTestAlgorithmEditForm extends GWTTestCase {
     // the above is valid input and retrieving the values should not fail
     try {
       form.retrieveInputValues();
-    } catch (InputValidationException e) {
+    }
+    catch (InputValidationException e) {
       fail();
     }
 
@@ -96,7 +97,8 @@ public class GwtTestAlgorithmEditForm extends GWTTestCase {
 
     try {
       form.retrieveInputValues();
-    } catch (InputValidationException e) {
+    }
+    catch (InputValidationException e) {
       form.saveSubmit();
       assertTrue(tab.isInError());
     }
@@ -126,7 +128,8 @@ public class GwtTestAlgorithmEditForm extends GWTTestCase {
 
     try {
       form.retrieveInputValues();
-    } catch (InputValidationException e) {
+    }
+    catch (InputValidationException e) {
       form.saveSubmit();
       assertTrue(tab.isInError());
     }
@@ -168,7 +171,7 @@ public class GwtTestAlgorithmEditForm extends GWTTestCase {
   /**
    * Test method for {@link de.metanome.frontend.client.algorithms.AlgorithmEditForm#updateAlgorithm(de.metanome.backend.results_db.Algorithm)}
    * and test method for {@link AlgorithmEditForm#showSaveButton()}
-   *
+   * <p/>
    * If the edit button for an algorithm is clicked, the edit form should contain the values
    * of that algorithm and the edit form should show a update button instead of an save button.
    * If the method 'show save button' is called, the save button should be visible again.
@@ -186,9 +189,9 @@ public class GwtTestAlgorithmEditForm extends GWTTestCase {
     String expectedAuthor = "some author";
     String expectedDescription = "some description";
     Algorithm algorithm = new Algorithm(expectedFileName)
-        .setAuthor(expectedAuthor)
-        .setName(expectedName)
-        .setDescription(expectedDescription);
+      .setAuthor(expectedAuthor)
+      .setName(expectedName)
+      .setDescription(expectedDescription);
 
     // Execute
     form.updateAlgorithm(algorithm);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,29 +16,24 @@
 
 package de.metanome.backend.input.database;
 
-import com.google.common.collect.ImmutableList;
-
-import de.metanome.algorithm_integration.input.InputIterationException;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import com.google.common.collect.ImmutableList;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import de.metanome.algorithm_integration.input.InputIterationException;
 
 /**
  * Test for {@link ResultSetIterator}
- *
  * @author Jakob Zwiener
  */
 public class ResultSetIteratorTest {
@@ -70,9 +65,9 @@ public class ResultSetIteratorTest {
     boolean expectedFirstNext = true;
     boolean expectedSecondNext = false;
     when(resultSet.next())
-        .thenReturn(expectedFirstNext)
-            // The second call should not be made.
-        .thenReturn(false);
+      .thenReturn(expectedFirstNext)
+        // The second call should not be made.
+      .thenReturn(false);
 
     // Execute functionality
     // Check result
@@ -101,7 +96,7 @@ public class ResultSetIteratorTest {
       assertEquals(expectedRecords.get(i), resultSetIterator.next());
     }
     assertEquals(expectedNextValues.get(twoLinesResultSetFixture.numberOfRows()),
-                 resultSetIterator.hasNext());
+      resultSetIterator.hasNext());
     // Next should have been called.
     verify(resultSet, times(3)).next();
 
@@ -134,8 +129,8 @@ public class ResultSetIteratorTest {
   public void testNumberOfColumns() throws SQLException {
     // Setup
     ResultSetIterator
-        resultSetIterator =
-        new ResultSetIterator(twoLinesResultSetFixture.getTestData());
+      resultSetIterator =
+      new ResultSetIterator(twoLinesResultSetFixture.getTestData());
 
     // Check result
     assertEquals(twoLinesResultSetFixture.numberOfColumns(), resultSetIterator.numberOfColumns());
@@ -149,13 +144,13 @@ public class ResultSetIteratorTest {
   public void testRelationName() throws SQLException {
     // Setup
     ResultSetIterator
-        resultSetIterator =
-        new ResultSetIterator(twoLinesResultSetFixture.getTestData());
+      resultSetIterator =
+      new ResultSetIterator(twoLinesResultSetFixture.getTestData());
 
     // Execute functionality
     // Check result
     assertEquals(twoLinesResultSetFixture.getExpectedRelationName(),
-                 resultSetIterator.relationName());
+      resultSetIterator.relationName());
   }
 
   /**
@@ -166,13 +161,13 @@ public class ResultSetIteratorTest {
   public void testColumnNames() throws SQLException {
     // Setup
     ResultSetIterator
-        resultSetIterator =
-        new ResultSetIterator(twoLinesResultSetFixture.getTestData());
+      resultSetIterator =
+      new ResultSetIterator(twoLinesResultSetFixture.getTestData());
 
     // Execute functionality
     // Check result
     assertEquals(twoLinesResultSetFixture.getExpectedColumnNames(),
-                 resultSetIterator.columnNames());
+      resultSetIterator.columnNames());
   }
 
   /**

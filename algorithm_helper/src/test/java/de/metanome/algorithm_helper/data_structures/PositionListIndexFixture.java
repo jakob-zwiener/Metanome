@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,20 +16,20 @@
 
 package de.metanome.algorithm_helper.data_structures;
 
-import it.unimi.dsi.fastutil.longs.Long2LongOpenHashMap;
-import it.unimi.dsi.fastutil.longs.LongArrayList;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import it.unimi.dsi.fastutil.longs.Long2LongOpenHashMap;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 
 public class PositionListIndexFixture {
 
   PositionListIndex getFirstPLI() {
     List<LongArrayList> clusters = new ArrayList<>();
 
-    long[] cluster1 = {2, 4, 8};
+    long[] cluster1 = { 2, 4, 8 };
     clusters.add(new LongArrayList(cluster1));
-    long[] cluster2 = {5, 6, 7};
+    long[] cluster2 = { 5, 6, 7 };
     clusters.add(new LongArrayList(cluster2));
 
     return new PositionListIndex(clusters);
@@ -46,9 +46,9 @@ public class PositionListIndexFixture {
   protected PositionListIndex getPermutatedFirstPLI() {
     List<LongArrayList> clusters = new ArrayList<>();
 
-    long[] cluster1 = {7, 6, 5};
+    long[] cluster1 = { 7, 6, 5 };
     clusters.add(new LongArrayList(cluster1));
-    long[] cluster2 = {4, 2, 2, 8};
+    long[] cluster2 = { 4, 2, 2, 8 };
     clusters.add(new LongArrayList(cluster2));
 
     return new PositionListIndex(clusters);
@@ -57,11 +57,11 @@ public class PositionListIndexFixture {
   protected PositionListIndex getSupersetOfFirstPLI() {
     List<LongArrayList> clusters = new ArrayList<>();
 
-    long[] cluster1 = {7, 6, 5};
+    long[] cluster1 = { 7, 6, 5 };
     clusters.add(new LongArrayList(cluster1));
-    long[] cluster2 = {4, 2, 2, 8};
+    long[] cluster2 = { 4, 2, 2, 8 };
     clusters.add(new LongArrayList(cluster2));
-    long[] cluster3 = {10, 11};
+    long[] cluster3 = { 10, 11 };
     clusters.add(new LongArrayList(cluster3));
 
     return new PositionListIndex(clusters);
@@ -84,9 +84,9 @@ public class PositionListIndexFixture {
   protected PositionListIndex getSecondPLI() {
     List<LongArrayList> clusters = new ArrayList<>();
 
-    long[] cluster1 = {1, 2, 5, 8};
+    long[] cluster1 = { 1, 2, 5, 8 };
     clusters.add(new LongArrayList(cluster1));
-    long[] cluster2 = {4, 6, 7};
+    long[] cluster2 = { 4, 6, 7 };
     clusters.add(new LongArrayList(cluster2));
 
     return new PositionListIndex(clusters);
@@ -99,9 +99,9 @@ public class PositionListIndexFixture {
   protected PositionListIndex getExpectedIntersectedPLI() {
     List<LongArrayList> clusters = new ArrayList<>();
 
-    long[] cluster1 = {2, 8};
+    long[] cluster1 = { 2, 8 };
     clusters.add(new LongArrayList(cluster1));
-    long[] cluster2 = {6, 7};
+    long[] cluster2 = { 6, 7 };
     clusters.add(new LongArrayList(cluster2));
 
     return new PositionListIndex(clusters);

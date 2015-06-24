@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 package de.metanome.backend.configuration;
 
+import java.util.Set;
+
 import de.metanome.algorithm_integration.Algorithm;
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.algorithm_types.TableInputParameterAlgorithm;
@@ -24,30 +26,31 @@ import de.metanome.algorithm_integration.configuration.ConfigurationSettingTable
 import de.metanome.algorithm_integration.input.TableInputGenerator;
 import de.metanome.backend.input.database.DefaultTableInputGenerator;
 
-import java.util.Set;
-
 /**
  * Represents {@link de.metanome.algorithm_integration.input.TableInputGenerator} configuration
  * values for {@link Algorithm}s.
- *
  * @author Jakob Zwiener
  */
 public class ConfigurationValueTableInputGenerator
-    extends ConfigurationValue<TableInputGenerator, ConfigurationRequirementTableInput> {
+  extends ConfigurationValue<TableInputGenerator, ConfigurationRequirementTableInput>
+{
 
   public ConfigurationValueTableInputGenerator(String identifier,
-                                               TableInputGenerator... values) {
+                                               TableInputGenerator... values)
+  {
     super(identifier, values);
   }
 
   public ConfigurationValueTableInputGenerator(ConfigurationRequirementTableInput requirement)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     super(requirement);
   }
 
   @Override
   protected TableInputGenerator[] convertToValues(ConfigurationRequirementTableInput requirement)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     ConfigurationSettingTableInput[] settings = requirement.getSettings();
     TableInputGenerator[] configValues = new TableInputGenerator[settings.length];
     for (int i = 0; i < settings.length; i++) {
@@ -58,14 +61,15 @@ public class ConfigurationValueTableInputGenerator
 
   @Override
   public void triggerSetValue(Algorithm algorithm, Set<Class<?>> algorithmInterfaces)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     if (!algorithmInterfaces.contains(TableInputParameterAlgorithm.class)) {
       throw new AlgorithmConfigurationException(
-          "Algorithm does not accept table input configuration values.");
+        "Algorithm does not accept table input configuration values.");
     }
 
     TableInputParameterAlgorithm tableInputParameterAlgorithm =
-        (TableInputParameterAlgorithm) algorithm;
+      (TableInputParameterAlgorithm) algorithm;
     tableInputParameterAlgorithm.setTableInputConfigurationValue(identifier, values);
   }
 

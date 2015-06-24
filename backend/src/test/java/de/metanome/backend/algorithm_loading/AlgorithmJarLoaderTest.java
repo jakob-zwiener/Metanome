@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,21 +16,20 @@
 
 package de.metanome.backend.algorithm_loading;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+
+import org.junit.Test;
+
 import de.metanome.algorithm_integration.Algorithm;
 import de.metanome.algorithm_integration.AlgorithmExecutionException;
 import de.metanome.algorithm_integration.algorithm_execution.ProgressReceiver;
 import de.metanome.algorithm_integration.algorithm_types.ProgressEstimatingAlgorithm;
 import de.metanome.algorithm_integration.algorithm_types.UniqueColumnCombinationsAlgorithm;
 import de.metanome.algorithm_integration.result_receiver.OmniscientResultReceiver;
-
-import org.junit.Test;
-
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 
 /**
  * Test for {@link AlgorithmJarLoader}
@@ -42,9 +41,10 @@ public class AlgorithmJarLoaderTest {
    */
   @Test
   public void loadAlgorithm()
-      throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException,
-             IllegalArgumentException, SecurityException, InvocationTargetException,
-             NoSuchMethodException, AlgorithmExecutionException {
+    throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException,
+    IllegalArgumentException, SecurityException, InvocationTargetException,
+    NoSuchMethodException, AlgorithmExecutionException
+  {
     // Setup
     AlgorithmJarLoader loader = new AlgorithmJarLoader();
 

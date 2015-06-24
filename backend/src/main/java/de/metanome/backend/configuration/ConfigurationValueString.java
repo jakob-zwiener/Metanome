@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,34 +16,36 @@
 
 package de.metanome.backend.configuration;
 
+import java.util.Set;
+
 import de.metanome.algorithm_integration.Algorithm;
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.algorithm_types.StringParameterAlgorithm;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirementString;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingString;
 
-import java.util.Set;
-
 /**
  * Represents string configuration values for {@link Algorithm}s.
- *
  * @author Jakob Zwiener
  */
 public class ConfigurationValueString
-    extends ConfigurationValue<String, ConfigurationRequirementString> {
+  extends ConfigurationValue<String, ConfigurationRequirementString>
+{
 
   public ConfigurationValueString(String identifier, String... values) {
     super(identifier, values);
   }
 
   public ConfigurationValueString(ConfigurationRequirementString requirement)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     super(requirement);
   }
 
   @Override
   protected String[] convertToValues(ConfigurationRequirementString requirement)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     ConfigurationSettingString[] settings = requirement.getSettings();
     String[] configValues = new String[settings.length];
     int i = 0;
@@ -56,10 +58,11 @@ public class ConfigurationValueString
 
   @Override
   public void triggerSetValue(Algorithm algorithm, Set<Class<?>> algorithmInterfaces)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     if (!algorithmInterfaces.contains(StringParameterAlgorithm.class)) {
       throw new AlgorithmConfigurationException(
-          "Algorithm does not accept string configuration values.");
+        "Algorithm does not accept string configuration values.");
     }
 
     StringParameterAlgorithm stringParameterAlgorithm = (StringParameterAlgorithm) algorithm;

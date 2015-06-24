@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,6 @@
 
 package de.metanome.algorithm_integration;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,10 +23,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 /**
  * Logical "or" used in the composite pattern to represent column condition. Contains subcondition
  * that are concatenated by "or".
- *
  * @author Jens Ehrlich
  */
 @JsonTypeName("ColumnConditionOr")
@@ -95,7 +94,8 @@ public class ColumnConditionOr implements ColumnCondition {
         coverage += subCondition.getCoverage();
       }
       return coverage;
-    } else {
+    }
+    else {
       return this.coverage;
     }
   }
@@ -138,7 +138,8 @@ public class ColumnConditionOr implements ColumnCondition {
       int lengthComparison = this.columnValues.size() - other.columnValues.size();
       if (lengthComparison != 0) {
         return lengthComparison;
-      } else {
+      }
+      else {
         Iterator<ColumnCondition> otherIterator = other.columnValues.iterator();
         int equalCount = 0;
 
@@ -154,16 +155,20 @@ public class ColumnConditionOr implements ColumnCondition {
           }
         }
 
-        if (equalCount == this.columnValues.size())
+        if (equalCount == this.columnValues.size()) {
           return 0;
-        else
+        }
+        else {
           return 1;
+        }
       }
-    } else {
+    }
+    else {
       //or between "simple" and "and"
       if (o instanceof ColumnConditionValue) {
         return 1;
-      } else {
+      }
+      else {
         return -1;
       }
     }
@@ -182,7 +187,7 @@ public class ColumnConditionOr implements ColumnCondition {
       builder.append(delimiter);
     }
     return builder.substring(0, builder.length() - delimiter.length())
-        .concat(CLOSE_BRACKET);
+      .concat(CLOSE_BRACKET);
   }
 
   @Override
@@ -199,12 +204,9 @@ public class ColumnConditionOr implements ColumnCondition {
     if (isNegated != that.isNegated) {
       return false;
     }
-    if (columnValues != null ? !columnValues.equals(that.columnValues)
-                             : that.columnValues != null) {
-      return false;
-    }
+    return !(columnValues != null ? !columnValues.equals(that.columnValues)
+      : that.columnValues != null);
 
-    return true;
   }
 
   @Override

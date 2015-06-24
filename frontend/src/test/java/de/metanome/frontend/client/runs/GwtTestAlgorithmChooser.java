@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,13 @@
 
 package de.metanome.frontend.client.runs;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import com.google.gwt.junit.client.GWTTestCase;
+
+import org.fusesource.restygwt.client.MethodCallback;
 
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirementInteger;
@@ -29,15 +35,8 @@ import de.metanome.frontend.client.BasePage;
 import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.TestHelper;
 
-import org.fusesource.restygwt.client.MethodCallback;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * Tests for {@link de.metanome.frontend.client.runs.AlgorithmChooser}
- *
  * @author Jakob Zwiener
  */
 public class GwtTestAlgorithmChooser extends GWTTestCase {
@@ -61,16 +60,16 @@ public class GwtTestAlgorithmChooser extends GWTTestCase {
 
     // Check result
     assertTrue(AlgorithmContentEquals.contentEquals(expectedAlgorithm1, jarChooser.algorithmMap
-        .get(expectedAlgorithm1.getName())));
+      .get(expectedAlgorithm1.getName())));
     assertTrue(AlgorithmContentEquals.contentEquals(expectedAlgorithm2, jarChooser.algorithmMap
-        .get(expectedAlgorithm2.getName())));
+      .get(expectedAlgorithm2.getName())));
 
     assertEquals(expectedAlgorithm1.getName(), jarChooser.categoryMap
-        .get(AlgorithmChooser.AlgorithmCategory.Inclusion_Dependencies.name()).get(0));
+      .get(AlgorithmChooser.AlgorithmCategory.Inclusion_Dependencies.name()).get(0));
     assertEquals(expectedAlgorithm2.getName(), jarChooser.categoryMap
-        .get(AlgorithmChooser.AlgorithmCategory.Functional_Dependencies.name()).get(0));
+      .get(AlgorithmChooser.AlgorithmCategory.Functional_Dependencies.name()).get(0));
     assertEquals(2, jarChooser.categoryMap
-        .get(AlgorithmChooser.AlgorithmCategory.All.name()).size());
+      .get(AlgorithmChooser.AlgorithmCategory.All.name()).size());
 
     // Execute duplicate insert
     int previousCount = jarChooser.getListItemCount();
@@ -289,7 +288,7 @@ public class GwtTestAlgorithmChooser extends GWTTestCase {
 
     // Execute
     jarChooser.filterForPrimaryDataSource(new ConfigurationSettingDatabaseConnection("url", "user", "pwd",
-                                                                                     DbSystem.DB2));
+      DbSystem.DB2));
 
     assertEquals(2, jarChooser.algorithmListBox.getItemCount());
     assertEquals("--", jarChooser.algorithmListBox.getItemText(0));

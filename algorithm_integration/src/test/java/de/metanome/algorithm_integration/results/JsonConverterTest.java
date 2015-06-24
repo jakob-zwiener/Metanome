@@ -16,18 +16,18 @@
 
 package de.metanome.algorithm_integration.results;
 
+import static org.junit.Assert.*;
+
+import java.io.IOException;
+
+import org.junit.Test;
+
 import de.metanome.algorithm_integration.ColumnCombination;
 import de.metanome.algorithm_integration.ColumnConditionAnd;
 import de.metanome.algorithm_integration.ColumnConditionOr;
 import de.metanome.algorithm_integration.ColumnConditionValue;
 import de.metanome.algorithm_integration.ColumnIdentifier;
 import de.metanome.algorithm_integration.ColumnPermutation;
-
-import org.junit.Test;
-
-import java.io.IOException;
-
-import static org.junit.Assert.assertEquals;
 
 public class JsonConverterTest {
 
@@ -42,8 +42,8 @@ public class JsonConverterTest {
     String expectedStatisticValue = "minValue";
     ColumnIdentifier expectedColumn = new ColumnIdentifier("table42", "column23");
     BasicStatistic
-        expectedStatistic =
-        new BasicStatistic(expectedStatisticName, expectedStatisticValue, expectedColumn);
+      expectedStatistic =
+      new BasicStatistic(expectedStatisticName, expectedStatisticValue, expectedColumn);
 
     JsonConverter<BasicStatistic> jsonConverter = new JsonConverter<>();
 
@@ -72,11 +72,11 @@ public class JsonConverterTest {
   public void testToAndFromJsonStringInclusionDependency() throws IOException {
     // Setup
     ColumnPermutation expectedDependant = new ColumnPermutation(
-        new ColumnIdentifier("table2", "column2"),
-        new ColumnIdentifier("table2", "column27"));
+      new ColumnIdentifier("table2", "column2"),
+      new ColumnIdentifier("table2", "column27"));
     ColumnPermutation expectedReferenced = new ColumnPermutation(
-        new ColumnIdentifier("table1", "column1"),
-        new ColumnIdentifier("table1", "column4"));
+      new ColumnIdentifier("table1", "column1"),
+      new ColumnIdentifier("table1", "column4"));
     InclusionDependency expectedInd = new InclusionDependency(expectedDependant, expectedReferenced);
 
     JsonConverter<InclusionDependency> jsonConverter = new JsonConverter<>();
@@ -105,14 +105,14 @@ public class JsonConverterTest {
   public void testToAndFromJsonString() throws IOException {
     // Setup
     final ColumnPermutation expectedLhs =
-        new ColumnPermutation(new ColumnIdentifier("table1", "column1"), new ColumnIdentifier(
-            "table1", "column2"));
+      new ColumnPermutation(new ColumnIdentifier("table1", "column1"), new ColumnIdentifier(
+        "table1", "column2"));
     final ColumnPermutation expectedRhs =
-        new ColumnPermutation(new ColumnIdentifier("table1", "column3"), new ColumnIdentifier(
-            "table1", "column4"));
+      new ColumnPermutation(new ColumnIdentifier("table1", "column3"), new ColumnIdentifier(
+        "table1", "column4"));
     final OrderDependency expectedOD =
-        new OrderDependency(expectedLhs, expectedRhs, OrderDependency.OrderType.LEXICOGRAPHICAL,
-                            OrderDependency.ComparisonOperator.SMALLER_EQUAL);
+      new OrderDependency(expectedLhs, expectedRhs, OrderDependency.OrderType.LEXICOGRAPHICAL,
+        OrderDependency.ComparisonOperator.SMALLER_EQUAL);
 
     JsonConverter<OrderDependency> jsonConverter = new JsonConverter<>();
 
@@ -141,12 +141,12 @@ public class JsonConverterTest {
   public void testToAndFromJsonStringFunctionalDependency() throws IOException {
     // Setup
     ColumnCombination
-        expectedDeterminant =
-        new ColumnCombination();
+      expectedDeterminant =
+      new ColumnCombination();
     ColumnIdentifier expectedDependant = new ColumnIdentifier("table1", "column7");
     FunctionalDependency
-        expectedFD =
-        new FunctionalDependency(expectedDeterminant, expectedDependant);
+      expectedFD =
+      new FunctionalDependency(expectedDeterminant, expectedDependant);
 
     JsonConverter<FunctionalDependency> jsonConverter = new JsonConverter<>();
 
@@ -176,14 +176,14 @@ public class JsonConverterTest {
     ColumnIdentifier expectedColumn1 = new ColumnIdentifier("table1", "column1");
     ColumnIdentifier expectedColumn2 = new ColumnIdentifier("table2", "column2");
     UniqueColumnCombination
-        expectedUCC =
-        new UniqueColumnCombination(expectedColumn1, expectedColumn2);
+      expectedUCC =
+      new UniqueColumnCombination(expectedColumn1, expectedColumn2);
 
     JsonConverter<UniqueColumnCombination> jsonConverter = new JsonConverter<>();
 
     // Expected values
     String expectedJson =
-        "{\"type\":\"UniqueColumnCombination\",\"columnCombination\":{\"columnIdentifiers\":[{\"tableIdentifier\":\"table1\",\"columnIdentifier\":\"column1\"},{\"tableIdentifier\":\"table2\",\"columnIdentifier\":\"column2\"}]}}";
+      "{\"type\":\"UniqueColumnCombination\",\"columnCombination\":{\"columnIdentifiers\":[{\"tableIdentifier\":\"table1\",\"columnIdentifier\":\"column1\"},{\"tableIdentifier\":\"table2\",\"columnIdentifier\":\"column2\"}]}}";
 
     // Execute functionality
     String actualJson = jsonConverter.toJsonString(expectedUCC);
@@ -199,7 +199,6 @@ public class JsonConverterTest {
   }
 
 
-
   /**
    * A {@link ConditionalUniqueColumnCombination} should be converted to a JSON String and creatable from a
    * JSON string.
@@ -211,29 +210,30 @@ public class JsonConverterTest {
     ColumnIdentifier expectedColumn2 = new ColumnIdentifier("table2", "column2");
     ColumnConditionOr outerCondition = new ColumnConditionOr();
     outerCondition.add(
-        new ColumnConditionAnd(new ColumnConditionValue(expectedColumn1, "condition1"),
-                               new ColumnConditionValue(expectedColumn2, "condition2"),
-                               new ColumnConditionOr(new ColumnConditionValue(expectedColumn1, "condition4"),
-                                                     new ColumnConditionValue(expectedColumn1, "condition5"))));
+      new ColumnConditionAnd(new ColumnConditionValue(expectedColumn1, "condition1"),
+        new ColumnConditionValue(expectedColumn2, "condition2"),
+        new ColumnConditionOr(new ColumnConditionValue(expectedColumn1, "condition4"),
+          new ColumnConditionValue(expectedColumn1, "condition5"))));
     outerCondition
-        .add(new ColumnConditionValue(expectedColumn1, "condition3"));
+      .add(new ColumnConditionValue(expectedColumn1, "condition3"));
     outerCondition.add(
-        new ColumnConditionAnd(new ColumnConditionValue(expectedColumn1, "condition6"),
-                               new ColumnConditionValue(expectedColumn2, "condition7"),
-                               new ColumnConditionOr(new ColumnConditionValue(expectedColumn1, "condition8"),
-                                                     new ColumnConditionValue(expectedColumn1, "condition9"))));
+      new ColumnConditionAnd(new ColumnConditionValue(expectedColumn1, "condition6"),
+        new ColumnConditionValue(expectedColumn2, "condition7"),
+        new ColumnConditionOr(new ColumnConditionValue(expectedColumn1, "condition8"),
+          new ColumnConditionValue(expectedColumn1, "condition9"))));
 
     ConditionalUniqueColumnCombination
-        expectedCUCC =
-        new ConditionalUniqueColumnCombination(
-            new ColumnCombination(expectedColumn1, expectedColumn2),
-            outerCondition);
+      expectedCUCC =
+      new ConditionalUniqueColumnCombination(
+        new ColumnCombination(expectedColumn1, expectedColumn2),
+        outerCondition);
 
     JsonConverter<ConditionalUniqueColumnCombination> jsonConverter = new JsonConverter<>();
 
     // Execute functionality
     String actualJson = jsonConverter.toJsonString(expectedCUCC);
-    ConditionalUniqueColumnCombination actualCUCC = jsonConverter.fromJsonString(actualJson, ConditionalUniqueColumnCombination.class);
+    ConditionalUniqueColumnCombination actualCUCC = jsonConverter.fromJsonString(actualJson,
+      ConditionalUniqueColumnCombination.class);
 
     // Check result
     assertEquals(expectedCUCC, actualCUCC);

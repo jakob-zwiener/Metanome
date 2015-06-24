@@ -1,18 +1,27 @@
 /*
- * Copyright 2014 by the Metanome project
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software distributed under the License
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
- * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
+ * Copyright 2015 by the Metanome project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package de.metanome.algorithm_integration.results;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import de.metanome.algorithm_integration.ColumnIdentifier;
 import de.metanome.algorithm_integration.ColumnPermutation;
@@ -23,26 +32,19 @@ import de.metanome.algorithm_integration.results.OrderDependency.OrderType;
 import de.metanome.test_helper.EqualsAndHashCodeTester;
 import de.metanome.test_helper.GwtSerializationTester;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
 /**
  * Test for {@link OrderDependency}
- *
  * @author Philipp Langer
  */
 public class OrderDependencyTest {
 
   @Before
-  public void setUp() throws Exception {}
+  public void setUp() throws Exception {
+  }
 
   @After
-  public void tearDown() throws Exception {}
+  public void tearDown() throws Exception {
+  }
 
   /**
    * Test method for {@link OrderDependency#OrderDependency()}
@@ -56,15 +58,15 @@ public class OrderDependencyTest {
     // Setup
     // Expected values
     final ColumnPermutation expectedLhs =
-        new ColumnPermutation(new ColumnIdentifier("table1", "column1"), new ColumnIdentifier(
-            "table1", "column2"));
+      new ColumnPermutation(new ColumnIdentifier("table1", "column1"), new ColumnIdentifier(
+        "table1", "column2"));
     final ColumnPermutation expectedRhs =
-        new ColumnPermutation(new ColumnIdentifier("table1", "column7"));
+      new ColumnPermutation(new ColumnIdentifier("table1", "column7"));
 
     // Execute functionality
     final OrderDependency orderDependency =
-        new OrderDependency(expectedLhs, expectedRhs, OrderType.LEXICOGRAPHICAL,
-            ComparisonOperator.SMALLER_EQUAL);
+      new OrderDependency(expectedLhs, expectedRhs, OrderType.LEXICOGRAPHICAL,
+        ComparisonOperator.SMALLER_EQUAL);
 
     // Check result
     assertEquals(expectedLhs, orderDependency.getLhs());
@@ -83,27 +85,27 @@ public class OrderDependencyTest {
   public void testEqualsHashCode() {
     // Setup
     final OrderDependency expectedOd =
-        new OrderDependency(new ColumnPermutation(new ColumnIdentifier("table1", "column2")),
-            new ColumnPermutation(new ColumnIdentifier("table1", "column47")),
-            OrderType.LEXICOGRAPHICAL, ComparisonOperator.SMALLER_EQUAL);
+      new OrderDependency(new ColumnPermutation(new ColumnIdentifier("table1", "column2")),
+        new ColumnPermutation(new ColumnIdentifier("table1", "column47")),
+        OrderType.LEXICOGRAPHICAL, ComparisonOperator.SMALLER_EQUAL);
     final OrderDependency expectedEqualOd =
-        new OrderDependency(new ColumnPermutation(new ColumnIdentifier("table1", "column2")),
-            new ColumnPermutation(new ColumnIdentifier("table1", "column47")),
-            OrderType.LEXICOGRAPHICAL, ComparisonOperator.SMALLER_EQUAL);
+      new OrderDependency(new ColumnPermutation(new ColumnIdentifier("table1", "column2")),
+        new ColumnPermutation(new ColumnIdentifier("table1", "column47")),
+        OrderType.LEXICOGRAPHICAL, ComparisonOperator.SMALLER_EQUAL);
     final OrderDependency expectedNotEqualLhsOd =
-        new OrderDependency(new ColumnPermutation(new ColumnIdentifier("table1", "column3")),
-            new ColumnPermutation(new ColumnIdentifier("table1", "column47")),
-            OrderType.LEXICOGRAPHICAL, ComparisonOperator.SMALLER_EQUAL);
+      new OrderDependency(new ColumnPermutation(new ColumnIdentifier("table1", "column3")),
+        new ColumnPermutation(new ColumnIdentifier("table1", "column47")),
+        OrderType.LEXICOGRAPHICAL, ComparisonOperator.SMALLER_EQUAL);
     final OrderDependency expectedNotEqualRhsOd =
-        new OrderDependency(new ColumnPermutation(new ColumnIdentifier("table1", "column2")),
-            new ColumnPermutation(new ColumnIdentifier("table1", "column3")),
-            OrderType.LEXICOGRAPHICAL, ComparisonOperator.SMALLER_EQUAL);
+      new OrderDependency(new ColumnPermutation(new ColumnIdentifier("table1", "column2")),
+        new ColumnPermutation(new ColumnIdentifier("table1", "column3")),
+        OrderType.LEXICOGRAPHICAL, ComparisonOperator.SMALLER_EQUAL);
 
     // Execute functionality
     // Check result
     final EqualsAndHashCodeTester<OrderDependency> tester = new EqualsAndHashCodeTester<>();
     tester.performBasicEqualsAndHashCodeChecks(expectedOd, expectedEqualOd, expectedNotEqualLhsOd,
-        expectedNotEqualRhsOd);
+      expectedNotEqualRhsOd);
   }
 
   /**
@@ -112,8 +114,8 @@ public class OrderDependencyTest {
   @Test
   public void testGwtSerialization() {
     GwtSerializationTester.checkGwtSerializability(new OrderDependency(
-        mock(ColumnPermutation.class), mock(ColumnPermutation.class), OrderType.LEXICOGRAPHICAL,
-        ComparisonOperator.SMALLER_EQUAL));
+      mock(ColumnPermutation.class), mock(ColumnPermutation.class), OrderType.LEXICOGRAPHICAL,
+      ComparisonOperator.SMALLER_EQUAL));
   }
 
   /**
@@ -126,8 +128,8 @@ public class OrderDependencyTest {
     // Setup
     final OmniscientResultReceiver resultReceiver = mock(OmniscientResultReceiver.class);
     final OrderDependency od =
-        new OrderDependency(mock(ColumnPermutation.class), mock(ColumnPermutation.class),
-            OrderType.LEXICOGRAPHICAL, ComparisonOperator.SMALLER_EQUAL);
+      new OrderDependency(mock(ColumnPermutation.class), mock(ColumnPermutation.class),
+        OrderType.LEXICOGRAPHICAL, ComparisonOperator.SMALLER_EQUAL);
 
     // Execute functionality
     od.sendResultTo(resultReceiver);
@@ -145,17 +147,17 @@ public class OrderDependencyTest {
   public void testToString() {
     // Setup
     final ColumnPermutation expectedLhs =
-        new ColumnPermutation(new ColumnIdentifier("table1", "column1"), new ColumnIdentifier(
-            "table1", "column2"));
+      new ColumnPermutation(new ColumnIdentifier("table1", "column1"), new ColumnIdentifier(
+        "table1", "column2"));
     final ColumnPermutation expectedRhs =
-        new ColumnPermutation(new ColumnIdentifier("table1", "column3"), new ColumnIdentifier(
-            "table1", "column4"));
+      new ColumnPermutation(new ColumnIdentifier("table1", "column3"), new ColumnIdentifier(
+        "table1", "column4"));
     final OrderDependency orderDependency =
-        new OrderDependency(expectedLhs, expectedRhs, OrderType.LEXICOGRAPHICAL,
-            ComparisonOperator.SMALLER_EQUAL);
+      new OrderDependency(expectedLhs, expectedRhs, OrderType.LEXICOGRAPHICAL,
+        ComparisonOperator.SMALLER_EQUAL);
     // Expected values
     final String expectedStringRepresentation =
-        expectedLhs + OrderDependency.OD_SEPARATOR + "[" + "<=" + "," + "lex" + "]" + expectedRhs;
+      expectedLhs + OrderDependency.OD_SEPARATOR + "[" + "<=" + "," + "lex" + "]" + expectedRhs;
 
     // Execute functionality
     // Check result

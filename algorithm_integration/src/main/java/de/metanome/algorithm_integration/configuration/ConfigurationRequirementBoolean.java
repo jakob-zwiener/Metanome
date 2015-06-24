@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,29 +17,29 @@
 package de.metanome.algorithm_integration.configuration;
 
 
-import com.google.common.annotations.GwtIncompatible;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.common.annotations.GwtIncompatible;
 
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
-
-import javax.xml.bind.annotation.XmlTransient;
 
 
 /**
  * Concrete {@link ConfigurationRequirement} for booleans.
- *
  * @author Jakob Zwiener
  * @see ConfigurationRequirement
  */
 @JsonTypeName("ConfigurationRequirementBoolean")
 public class ConfigurationRequirementBoolean
-    extends ConfigurationRequirementDefaultValue<Boolean, ConfigurationSettingBoolean> {
+  extends ConfigurationRequirementDefaultValue<Boolean, ConfigurationSettingBoolean>
+{
 
   // Needed for restful serialization
   public String type = "ConfigurationRequirementBoolean";
 
-  public ConfigurationRequirementBoolean() { }
+  public ConfigurationRequirementBoolean() {
+  }
 
   public ConfigurationRequirementBoolean(String identifier) {
     super(identifier);
@@ -60,7 +60,8 @@ public class ConfigurationRequirementBoolean
   @Override
   @GwtIncompatible("ConfigurationValues cannot be build on client side.")
   public ConfigurationValue build(ConfigurationFactory factory)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     return factory.build(this);
   }
 

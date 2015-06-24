@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,20 @@
 
 package de.metanome.backend.result_receiver;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
+
+import org.apache.commons.io.FileUtils;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import de.metanome.algorithm_integration.ColumnCombination;
 import de.metanome.algorithm_integration.ColumnIdentifier;
@@ -30,23 +42,8 @@ import de.metanome.algorithm_integration.results.Result;
 import de.metanome.algorithm_integration.results.UniqueColumnCombination;
 import de.metanome.backend.results_db.ResultType;
 
-import org.apache.commons.io.FileUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-
 /**
  * Test for {@link ResultCache}
- *
  * @author Jakob Zwiener
  */
 public class ResultCacheTest {
@@ -112,9 +109,9 @@ public class ResultCacheTest {
   public void testClose() throws IOException, CouldNotReceiveResultException {
     // Set up
     FunctionalDependency expectedFd = new FunctionalDependency(
-        new ColumnCombination(
-            new ColumnIdentifier("table1", "column2")),
-        new ColumnIdentifier("table1", "column23")
+      new ColumnCombination(
+        new ColumnIdentifier("table1", "column2")),
+      new ColumnIdentifier("table1", "column23")
     );
 
     ResultCache resultCache = new ResultCache("identifier");

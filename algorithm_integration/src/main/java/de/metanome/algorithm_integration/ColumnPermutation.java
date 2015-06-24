@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * Represents column permutations. In contrast to {@link ColumnCombination}s
- *  the order of the column is not necessarily lexicographically.
+ * the order of the column is not necessarily lexicographically.
  */
 public class ColumnPermutation implements Serializable {
 
@@ -38,7 +38,6 @@ public class ColumnPermutation implements Serializable {
 
   /**
    * Store string identifiers for columns to form a column combination.
-   *
    * @param columnIdentifier the identifier in the ColumnCombination
    */
   public ColumnPermutation(ColumnIdentifier... columnIdentifier) {
@@ -47,14 +46,15 @@ public class ColumnPermutation implements Serializable {
 
   /**
    * Get column identifiers as set.
-   *
    * @return columnIdentifiers
    */
   public List<ColumnIdentifier> getColumnIdentifiers() {
     return columnIdentifiers;
   }
 
-  public void setColumnIdentifiers(List<ColumnIdentifier> identifiers) { this.columnIdentifiers = identifiers; }
+  public void setColumnIdentifiers(List<ColumnIdentifier> identifiers) {
+    this.columnIdentifiers = identifiers;
+  }
 
   @Override
   public String toString() {
@@ -66,9 +66,9 @@ public class ColumnPermutation implements Serializable {
     final int prime = 31;
     int result = 1;
     result = prime
-             * result
-             + ((columnIdentifiers == null) ? 0 : columnIdentifiers
-        .hashCode());
+      * result
+      + ((columnIdentifiers == null) ? 0 : columnIdentifiers
+      .hashCode());
     return result;
   }
 
@@ -88,7 +88,8 @@ public class ColumnPermutation implements Serializable {
       if (other.columnIdentifiers != null) {
         return false;
       }
-    } else if (!columnIdentifiers.equals(other.columnIdentifiers)) {
+    }
+    else if (!columnIdentifiers.equals(other.columnIdentifiers)) {
       return false;
     }
     return true;

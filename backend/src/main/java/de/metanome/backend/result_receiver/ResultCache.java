@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,11 @@
 
 package de.metanome.backend.result_receiver;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+
 import de.metanome.algorithm_integration.result_receiver.CouldNotReceiveResultException;
 import de.metanome.algorithm_integration.results.BasicStatistic;
 import de.metanome.algorithm_integration.results.ConditionalUniqueColumnCombination;
@@ -25,15 +30,9 @@ import de.metanome.algorithm_integration.results.OrderDependency;
 import de.metanome.algorithm_integration.results.Result;
 import de.metanome.algorithm_integration.results.UniqueColumnCombination;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * Stores all received Results in a list and returns the new results on call to {@link
  * ResultCache#fetchNewResults()}. When all results were received, they are written to disk.
- *
  * @author Jakob Zwiener
  */
 public class ResultCache extends ResultReceiver {
@@ -42,11 +41,14 @@ public class ResultCache extends ResultReceiver {
   protected int fromIndex = 0;
 
   public ResultCache(String algorithmExecutionIdentifier)
-      throws FileNotFoundException {
+    throws FileNotFoundException
+  {
     super(algorithmExecutionIdentifier);
   }
+
   protected ResultCache(String algorithmExecutionIdentifier, Boolean test)
-      throws FileNotFoundException {
+    throws FileNotFoundException
+  {
     super(algorithmExecutionIdentifier, test);
   }
 
@@ -81,7 +83,6 @@ public class ResultCache extends ResultReceiver {
 
   /**
    * Should return all results once. Copies the new received results and returns them.
-   *
    * @return new results
    */
   public List<Result> fetchNewResults() {
@@ -98,21 +99,28 @@ public class ResultCache extends ResultReceiver {
   @Override
   public void close() throws IOException {
     ResultPrinter printer = new ResultPrinter(this.algorithmExecutionIdentifier, this.testDirectory);
-    for (Result result: results) {
+    for (Result result : results) {
       try {
-        if (result instanceof FunctionalDependency)
+        if (result instanceof FunctionalDependency) {
           printer.receiveResult((FunctionalDependency) result);
-        else if (result instanceof InclusionDependency)
+        }
+        else if (result instanceof InclusionDependency) {
           printer.receiveResult((InclusionDependency) result);
-        else if (result instanceof UniqueColumnCombination)
+        }
+        else if (result instanceof UniqueColumnCombination) {
           printer.receiveResult((UniqueColumnCombination) result);
-        else if (result instanceof ConditionalUniqueColumnCombination)
+        }
+        else if (result instanceof ConditionalUniqueColumnCombination) {
           printer.receiveResult((ConditionalUniqueColumnCombination) result);
-        else if (result instanceof OrderDependency)
+        }
+        else if (result instanceof OrderDependency) {
           printer.receiveResult((OrderDependency) result);
-        else if (result instanceof BasicStatistic)
+        }
+        else if (result instanceof BasicStatistic) {
           printer.receiveResult((BasicStatistic) result);
-      } catch (CouldNotReceiveResultException ignored) {
+        }
+      }
+      catch (CouldNotReceiveResultException ignored) {
 
       }
     }

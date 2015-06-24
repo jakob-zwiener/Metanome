@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,17 +16,16 @@
 
 package de.metanome.frontend.client.input_fields;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.user.client.ui.ListBox;
 
 import de.metanome.frontend.client.helpers.InputValidationException;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * A wrapper for a list box of strings that can contain a remove button. If the remove button is
  * clicked, the list box is removed from the parent widget.
- *
  * @author Tanja Bergmann
  */
 public class ListBoxInput extends InputField {
@@ -35,7 +34,7 @@ public class ListBoxInput extends InputField {
 
   /**
    * @param optional If true, a remove button will be rendered, to remove this widget from its
-   *                 parent.
+   * parent.
    */
   public ListBoxInput(boolean optional, boolean required) {
     super(optional, required);
@@ -59,7 +58,6 @@ public class ListBoxInput extends InputField {
 
   /**
    * Sets all values of the list of items to the list box.
-   *
    * @param items the items of the list box
    */
   public void setValues(List<String> items) {
@@ -70,7 +68,6 @@ public class ListBoxInput extends InputField {
 
   /**
    * Adds a item to the list box.
-   *
    * @param item the item to be added
    */
   public void addValue(String item) {
@@ -79,7 +76,6 @@ public class ListBoxInput extends InputField {
 
   /**
    * Removes an item to the list box.
-   *
    * @param item the item to be deleted
    */
   public void removeValue(String item) {
@@ -107,7 +103,8 @@ public class ListBoxInput extends InputField {
     if (selectedIndex < 0) {
       if (isRequired) {
         throw new InputValidationException("You must choose a value from the list box!");
-      } else {
+      }
+      else {
         return null;
       }
     }
@@ -131,7 +128,6 @@ public class ListBoxInput extends InputField {
 
   /**
    * Checks if the list box contains values
-   *
    * @return false, if no values are set, true otherwise
    */
   public boolean containsValues() {

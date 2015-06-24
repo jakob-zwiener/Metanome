@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,28 +17,11 @@
 package de.metanome.backend.resources;
 
 
-import de.metanome.algorithm_integration.AlgorithmExecutionException;
-import de.metanome.algorithm_integration.algorithm_execution.FileGenerator;
-import de.metanome.algorithm_integration.results.Result;
-import de.metanome.backend.algorithm_execution.AlgorithmExecutor;
-import de.metanome.backend.algorithm_execution.ProgressCache;
-import de.metanome.backend.algorithm_execution.TempFileGenerator;
-import de.metanome.backend.algorithm_loading.AlgorithmLoadingException;
-import de.metanome.backend.result_receiver.ResultReader;
-import de.metanome.backend.result_receiver.ResultCache;
-import de.metanome.backend.result_receiver.ResultCounter;
-import de.metanome.backend.result_receiver.ResultPrinter;
-import de.metanome.backend.result_receiver.ResultReceiver;
-import de.metanome.backend.results_db.Algorithm;
-import de.metanome.backend.results_db.Execution;
-import de.metanome.backend.results_db.ResultType;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.EnumMap;
 import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -46,6 +29,22 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+
+import de.metanome.algorithm_integration.AlgorithmExecutionException;
+import de.metanome.algorithm_integration.algorithm_execution.FileGenerator;
+import de.metanome.algorithm_integration.results.Result;
+import de.metanome.backend.algorithm_execution.AlgorithmExecutor;
+import de.metanome.backend.algorithm_execution.ProgressCache;
+import de.metanome.backend.algorithm_execution.TempFileGenerator;
+import de.metanome.backend.algorithm_loading.AlgorithmLoadingException;
+import de.metanome.backend.result_receiver.ResultCache;
+import de.metanome.backend.result_receiver.ResultCounter;
+import de.metanome.backend.result_receiver.ResultPrinter;
+import de.metanome.backend.result_receiver.ResultReader;
+import de.metanome.backend.result_receiver.ResultReceiver;
+import de.metanome.backend.results_db.Algorithm;
+import de.metanome.backend.results_db.Execution;
+import de.metanome.backend.results_db.ResultType;
 
 @Path("algorithm_execution")
 public class AlgorithmExecutionResource {
@@ -63,9 +62,11 @@ public class AlgorithmExecutionResource {
 
     try {
       executor = buildExecutor(params);
-    } catch (FileNotFoundException e) {
+    }
+    catch (FileNotFoundException e) {
       throw new WebException("Could not generate result file", Response.Status.BAD_REQUEST);
-    } catch (UnsupportedEncodingException e) {
+    }
+    catch (UnsupportedEncodingException e) {
       throw new WebException("Could not build temporary file generator", Response.Status.BAD_REQUEST);
     }
 
@@ -75,13 +76,15 @@ public class AlgorithmExecutionResource {
     Execution execution = null;
     try {
       execution = executor.executeAlgorithm(algorithm, params.getRequirements(), params.getExecutionIdentifier());
-    } catch (AlgorithmLoadingException | AlgorithmExecutionException e) {
+    }
+    catch (AlgorithmLoadingException | AlgorithmExecutionException e) {
       throw new WebException(e, Response.Status.BAD_REQUEST);
     }
 
     try {
       executor.close();
-    } catch (IOException e) {
+    }
+    catch (IOException e) {
       throw new WebException("Could not close algorithm executor", Response.Status.BAD_REQUEST);
     }
 
@@ -94,9 +97,10 @@ public class AlgorithmExecutionResource {
   public List<Result> getCacheResults(@PathParam("identifier") String executionIdentifier) {
     try {
       return AlgorithmExecutionCache.getResultCache(executionIdentifier).fetchNewResults();
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       throw new WebException("Could not find any results to the given identifier",
-                             Response.Status.BAD_REQUEST);
+        Response.Status.BAD_REQUEST);
     }
   }
 
@@ -106,9 +110,10 @@ public class AlgorithmExecutionResource {
   public float fetchProgress(@PathParam("identifier") String executionIdentifier) {
     try {
       return AlgorithmExecutionCache.getProgressCache(executionIdentifier).getProgress();
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       throw new WebException("Could not find any progress to the given identifier",
-                             Response.Status.BAD_REQUEST);
+        Response.Status.BAD_REQUEST);
     }
   }
 
@@ -118,9 +123,10 @@ public class AlgorithmExecutionResource {
   public EnumMap<ResultType, Integer> getCounterResults(@PathParam("identifier") String executionIdentifier) {
     try {
       return AlgorithmExecutionCache.getResultCounter(executionIdentifier).getResults();
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       throw new WebException("Could not find any progress to the given identifier",
-                             Response.Status.BAD_REQUEST);
+        Response.Status.BAD_REQUEST);
     }
   }
 
@@ -130,9 +136,10 @@ public class AlgorithmExecutionResource {
   public List<Result> getPrinterResults(@PathParam("identifier") String executionIdentifier) {
     try {
       return AlgorithmExecutionCache.getResultPrinter(executionIdentifier).getResults();
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       throw new WebException("Could not find any progress to the given identifier",
-                             Response.Status.BAD_REQUEST);
+        Response.Status.BAD_REQUEST);
     }
   }
 
@@ -142,9 +149,10 @@ public class AlgorithmExecutionResource {
   public List<Result> readResultFromFile(@PathParam("file_name") String fileName, @PathParam("type") String type) {
     try {
       return ResultReader.readResultsFromFile(fileName, type);
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       throw new WebException("Could not read result file",
-                             Response.Status.BAD_REQUEST);
+        Response.Status.BAD_REQUEST);
     }
   }
 
@@ -152,14 +160,14 @@ public class AlgorithmExecutionResource {
   /**
    * Builds an {@link de.metanome.backend.algorithm_execution.AlgorithmExecutor} with stacked {@link de.metanome.algorithm_integration.result_receiver.OmniscientResultReceiver}s to write
    * result files and cache results for the frontend.
-   *
    * @param params all parameters for executing the algorithm
    * @return an {@link de.metanome.backend.algorithm_execution.AlgorithmExecutor}
-   * @throws java.io.FileNotFoundException        when the result files cannot be opened
+   * @throws java.io.FileNotFoundException when the result files cannot be opened
    * @throws java.io.UnsupportedEncodingException when the temp files cannot be opened
    */
   protected AlgorithmExecutor buildExecutor(AlgorithmExecutionParams params)
-      throws FileNotFoundException, UnsupportedEncodingException {
+    throws FileNotFoundException, UnsupportedEncodingException
+  {
     String identifier = params.getExecutionIdentifier();
     FileGenerator fileGenerator = new TempFileGenerator();
     ProgressCache progressCache = new ProgressCache();
@@ -168,10 +176,12 @@ public class AlgorithmExecutionResource {
     if (params.getCacheResults()) {
       resultReceiver = new ResultCache(identifier);
       AlgorithmExecutionCache.add(identifier, (ResultCache) resultReceiver);
-    } else if (params.getCountResults()) {
+    }
+    else if (params.getCountResults()) {
       resultReceiver = new ResultCounter(identifier);
       AlgorithmExecutionCache.add(identifier, (ResultCounter) resultReceiver);
-    } else if (params.getWriteResults()) {
+    }
+    else if (params.getWriteResults()) {
       resultReceiver = new ResultPrinter(identifier);
       AlgorithmExecutionCache.add(identifier, (ResultPrinter) resultReceiver);
     }

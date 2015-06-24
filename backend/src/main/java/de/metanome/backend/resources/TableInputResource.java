@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,7 @@
 
 package de.metanome.backend.resources;
 
-import de.metanome.backend.results_db.EntityStorageException;
-import de.metanome.backend.results_db.HibernateUtil;
-import de.metanome.backend.results_db.TableInput;
-
 import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -31,12 +26,15 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import de.metanome.backend.results_db.EntityStorageException;
+import de.metanome.backend.results_db.HibernateUtil;
+import de.metanome.backend.results_db.TableInput;
+
 @Path("tableInputs")
 public class TableInputResource implements Resource<TableInput> {
 
   /**
    * Stores the TableInput in the database.
-   *
    * @return the TableInput
    */
   @POST
@@ -47,7 +45,8 @@ public class TableInputResource implements Resource<TableInput> {
   public TableInput store(TableInput table) {
     try {
       HibernateUtil.store(table);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       e.printStackTrace();
     }
     return table;
@@ -64,7 +63,8 @@ public class TableInputResource implements Resource<TableInput> {
     try {
       TableInput tableInput = (TableInput) HibernateUtil.retrieve(TableInput.class, id);
       HibernateUtil.delete(tableInput);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       throw new WebException(e, Response.Status.BAD_REQUEST);
     }
   }
@@ -81,7 +81,8 @@ public class TableInputResource implements Resource<TableInput> {
   public TableInput get(@PathParam("id") long id) {
     try {
       return (TableInput) HibernateUtil.retrieve(TableInput.class, id);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       throw new WebException(e, Response.Status.BAD_REQUEST);
     }
   }
@@ -95,7 +96,8 @@ public class TableInputResource implements Resource<TableInput> {
   public List<TableInput> getAll() {
     try {
       return HibernateUtil.queryCriteria(TableInput.class);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       throw new WebException(e, Response.Status.BAD_REQUEST);
     }
   }
@@ -113,7 +115,8 @@ public class TableInputResource implements Resource<TableInput> {
   public TableInput update(TableInput tableInput) {
     try {
       HibernateUtil.update(tableInput);
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       throw new WebException(e, Response.Status.BAD_REQUEST);
     }
     return tableInput;

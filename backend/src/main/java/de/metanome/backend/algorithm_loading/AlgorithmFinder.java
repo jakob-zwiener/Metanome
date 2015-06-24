@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,6 @@
 
 package de.metanome.backend.algorithm_loading;
 
-import de.metanome.algorithm_integration.Algorithm;
-
-import org.apache.commons.lang3.ClassUtils;
-
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -34,6 +30,10 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
+import org.apache.commons.lang3.ClassUtils;
+
+import de.metanome.algorithm_integration.Algorithm;
+
 /**
  * Class that provides utilities to retrieve information on the available algorithm jars.
  */
@@ -46,17 +46,18 @@ public class AlgorithmFinder {
    * @return an array with the names of the available algorithms
    */
   public String[] getAvailableAlgorithmFileNames(Class<?> algorithmSubclass)
-      throws IOException, ClassNotFoundException {
+    throws IOException, ClassNotFoundException
+  {
 
     LinkedList<String> availableAlgorithms = new LinkedList<>();
     String
-        pathToFolder =
-        Thread.currentThread().getContextClassLoader().getResource("algorithms").getPath();
+      pathToFolder =
+      Thread.currentThread().getContextClassLoader().getResource("algorithms").getPath();
     File[] jarFiles = retrieveJarFiles(pathToFolder);
 
     for (File jarFile : jarFiles) {
       if (algorithmSubclass == null ||
-          getAlgorithmInterfaces(jarFile).contains(algorithmSubclass)) {
+        getAlgorithmInterfaces(jarFile).contains(algorithmSubclass)) {
         availableAlgorithms.add(jarFile.getName());
       }
     }
@@ -87,16 +88,16 @@ public class AlgorithmFinder {
   /**
    * Finds out which subclass of Algorithm is implemented by the source code in the algorithmJarFile
    * by file name.
-   *
    * @param algorithmJarFileName the algorithm's file name
    * @return the interfaces of the algorithm implementation in algorithmJarFile
    */
   public Set<Class<?>> getAlgorithmInterfaces(String algorithmJarFileName)
-      throws IOException, ClassNotFoundException {
+    throws IOException, ClassNotFoundException
+  {
     String
-        jarFilePath =
-        Thread.currentThread().getContextClassLoader()
-            .getResource("algorithms/" + algorithmJarFileName).getFile();
+      jarFilePath =
+      Thread.currentThread().getContextClassLoader()
+        .getResource("algorithms/" + algorithmJarFileName).getFile();
     File file = new File(URLDecoder.decode(jarFilePath, "utf-8"));
 
     return getAlgorithmInterfaces(file);
@@ -105,28 +106,30 @@ public class AlgorithmFinder {
   /**
    * Finds out which subclass of Algorithm is implemented by the source code in the
    * algorithmJarFile.
-   *
    * @param algorithmJarFile the algorithm's jar file
    * @return the interfaces of the algorithm implementation in algorithmJarFile
    */
   public Set<Class<?>> getAlgorithmInterfaces(File algorithmJarFile)
-      throws IOException, ClassNotFoundException {
+    throws IOException, ClassNotFoundException
+  {
     JarFile jar = new JarFile(algorithmJarFile);
 
     Manifest man = jar.getManifest();
     Attributes attr = man.getMainAttributes();
     String className = attr.getValue(bootstrapClassTagName);
 
-    URL[] url = {algorithmJarFile.toURI().toURL()};
+    URL[] url = { algorithmJarFile.toURI().toURL() };
     ClassLoader loader = new URLClassLoader(url, Algorithm.class.getClassLoader());
 
     Class<?> algorithmClass;
     try {
       algorithmClass = Class.forName(className, false, loader);
-    } catch (ClassNotFoundException e) {
+    }
+    catch (ClassNotFoundException e) {
       System.out.println("Could not find class " + className);
       return new HashSet<>();
-    } finally {
+    }
+    finally {
       jar.close();
     }
 

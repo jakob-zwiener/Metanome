@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,15 @@
 /**
  *
  */
+
 package de.metanome.algorithm_integration.results;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import de.metanome.algorithm_integration.ColumnCombination;
 import de.metanome.algorithm_integration.ColumnIdentifier;
@@ -25,19 +33,8 @@ import de.metanome.algorithm_integration.result_receiver.CouldNotReceiveResultEx
 import de.metanome.algorithm_integration.result_receiver.OmniscientResultReceiver;
 import de.metanome.test_helper.GwtSerializationTester;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
 /**
  * Test for {@link UniqueColumnCombination}
- *
  * @author Jakob Zwiener
  */
 public class UniqueColumnCombinationTest {
@@ -87,12 +84,12 @@ public class UniqueColumnCombinationTest {
 
     // Execute functionality
     UniqueColumnCombination
-        actualUniqueColumnCombination =
-        new UniqueColumnCombination(expectedColumn1, expectedColumn2, expectedColumn2);
+      actualUniqueColumnCombination =
+      new UniqueColumnCombination(expectedColumn1, expectedColumn2, expectedColumn2);
 
     // Check result
     assertEquals(new ColumnCombination(expectedColumn1, expectedColumn2),
-                 actualUniqueColumnCombination.getColumnCombination());
+      actualUniqueColumnCombination.getColumnCombination());
   }
 
   /**
@@ -107,13 +104,13 @@ public class UniqueColumnCombinationTest {
     ColumnIdentifier expectedColumn1 = new ColumnIdentifier("table1", "column1");
     ColumnIdentifier expectedColumn2 = new ColumnIdentifier("table2", "column2");
     ColumnCombination
-        expectedColumnCombination =
-        new ColumnCombination(expectedColumn1, expectedColumn2, expectedColumn2);
+      expectedColumnCombination =
+      new ColumnCombination(expectedColumn1, expectedColumn2, expectedColumn2);
 
     // Execute functionality
     UniqueColumnCombination
-        actualUniqueColumnCombination =
-        new UniqueColumnCombination(expectedColumnCombination);
+      actualUniqueColumnCombination =
+      new UniqueColumnCombination(expectedColumnCombination);
 
     // Check result
     assertEquals(expectedColumnCombination, actualUniqueColumnCombination.getColumnCombination());
@@ -130,12 +127,12 @@ public class UniqueColumnCombinationTest {
     ColumnIdentifier expectedColumn1 = new ColumnIdentifier("table1", "column1");
     ColumnIdentifier expectedColumn2 = new ColumnIdentifier("table2", "column2");
     UniqueColumnCombination
-        uniqueColumnCombination =
-        new UniqueColumnCombination(expectedColumn1, expectedColumn2);
+      uniqueColumnCombination =
+      new UniqueColumnCombination(expectedColumn1, expectedColumn2);
     // Expected values
     String
-        expectedStringRepresentation =
-        new ColumnCombination(expectedColumn1, expectedColumn2).toString();
+      expectedStringRepresentation =
+      new ColumnCombination(expectedColumn1, expectedColumn2).toString();
 
     // Execute functionality
     // Check result
@@ -154,17 +151,17 @@ public class UniqueColumnCombinationTest {
     ColumnIdentifier column12 = new ColumnIdentifier("table2", "column2");
     ColumnIdentifier column13 = new ColumnIdentifier("table3", "column3");
     UniqueColumnCombination
-        expectedColumnCombination1 =
-        new UniqueColumnCombination(column12, column13, column11);
+      expectedColumnCombination1 =
+      new UniqueColumnCombination(column12, column13, column11);
     ColumnIdentifier column21 = new ColumnIdentifier("table1", "column1");
     ColumnIdentifier column22 = new ColumnIdentifier("table2", "column2");
     ColumnIdentifier column23 = new ColumnIdentifier("table3", "column3");
     UniqueColumnCombination
-        expectedColumnCombination2 =
-        new UniqueColumnCombination(column21, column22, column23);
+      expectedColumnCombination2 =
+      new UniqueColumnCombination(column21, column22, column23);
     UniqueColumnCombination
-        expectedColumnCombinationNotEquals =
-        new UniqueColumnCombination(column21, column23);
+      expectedColumnCombinationNotEquals =
+      new UniqueColumnCombination(column21, column23);
 
     // Execute functionality
     // Check result
@@ -175,7 +172,7 @@ public class UniqueColumnCombinationTest {
     assertEquals(expectedColumnCombination1.hashCode(), expectedColumnCombination2.hashCode());
     assertNotEquals(expectedColumnCombination1, expectedColumnCombinationNotEquals);
     assertNotEquals(expectedColumnCombination1.hashCode(),
-                    expectedColumnCombinationNotEquals.hashCode());
+      expectedColumnCombinationNotEquals.hashCode());
   }
 
   /**
@@ -184,7 +181,7 @@ public class UniqueColumnCombinationTest {
   @Test
   public void testGwtSerialization() {
     GwtSerializationTester
-        .checkGwtSerializability(new UniqueColumnCombination(mock(ColumnIdentifier.class)));
+      .checkGwtSerializability(new UniqueColumnCombination(mock(ColumnIdentifier.class)));
   }
 
 }

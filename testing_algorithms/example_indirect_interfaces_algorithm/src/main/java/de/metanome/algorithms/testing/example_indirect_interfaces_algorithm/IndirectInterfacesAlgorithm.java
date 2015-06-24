@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,8 @@ package de.metanome.algorithms.testing.example_indirect_interfaces_algorithm;/*
  * limitations under the License.
  */
 
+import java.util.ArrayList;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.AlgorithmExecutionException;
 import de.metanome.algorithm_integration.ColumnIdentifier;
@@ -40,11 +42,8 @@ import de.metanome.algorithm_integration.input.RelationalInputGenerator;
 import de.metanome.algorithm_integration.result_receiver.UniqueColumnCombinationResultReceiver;
 import de.metanome.algorithm_integration.results.UniqueColumnCombination;
 
-import java.util.ArrayList;
-
 /**
  * A metanome algorithm that does not implement the metanome interfaces directly.
- *
  * @author Jakob Zwiener
  */
 public class IndirectInterfacesAlgorithm extends AlgorithmSuperclass {
@@ -61,7 +60,8 @@ public class IndirectInterfacesAlgorithm extends AlgorithmSuperclass {
   @Override
   public void setRelationalInputConfigurationValue(String identifier,
                                                    RelationalInputGenerator... values)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     this.inputGenerator = values[0];
   }
 
@@ -83,7 +83,7 @@ public class IndirectInterfacesAlgorithm extends AlgorithmSuperclass {
   public void execute() throws AlgorithmExecutionException {
     if ((progressReceiver != null) && (inputGenerator != null) && (resultReceiver != null)) {
       resultReceiver
-          .receiveResult(new UniqueColumnCombination(new ColumnIdentifier("table1", "column3")));
+        .receiveResult(new UniqueColumnCombination(new ColumnIdentifier("table1", "column3")));
     }
   }
 }

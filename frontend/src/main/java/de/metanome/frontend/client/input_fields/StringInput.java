@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ import de.metanome.frontend.client.helpers.InputValidationException;
 /**
  * A wrapper for a text box that can contain a remove button. If the remove button is clicked, the
  * checkbox is removed from the parent widget.
- *
  * @author Claudia Exeler
  */
 public class StringInput extends InputField {
@@ -32,7 +31,7 @@ public class StringInput extends InputField {
 
   /**
    * @param optional If true, a remove button will be rendered, to remove this widget from its
-   *                 parent.
+   * parent.
    */
   public StringInput(boolean optional, boolean required) {
     super(optional, required);
@@ -50,7 +49,8 @@ public class StringInput extends InputField {
     if (input.isEmpty()) {
       if (isRequired) {
         throw new InputValidationException("You have to enter a value!");
-      } else {
+      }
+      else {
         return null;
       }
     }
@@ -60,7 +60,6 @@ public class StringInput extends InputField {
 
   /**
    * Sets the value of the text box
-   *
    * @param value the value which should be set
    */
   public void setValue(String value) {

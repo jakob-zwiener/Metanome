@@ -16,22 +16,20 @@
 
 package de.metanome.backend.input.file;
 
-import au.com.bytecode.opencsv.CSVReader;
-
-import de.metanome.algorithm_integration.configuration.ConfigurationSettingFileInput;
-import de.metanome.algorithm_integration.input.InputIterationException;
-import de.metanome.algorithm_integration.input.RelationalInput;
-import de.metanome.backend.helper.ExceptionParser;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import au.com.bytecode.opencsv.CSVReader;
+import de.metanome.algorithm_integration.configuration.ConfigurationSettingFileInput;
+import de.metanome.algorithm_integration.input.InputIterationException;
+import de.metanome.algorithm_integration.input.RelationalInput;
+import de.metanome.backend.helper.ExceptionParser;
+
 /**
  * {@link FileIterator}s are Iterators over lines in a file file.
- *
  * @author Jakob Zwiener
  */
 public class FileIterator implements RelationalInput {
@@ -57,7 +55,8 @@ public class FileIterator implements RelationalInput {
 
 
   public FileIterator(String relationName, Reader reader, ConfigurationSettingFileInput setting)
-      throws InputIterationException {
+    throws InputIterationException
+  {
     this.relationName = relationName;
 
     this.hasHeader = setting.hasHeader();
@@ -65,13 +64,13 @@ public class FileIterator implements RelationalInput {
     this.nullValue = setting.getNullValue();
 
     this.csvReader =
-        new CSVReader(reader,
-                      setting.getSeparatorAsChar(),
-                      setting.getQuoteCharAsChar(),
-                      setting.getEscapeCharAsChar(),
-                      setting.getSkipLines(),
-                      setting.isStrictQuotes(),
-                      setting.isIgnoreLeadingWhiteSpace());
+      new CSVReader(reader,
+        setting.getSeparatorAsChar(),
+        setting.getQuoteCharAsChar(),
+        setting.getEscapeCharAsChar(),
+        setting.getSkipLines(),
+        setting.isStrictQuotes(),
+        setting.isIgnoreLeadingWhiteSpace());
 
     this.nextLine = readNextLine();
     if (this.nextLine != null) {
@@ -105,7 +104,8 @@ public class FileIterator implements RelationalInput {
 
     if (this.skipDifferingLines) {
       readToNextValidLine();
-    } else {
+    }
+    else {
       failDifferingLine(currentLine);
     }
 
@@ -113,12 +113,13 @@ public class FileIterator implements RelationalInput {
   }
 
   protected void failDifferingLine(List<String> currentLine)
-      throws InputIterationException {
+    throws InputIterationException
+  {
     if (currentLine.size() != this.numberOfColumns()) {
       throw new InputIterationException(
-          String.format(
-              "Csv line length did not match on line %d. Line length was %d, where it should have been %d.",
-              currentLineNumber, currentLine.size(), this.numberOfColumns()));
+        String.format(
+          "Csv line length did not match on line %d. Line length was %d, where it should have been %d.",
+          currentLineNumber, currentLine.size(), this.numberOfColumns()));
     }
   }
 
@@ -149,19 +150,22 @@ public class FileIterator implements RelationalInput {
     try {
       lineArray = this.csvReader.readNext();
       currentLineNumber++;
-    } catch (IOException e) {
+    }
+    catch (IOException e) {
       throw new InputIterationException(
-          ExceptionParser.parse(e, "Could not read next line in file input"), e);
+        ExceptionParser.parse(e, "Could not read next line in file input"), e);
     }
     if (lineArray == null) {
       return null;
-    } else {
+    }
+    else {
       // Convert empty Strings to null
       List<String> list = new ArrayList<>();
       for (String val : lineArray) {
         if (val.equals(this.nullValue)) {
           list.add(null);
-        } else {
+        }
+        else {
           list.add(val);
         }
       }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
  * The setting of a {@link ConfigurationRequirementString}
- *
  * @author Jakob Zwiener
  */
 @JsonTypeName("ConfigurationSettingString")
@@ -29,7 +28,8 @@ public class ConfigurationSettingString extends ConfigurationSettingPrimitive<St
   // Needed for restful serialization
   public String type = "ConfigurationSettingString";
 
-  public ConfigurationSettingString() {}
+  public ConfigurationSettingString() {
+  }
 
   public ConfigurationSettingString(String value) {
     super(value);

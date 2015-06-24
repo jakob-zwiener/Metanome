@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,22 +16,18 @@
 
 package de.metanome.backend.resources;
 
-import de.metanome.backend.algorithm_loading.AlgorithmLoadingException;
-import de.metanome.backend.results_db.Algorithm;
-import de.metanome.backend.results_db.EntityStorageException;
-import de.metanome.backend.results_db.HibernateUtil;
-
-import org.hamcrest.collection.IsIterableContainingInAnyOrder;
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.util.Collection;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import org.hamcrest.collection.IsIterableContainingInAnyOrder;
+import org.junit.Test;
+
+import de.metanome.backend.algorithm_loading.AlgorithmLoadingException;
+import de.metanome.backend.results_db.Algorithm;
+import de.metanome.backend.results_db.EntityStorageException;
+import de.metanome.backend.results_db.HibernateUtil;
 
 public class AlgorithmResourceTest {
 
@@ -58,7 +54,7 @@ public class AlgorithmResourceTest {
 
     // Check result
     assertThat(actualAlgorithms, IsIterableContainingInAnyOrder
-        .containsInAnyOrder(expectedAlgorithm1, expectedAlgorithm2));
+      .containsInAnyOrder(expectedAlgorithm1, expectedAlgorithm2));
 
     // Cleanup
     HibernateUtil.clear();
@@ -66,7 +62,7 @@ public class AlgorithmResourceTest {
 
   /**
    * Test method for {@link de.metanome.backend.resources.AlgorithmResource#getAll()}
-   *
+   * <p/>
    * When the database has never been accessed, the list of algorithms should still be
    * retrievable and empty.
    */
@@ -92,8 +88,8 @@ public class AlgorithmResourceTest {
 
     // Expected values
     Algorithm expectedAlgorithm = new Algorithm("example_ind_algorithm.jar")
-        .setName("ind")
-        .setInd(true);
+      .setName("ind")
+      .setInd(true);
     HibernateUtil.store(expectedAlgorithm);
 
     // Execute functionality
@@ -101,7 +97,7 @@ public class AlgorithmResourceTest {
 
     // Check result
     assertThat(actualAlgorithms,
-               IsIterableContainingInAnyOrder.containsInAnyOrder(expectedAlgorithm));
+      IsIterableContainingInAnyOrder.containsInAnyOrder(expectedAlgorithm));
 
     // Cleanup
     HibernateUtil.clear();
@@ -114,8 +110,8 @@ public class AlgorithmResourceTest {
 
     // Expected values
     Algorithm expectedAlgorithm = new Algorithm("example_ucc_algorithm.jar")
-        .setName("Ucc")
-        .setUcc(true);
+      .setName("Ucc")
+      .setUcc(true);
     HibernateUtil.store(expectedAlgorithm);
 
     // Execute functionality
@@ -123,7 +119,7 @@ public class AlgorithmResourceTest {
 
     // Check result
     assertThat(actualAlgorithms,
-               IsIterableContainingInAnyOrder.containsInAnyOrder(expectedAlgorithm));
+      IsIterableContainingInAnyOrder.containsInAnyOrder(expectedAlgorithm));
 
     // Cleanup
     HibernateUtil.clear();
@@ -136,8 +132,8 @@ public class AlgorithmResourceTest {
 
     // Expected values
     Algorithm expectedAlgorithm = new Algorithm("example_cucc_algorithm.jar")
-        .setName("cucc")
-        .setCucc(true);
+      .setName("cucc")
+      .setCucc(true);
     HibernateUtil.store(expectedAlgorithm);
 
     // Execute functionality
@@ -145,7 +141,7 @@ public class AlgorithmResourceTest {
 
     // Check result
     assertThat(actualAlgorithms,
-               IsIterableContainingInAnyOrder.containsInAnyOrder(expectedAlgorithm));
+      IsIterableContainingInAnyOrder.containsInAnyOrder(expectedAlgorithm));
 
     // Cleanup
     HibernateUtil.clear();
@@ -158,8 +154,8 @@ public class AlgorithmResourceTest {
 
     // Expected values
     Algorithm expectedAlgorithm = new Algorithm("example_fd_algorithm.jar")
-        .setName("fd")
-        .setFd(true);
+      .setName("fd")
+      .setFd(true);
     HibernateUtil.store(expectedAlgorithm);
 
     // Execute functionality
@@ -167,7 +163,7 @@ public class AlgorithmResourceTest {
 
     // Check result
     assertThat(actualAlgorithms,
-               IsIterableContainingInAnyOrder.containsInAnyOrder(expectedAlgorithm));
+      IsIterableContainingInAnyOrder.containsInAnyOrder(expectedAlgorithm));
 
     // Cleanup
     HibernateUtil.clear();
@@ -180,8 +176,8 @@ public class AlgorithmResourceTest {
 
     // Expected values
     Algorithm expectedAlgorithm = new Algorithm("example_od_algorithm.jar")
-        .setName("od")
-        .setOd(true);
+      .setName("od")
+      .setOd(true);
     HibernateUtil.store(expectedAlgorithm);
 
     // Execute functionality
@@ -189,7 +185,7 @@ public class AlgorithmResourceTest {
 
     // Check result
     assertThat(actualAlgorithms,
-               IsIterableContainingInAnyOrder.containsInAnyOrder(expectedAlgorithm));
+      IsIterableContainingInAnyOrder.containsInAnyOrder(expectedAlgorithm));
 
     // Cleanup
     HibernateUtil.clear();
@@ -202,8 +198,8 @@ public class AlgorithmResourceTest {
 
     // Expected values
     Algorithm expectedAlgorithm = new Algorithm("example_basic_algorithm.jar")
-        .setName("basic")
-        .setBasicStat(true);
+      .setName("basic")
+      .setBasicStat(true);
     HibernateUtil.store(expectedAlgorithm);
 
     // Execute functionality
@@ -211,7 +207,7 @@ public class AlgorithmResourceTest {
 
     // Check result
     assertThat(actualAlgorithms,
-               IsIterableContainingInAnyOrder.containsInAnyOrder(expectedAlgorithm));
+      IsIterableContainingInAnyOrder.containsInAnyOrder(expectedAlgorithm));
 
     // Cleanup
     HibernateUtil.clear();
@@ -244,7 +240,7 @@ public class AlgorithmResourceTest {
 
   /**
    * Test method for {@link AlgorithmResource#listAvailableAlgorithmFiles()}
-   *
+   * <p/>
    * The list of available algorithms should not be emtpy.
    * @throws Exception
    */
@@ -267,7 +263,7 @@ public class AlgorithmResourceTest {
   /**
    * Test method for {@link de.metanome.backend.resources.AlgorithmResource#store(de.metanome.backend.results_db.Algorithm)}
    * and {@link de.metanome.backend.resources.AlgorithmResource#get(long)}
-   *
+   * <p/>
    * Algorithms should be storable and retrievable by id. The store method should return the stored
    * algorithm instance.
    */

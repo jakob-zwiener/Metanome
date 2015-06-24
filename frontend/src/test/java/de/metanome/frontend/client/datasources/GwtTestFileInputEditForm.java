@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import com.google.gwt.user.client.ui.Button;
 
 import au.com.bytecode.opencsv.CSVParser;
 import au.com.bytecode.opencsv.CSVReader;
-
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.backend.input.file.FileIterator;
 import de.metanome.backend.results_db.FileInput;
@@ -39,8 +38,8 @@ public class GwtTestFileInputEditForm extends GWTTestCase {
     // Set up
     // Expected
     FileInputEditForm
-        field =
-        new FileInputEditForm(new FileInputTab(new DataSourcePage(new BasePage())));
+      field =
+      new FileInputEditForm(new FileInputTab(new DataSourcePage(new BasePage())));
 
     String expectedFileName = "file name";
     String expectedComment = "comment";
@@ -62,13 +61,14 @@ public class GwtTestFileInputEditForm extends GWTTestCase {
     // Set up
     // Expected
     FileInputEditForm
-        field =
-        new FileInputEditForm(new FileInputTab(new DataSourcePage(new BasePage())));
+      field =
+      new FileInputEditForm(new FileInputTab(new DataSourcePage(new BasePage())));
     // Execute
     // Check
     try {
       field.getValue();
-    } catch (InputValidationException e) {
+    }
+    catch (InputValidationException e) {
       assertTrue(true);
     }
   }
@@ -77,12 +77,13 @@ public class GwtTestFileInputEditForm extends GWTTestCase {
    * Test method for {@link FileInputEditForm#getValue()}
    */
   public void testGetValueWithCustomAdvancedSettings()
-      throws InputValidationException, AlgorithmConfigurationException {
+    throws InputValidationException, AlgorithmConfigurationException
+  {
     // Set up
     // Expected
     FileInputEditForm
-        field =
-        new FileInputEditForm(new FileInputTab(new DataSourcePage(new BasePage())));
+      field =
+      new FileInputEditForm(new FileInputTab(new DataSourcePage(new BasePage())));
 
     String expectedFileName = "file name";
     String separator = ";";
@@ -125,11 +126,12 @@ public class GwtTestFileInputEditForm extends GWTTestCase {
    * Test method for {@link FileInputEditForm#getValue()}
    */
   public void testGetValueWithDefaultAdvancedSettings()
-      throws InputValidationException, AlgorithmConfigurationException {
+    throws InputValidationException, AlgorithmConfigurationException
+  {
     // Set up
     FileInputEditForm
-        field =
-        new FileInputEditForm(new FileInputTab(new DataSourcePage(new BasePage())));
+      field =
+      new FileInputEditForm(new FileInputTab(new DataSourcePage(new BasePage())));
     field.advancedCheckbox.setValue(true);
 
     // Expected
@@ -159,8 +161,8 @@ public class GwtTestFileInputEditForm extends GWTTestCase {
   public void testVisibilityOfAdvancedSettings() {
     // Set up
     FileInputEditForm
-        widget =
-        new FileInputEditForm(new FileInputTab(new DataSourcePage(new BasePage())));
+      widget =
+      new FileInputEditForm(new FileInputTab(new DataSourcePage(new BasePage())));
 
     // Check default visibility
     assertFalse(widget.advancedTable.isVisible());
@@ -169,12 +171,12 @@ public class GwtTestFileInputEditForm extends GWTTestCase {
     assertFalse(widget.separatorTextBox.isAttached() && widget.separatorTextBox.isVisible());
     assertFalse(widget.quoteTextBox.isAttached() && widget.quoteTextBox.isVisible());
     assertFalse(
-        widget.strictQuotesCheckbox.isAttached() && widget.strictQuotesCheckbox.isVisible());
+      widget.strictQuotesCheckbox.isAttached() && widget.strictQuotesCheckbox.isVisible());
     assertFalse(widget.ignoreLeadingWhiteSpaceCheckbox.isAttached()
-                && widget.ignoreLeadingWhiteSpaceCheckbox.isVisible());
+      && widget.ignoreLeadingWhiteSpaceCheckbox.isVisible());
     assertFalse(widget.headerCheckbox.isAttached() && widget.headerCheckbox.isVisible());
     assertFalse(widget.skipDifferingLinesCheckbox.isAttached() && widget.skipDifferingLinesCheckbox
-        .isVisible());
+      .isVisible());
 
     // Execute
     widget.advancedCheckbox.setValue(true, true);
@@ -197,8 +199,8 @@ public class GwtTestFileInputEditForm extends GWTTestCase {
   public void testResetValues() throws InputValidationException {
     //Setup
     FileInputEditForm
-        input =
-        new FileInputEditForm(new FileInputTab(new DataSourcePage(new BasePage())));
+      input =
+      new FileInputEditForm(new FileInputTab(new DataSourcePage(new BasePage())));
     input.fileListBox.addValue("file1");
     input.fileListBox.addValue("file2");
     input.fileListBox.setSelectedValue("file2");
@@ -218,7 +220,7 @@ public class GwtTestFileInputEditForm extends GWTTestCase {
   /**
    * Test method for {@link de.metanome.frontend.client.datasources.FileInputEditForm#updateFileInput(de.metanome.backend.results_db.FileInput)}
    * and test method for {@link FileInputEditForm#showSaveButton()}
-   *
+   * <p/>
    * If the edit button for a file input is clicked, the edit form should contain the values
    * of that file input and the edit form should show a update button instead of an save button.
    * If the method 'show save button' is called, the save button should be visible again.
@@ -228,8 +230,8 @@ public class GwtTestFileInputEditForm extends GWTTestCase {
     TestHelper.resetDatabaseSync();
 
     FileInputEditForm
-        editForm =
-        new FileInputEditForm(new FileInputTab(new DataSourcePage(new BasePage())));
+      editForm =
+      new FileInputEditForm(new FileInputTab(new DataSourcePage(new BasePage())));
 
     // Expected Values
     String expectedFileName = "file name";
@@ -243,14 +245,14 @@ public class GwtTestFileInputEditForm extends GWTTestCase {
     boolean skipDifferingLines = false;
 
     FileInput fileInput = new FileInput(expectedFileName)
-        .setSeparator(separator)
-        .setQuoteChar(quoteChar)
-        .setEscapeChar(escapeChar)
-        .setSkipLines(skipLines)
-        .setStrictQuotes(strictQuotes)
-        .setIgnoreLeadingWhiteSpace(ignoreLeadingWhiteSpace)
-        .setHasHeader(hasHeader)
-        .setSkipDifferingLines(skipDifferingLines);
+      .setSeparator(separator)
+      .setQuoteChar(quoteChar)
+      .setEscapeChar(escapeChar)
+      .setSkipLines(skipLines)
+      .setStrictQuotes(strictQuotes)
+      .setIgnoreLeadingWhiteSpace(ignoreLeadingWhiteSpace)
+      .setHasHeader(hasHeader)
+      .setSkipDifferingLines(skipDifferingLines);
 
     // Execute
     editForm.updateFileInput(fileInput);

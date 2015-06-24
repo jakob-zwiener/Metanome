@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,10 @@
 
 package de.metanome.backend.results_db;
 
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Entity;
+
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -27,14 +31,8 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.service.ServiceRegistry;
 
-import java.io.Serializable;
-import java.util.List;
-
-import javax.persistence.Entity;
-
 /**
  * Used to perform low level database operations like storage and retrieval of objects.
- *
  * @author Jakob Zwiener
  */
 public class HibernateUtil {
@@ -61,7 +59,6 @@ public class HibernateUtil {
 
   /**
    * Stores an entity in the database.
-   *
    * @param entity the entity to store
    */
   public static void store(Object entity) throws EntityStorageException {
@@ -75,17 +72,18 @@ public class HibernateUtil {
     try {
       session.save(entity);
       session.getTransaction().commit();
-    } catch (ConstraintViolationException e) {
+    }
+    catch (ConstraintViolationException e) {
       session.getTransaction().rollback();
       throw new EntityStorageException("Could not store object because of a constraint violation exception", e);
-    } finally {
+    }
+    finally {
       session.close();
     }
   }
 
   /**
    * Deletes an entity from the database.
-   *
    * @param entity the entity to delete
    */
   public static void delete(Object entity) throws EntityStorageException {
@@ -104,7 +102,6 @@ public class HibernateUtil {
 
   /**
    * Update an entity from the database.
-   *
    * @param entity the entity to update
    */
   public static void update(Object entity) throws Exception {
@@ -123,9 +120,8 @@ public class HibernateUtil {
 
   /**
    * Retrieves an entity of the given class and with the given id from the database.
-   *
    * @param clazz the class of the entity to retrieve
-   * @param id    the id of the entity to retrieve
+   * @param id the id of the entity to retrieve
    * @return the requested entity
    */
   public static Object retrieve(Class clazz, Serializable id) throws EntityStorageException {
@@ -144,7 +140,6 @@ public class HibernateUtil {
 
   /**
    * Executes a named query and returns the result as {@link java.util.List}
-   *
    * @param queryName the name of the query to execute
    * @return the query result as list
    */
@@ -163,13 +158,13 @@ public class HibernateUtil {
   /**
    * Creates and executes a {@link Criteria} of the type of the persistent class, after attaching
    * all criterions in the array.
-   *
    * @param persistentClass the type of {@link javax.persistence.Entity} to query
-   * @param criterionArray  all the criteria the results should match
+   * @param criterionArray all the criteria the results should match
    * @return the matching {@link javax.persistence.Entity}s
    */
   public static List queryCriteria(Class persistentClass, Criterion... criterionArray)
-      throws EntityStorageException {
+    throws EntityStorageException
+  {
     if (!persistentClass.isAnnotationPresent(Entity.class)) {
       throw new EntityStorageException("Class is missing the Entity annotation.");
     }
@@ -212,8 +207,8 @@ public class HibernateUtil {
   protected static SessionFactory buildSessionFactory() {
     Configuration configuration = new Configuration().configure();
     ServiceRegistry
-        serviceRegistry =
-        new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+      serviceRegistry =
+      new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
     return configuration.configure().buildSessionFactory(serviceRegistry);
   }
 }

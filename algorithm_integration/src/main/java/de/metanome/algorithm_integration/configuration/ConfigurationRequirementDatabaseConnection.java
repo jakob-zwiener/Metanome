@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,32 +16,31 @@
 
 package de.metanome.algorithm_integration.configuration;
 
-import com.google.common.annotations.GwtIncompatible;
+import java.util.List;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.common.annotations.GwtIncompatible;
 
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlTransient;
-
 /**
  * Concrete {@link ConfigurationRequirement} for database connections.
- *
  * @author Jakob Zwiener
  * @see ConfigurationRequirement
  */
 @JsonTypeName("ConfigurationRequirementDatabaseConnection")
 public class ConfigurationRequirementDatabaseConnection
-    extends ConfigurationRequirement<ConfigurationSettingDatabaseConnection> {
+  extends ConfigurationRequirement<ConfigurationSettingDatabaseConnection>
+{
 
   // Needed for restful serialization
   public String type = "ConfigurationRequirementDatabaseConnection";
 
   private List<String> acceptedDBSystems;
 
-  public ConfigurationRequirementDatabaseConnection() { }
+  public ConfigurationRequirementDatabaseConnection() {
+  }
 
   public ConfigurationRequirementDatabaseConnection(String identifier) {
     super(identifier);
@@ -70,7 +69,8 @@ public class ConfigurationRequirementDatabaseConnection
   @Override
   @GwtIncompatible("ConfigurationValues cannot be build on client side.")
   public ConfigurationValue build(ConfigurationFactory factory)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     return factory.build(this);
   }
 

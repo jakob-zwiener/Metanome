@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,15 @@
 
 package de.metanome.backend.results_db;
 
+import static org.junit.Assert.*;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.hibernate.exception.ConstraintViolationException;
+import org.junit.Test;
+
 import de.metanome.algorithm_integration.algorithm_types.BasicStatisticsAlgorithm;
 import de.metanome.algorithm_integration.algorithm_types.ConditionalUniqueColumnCombinationAlgorithm;
 import de.metanome.algorithm_integration.algorithm_types.DatabaseConnectionParameterAlgorithm;
@@ -27,26 +36,12 @@ import de.metanome.algorithm_integration.algorithm_types.ProgressEstimatingAlgor
 import de.metanome.algorithm_integration.algorithm_types.RelationalInputParameterAlgorithm;
 import de.metanome.algorithm_integration.algorithm_types.TableInputParameterAlgorithm;
 import de.metanome.algorithm_integration.algorithm_types.UniqueColumnCombinationsAlgorithm;
-import de.metanome.backend.algorithm_loading.AlgorithmAnalyzer;
 import de.metanome.backend.resources.AlgorithmResource;
 import de.metanome.test_helper.EqualsAndHashCodeTester;
 import de.metanome.test_helper.GwtSerializationTester;
 
-import org.hibernate.exception.ConstraintViolationException;
-import org.junit.Test;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 /**
  * Test for {@link de.metanome.backend.results_db.Algorithm}
- *
  * @author Jakob Zwiener
  */
 public class AlgorithmTest {
@@ -94,7 +89,7 @@ public class AlgorithmTest {
   /**
    * Test method for {@link de.metanome.backend.results_db.Algorithm#Algorithm(String, String,
    * String, String, java.util.Set)}
-   *
+   * <p/>
    * The algorithm should have the appropriate algorithm types and other values set.
    */
   @Test
@@ -111,9 +106,9 @@ public class AlgorithmTest {
 
     // Execute functionality
     Algorithm
-        actualAlgorithm =
-        new Algorithm(expectedFileName, expectedName, expectedAuthor, expectedDescription,
-                      algorithmInterfaces);
+      actualAlgorithm =
+      new Algorithm(expectedFileName, expectedName, expectedAuthor, expectedDescription,
+        algorithmInterfaces);
 
     // Check result
     assertEquals(expectedFileName, actualAlgorithm.getFileName());
@@ -167,7 +162,8 @@ public class AlgorithmTest {
     algorithm1.setName("name");
     try {
       HibernateUtil.store(algorithm1);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       fail();
     }
 
@@ -177,7 +173,8 @@ public class AlgorithmTest {
     // Check
     try {
       HibernateUtil.store(algorithm2);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       // should throw an exception
     }
 
@@ -193,7 +190,8 @@ public class AlgorithmTest {
     Algorithm algorithm1 = new Algorithm("example_ind_algorithm.jar");
     try {
       HibernateUtil.store(algorithm1);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       fail();
     }
 
@@ -202,7 +200,8 @@ public class AlgorithmTest {
     // Check
     try {
       HibernateUtil.store(algorithm2);
-    } catch (ConstraintViolationException | EntityStorageException e) {
+    }
+    catch (ConstraintViolationException | EntityStorageException e) {
       // should throw an exception
     }
 
@@ -227,7 +226,7 @@ public class AlgorithmTest {
     // Execute functionality
     // Check result
     new EqualsAndHashCodeTester<Algorithm>()
-        .performBasicEqualsAndHashCodeChecks(algorithm, algorithmEqual, algorithmNotEqual);
+      .performBasicEqualsAndHashCodeChecks(algorithm, algorithmEqual, algorithmNotEqual);
   }
 
   /**

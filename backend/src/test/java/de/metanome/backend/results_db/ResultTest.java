@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,19 +16,17 @@
 
 package de.metanome.backend.results_db;
 
-import de.metanome.backend.resources.ResultResource;
-import de.metanome.test_helper.EqualsAndHashCodeTester;
-
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import org.junit.Test;
+
+import de.metanome.backend.resources.ResultResource;
+import de.metanome.test_helper.EqualsAndHashCodeTester;
 
 /**
  * Tests for {@link de.metanome.backend.results_db.Result}
- *
  * @author Jakob Zwiener
  */
 public class ResultTest {
@@ -67,7 +65,8 @@ public class ResultTest {
     // Expected values
     try {
       HibernateUtil.store(new Result("file1"));
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       fail();
     }
 
@@ -91,7 +90,7 @@ public class ResultTest {
     // Execute functionality
     // Check result
     new EqualsAndHashCodeTester<Result>()
-        .performBasicEqualsAndHashCodeChecks(result, equalResult, notEqualResult);
+      .performBasicEqualsAndHashCodeChecks(result, equalResult, notEqualResult);
   }
 
 }

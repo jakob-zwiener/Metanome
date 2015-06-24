@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,17 @@
 
 package de.metanome.backend.configuration;
 
-import de.metanome.algorithm_integration.AlgorithmConfigurationException;
-import de.metanome.algorithm_integration.algorithm_types.ListBoxParameterAlgorithm;
-import de.metanome.algorithm_integration.configuration.ConfigurationRequirementListBox;
-
-import org.junit.Test;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import org.junit.Test;
+
+import de.metanome.algorithm_integration.AlgorithmConfigurationException;
+import de.metanome.algorithm_integration.algorithm_types.ListBoxParameterAlgorithm;
+import de.metanome.algorithm_integration.configuration.ConfigurationRequirementListBox;
 
 public class ConfigurationValueListBoxTest {
 
@@ -51,8 +50,8 @@ public class ConfigurationValueListBoxTest {
 
     // Execute functionality
     ConfigurationValueListBox configValue = new ConfigurationValueListBox(
-        new ConfigurationRequirementListBox(expectedIdentifier, expectedValues).getIdentifier(),
-        expectedConfigurationValue);
+      new ConfigurationRequirementListBox(expectedIdentifier, expectedValues).getIdentifier(),
+      expectedConfigurationValue);
     configValue.triggerSetValue(algorithm, interfaces);
 
     // Check result

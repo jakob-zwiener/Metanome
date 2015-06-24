@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,20 +28,18 @@ public class InputDataFinder {
 
   /**
    * Returns all possible input files from Metanome's input file directory.
-   *
    * @return an array of input files
    */
   public File[] getAvailableFiles() throws UnsupportedEncodingException {
     String
-        pathToFolder =
-        Thread.currentThread().getContextClassLoader().getResource("inputData").getPath();
+      pathToFolder =
+      Thread.currentThread().getContextClassLoader().getResource("inputData").getPath();
 
     return retrieveCsvTsvFiles(pathToFolder);
   }
 
   /**
    * Retrieves all csv and tsv files located directly in the given directory.
-   *
    * @param pathToFolder path to the folder to be searched in
    * @return names of all CSV and TSV files located directly in the given directory (no subfolders)
    */

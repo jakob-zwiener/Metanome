@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,16 @@
 
 package de.metanome.algorithms.testing.example_relational_input_algorithm;
 
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+import java.util.List;
+
+import org.hamcrest.collection.IsIterableContainingInAnyOrder;
+import org.junit.Before;
+import org.junit.Test;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.AlgorithmExecutionException;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
@@ -25,21 +35,8 @@ import de.metanome.algorithm_integration.input.RelationalInputGenerator;
 import de.metanome.algorithm_integration.input.TableInputGenerator;
 import de.metanome.algorithm_integration.result_receiver.UniqueColumnCombinationResultReceiver;
 
-import org.hamcrest.collection.IsIterableContainingInAnyOrder;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-
 /**
  * Tests for {@link ExampleAlgorithm}
- *
  * @author Jakob Zwiener
  */
 public class ExampleAlgorithmTest {
@@ -53,7 +50,7 @@ public class ExampleAlgorithmTest {
 
   /**
    * Test method for {@link ExampleAlgorithm#getConfigurationRequirements()}
-   *
+   * <p/>
    * The algorithm should require a {@link de.metanome.algorithm_integration.configuration.ConfigurationRequirementRelationalInput}
    * and a {@link de.metanome.algorithm_integration.configuration.ConfigurationRequirementTableInput}.
    */
@@ -64,13 +61,13 @@ public class ExampleAlgorithmTest {
 
     // Check result
     assertThat(actualRequirements, IsIterableContainingInAnyOrder.containsInAnyOrder(instanceOf(
-        ConfigurationRequirementRelationalInput.class), instanceOf(
-        ConfigurationRequirementTableInput.class)));
+      ConfigurationRequirementRelationalInput.class), instanceOf(
+      ConfigurationRequirementTableInput.class)));
   }
 
   /**
    * Test method for {@link ExampleAlgorithm#execute()}
-   *
+   * <p/>
    * The algorithm should throw an {@link de.metanome.algorithm_integration.AlgorithmExecutionException}
    * if the relational input has not been set.
    */
@@ -81,12 +78,13 @@ public class ExampleAlgorithmTest {
     try {
       algorithm.execute();
       fail("An exception should have been thrown.");
-    } catch (AlgorithmExecutionException e) {
+    }
+    catch (AlgorithmExecutionException e) {
       // Intentionally left blank
     }
 
     algorithm.setRelationalInputConfigurationValue("some identifier",
-                                                   mock(RelationalInputGenerator.class));
+      mock(RelationalInputGenerator.class));
     // No exception should be thrown
     algorithm.execute();
   }
@@ -94,7 +92,7 @@ public class ExampleAlgorithmTest {
   /**
    * Test method for {@link ExampleAlgorithm#setTableInputConfigurationValue(String,
    * de.metanome.algorithm_integration.input.TableInputGenerator...)}
-   *
+   * <p/>
    * The first {@link de.metanome.algorithm_integration.input.TableInputGenerator} in the
    * setTableInputGenerator method call should be stored.
    */
@@ -105,7 +103,7 @@ public class ExampleAlgorithmTest {
 
     // Execute functionality
     algorithm.setTableInputConfigurationValue("some identifier", expectedTableInputGenerator,
-                                              mock(TableInputGenerator.class));
+      mock(TableInputGenerator.class));
     TableInputGenerator actualTableInputGenerator = algorithm.tableInputGenerator;
 
     // Check result
@@ -115,7 +113,7 @@ public class ExampleAlgorithmTest {
   /**
    * Test method for {@link ExampleAlgorithm#setRelationalInputConfigurationValue(String,
    * de.metanome.algorithm_integration.input.RelationalInputGenerator...)}
-   *
+   * <p/>
    * The first {@link de.metanome.algorithm_integration.input.RelationalInputGenerator} in the
    * setRelationalInputGenerator method call should be stored.
    */
@@ -123,13 +121,13 @@ public class ExampleAlgorithmTest {
   public void testSetRelationalInputConfigurationValue() throws AlgorithmConfigurationException {
     // Expected values
     RelationalInputGenerator
-        expectedRelationalInputGenerator =
-        mock(RelationalInputGenerator.class);
+      expectedRelationalInputGenerator =
+      mock(RelationalInputGenerator.class);
 
     // Execute functionality
     algorithm
-        .setRelationalInputConfigurationValue("some identifier", expectedRelationalInputGenerator,
-                                              mock(RelationalInputGenerator.class));
+      .setRelationalInputConfigurationValue("some identifier", expectedRelationalInputGenerator,
+        mock(RelationalInputGenerator.class));
     RelationalInputGenerator actualRelationalInputGenerator = algorithm.relationalInputGenerator;
 
     // Check result
@@ -138,15 +136,15 @@ public class ExampleAlgorithmTest {
 
   /**
    * Test method for {@link ExampleAlgorithm#setResultReceiver(de.metanome.algorithm_integration.result_receiver.UniqueColumnCombinationResultReceiver)}
-   *
+   * <p/>
    * The result receiver should be stored.
    */
   @Test
   public void testSetResultReceiver() {
     // Expected values
     UniqueColumnCombinationResultReceiver
-        expectedResultReceiver =
-        mock(UniqueColumnCombinationResultReceiver.class);
+      expectedResultReceiver =
+      mock(UniqueColumnCombinationResultReceiver.class);
 
     // Execute functionality
     algorithm.setResultReceiver(expectedResultReceiver);

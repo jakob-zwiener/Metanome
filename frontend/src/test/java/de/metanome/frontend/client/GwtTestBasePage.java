@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,10 @@
 
 package de.metanome.frontend.client;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -29,10 +33,6 @@ import de.metanome.frontend.client.datasources.DataSourcePage;
 import de.metanome.frontend.client.executions.ExecutionsPage;
 import de.metanome.frontend.client.results.ResultsPage;
 import de.metanome.frontend.client.runs.RunConfigurationPage;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Tests related to the overall page.
@@ -108,7 +108,7 @@ public class GwtTestBasePage extends GWTTestCase {
     TestHelper.resetDatabaseSync();
   }
 
-/**
+  /**
    * Test method for {@link de.metanome.frontend.client.BasePage#switchToRunConfiguration(String,
    * de.metanome.algorithm_integration.configuration.ConfigurationSettingDataSource)} </p> Test
    * control flow from Algorithms to Run configuration
@@ -148,7 +148,7 @@ public class GwtTestBasePage extends GWTTestCase {
   }
 
 
-/**
+  /**
    * Test method for {@link de.metanome.frontend.client.BasePage#switchToRunConfiguration(String,
    * de.metanome.algorithm_integration.configuration.ConfigurationSettingDataSource)} </p> Test
    * control flow from Data sources to Run configuration
@@ -177,12 +177,12 @@ public class GwtTestBasePage extends GWTTestCase {
 
     assertEquals(Tabs.RUN_CONFIGURATION.ordinal(), page.getSelectedIndex());
     assertEquals(finalDataSource.getValueAsString(),
-                 runConfigPage.primaryDataSource.getValueAsString());
+      runConfigPage.primaryDataSource.getValueAsString());
   }
 
   private RunConfigurationPage getRunConfigurationPage(final BasePage page) {
     return (RunConfigurationPage) ((TabWrapper) ((ScrollPanel) page
-        .getWidget(page.getSelectedIndex())).getWidget()).contentPanel;
+      .getWidget(page.getSelectedIndex())).getWidget()).contentPanel;
   }
 
   @Override

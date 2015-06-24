@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,7 +70,7 @@ public class GwtTestFileInputInput extends GWTTestCase {
 
     // Expected values
     final ConfigurationSettingFileInput expectedSetting =
-        new ConfigurationSettingFileInput("filename");
+      new ConfigurationSettingFileInput("filename");
 
     // Initialize CsvFileInput (waiting for fetching all current file inputs)
     final FileInputInput fileInputInputs = new FileInputInput(false, false, new TabWrapper());
@@ -80,14 +80,16 @@ public class GwtTestFileInputInput extends GWTTestCase {
 
     try {
       fileInputInputs.setValues(expectedSetting);
-    } catch (AlgorithmConfigurationException e) {
+    }
+    catch (AlgorithmConfigurationException e) {
       fail();
     }
 
     ConfigurationSettingFileInput actualSetting = null;
     try {
       actualSetting = fileInputInputs.getValues();
-    } catch (InputValidationException e) {
+    }
+    catch (InputValidationException e) {
       fail();
     }
 
@@ -111,7 +113,8 @@ public class GwtTestFileInputInput extends GWTTestCase {
 
     try {
       fileInputInputs.getValues();
-    } catch (InputValidationException e) {
+    }
+    catch (InputValidationException e) {
       // should throw an exception
     }
 

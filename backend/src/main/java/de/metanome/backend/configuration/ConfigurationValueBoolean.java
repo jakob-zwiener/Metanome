@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,13 @@
 
 package de.metanome.backend.configuration;
 
+import java.util.Set;
+
 import de.metanome.algorithm_integration.Algorithm;
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.algorithm_types.BooleanParameterAlgorithm;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirementBoolean;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingBoolean;
-
-import java.util.Set;
 
 /**
  * Represents boolean configuration values for {@link Algorithm}s.
@@ -34,13 +34,15 @@ public class ConfigurationValueBoolean extends ConfigurationValue<Boolean, Confi
   }
 
   public ConfigurationValueBoolean(ConfigurationRequirementBoolean requirement)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     super(requirement);
   }
 
   @Override
   protected Boolean[] convertToValues(ConfigurationRequirementBoolean requirement)
-    throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     ConfigurationSettingBoolean[] settings = requirement.getSettings();
     Boolean[] configValues = new Boolean[settings.length];
     int i = 0;
@@ -53,10 +55,11 @@ public class ConfigurationValueBoolean extends ConfigurationValue<Boolean, Confi
 
   @Override
   public void triggerSetValue(Algorithm algorithm, Set<Class<?>> algorithmInterfaces)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     if (!algorithmInterfaces.contains(BooleanParameterAlgorithm.class)) {
       throw new AlgorithmConfigurationException(
-          "Algorithm does not accept boolean configuration values.");
+        "Algorithm does not accept boolean configuration values.");
     }
 
     BooleanParameterAlgorithm booleanParameterAlgorithm = (BooleanParameterAlgorithm) algorithm;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,25 +17,23 @@
 package de.metanome.algorithm_integration.configuration;
 
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
-
 import javax.xml.bind.annotation.XmlTransient;
+
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
  * The setting of a {@link de.metanome.algorithm_integration.configuration.ConfigurationRequirementDatabaseConnection}
- *
  * @author Claudia Exeler
  */
 @JsonTypeName("ConfigurationSettingDatabaseConnection")
 public class ConfigurationSettingDatabaseConnection extends ConfigurationSettingDataSource {
 
+  // Needed for restful serialization
+  public String type = "ConfigurationSettingDatabaseConnection";
   private String dbUrl;
   private String username;
   private String password;
   private DbSystem system;
-
-  // Needed for restful serialization
-  public String type = "ConfigurationSettingDatabaseConnection";
 
   /**
    * Exists for serialization.
@@ -44,7 +42,8 @@ public class ConfigurationSettingDatabaseConnection extends ConfigurationSetting
   }
 
   public ConfigurationSettingDatabaseConnection(String dbUrl, String username, String password,
-                                                DbSystem system) {
+                                                DbSystem system)
+  {
     this.dbUrl = dbUrl;
     this.username = username;
     this.password = password;
@@ -113,11 +112,8 @@ public class ConfigurationSettingDatabaseConnection extends ConfigurationSetting
     if (system != that.system) {
       return false;
     }
-    if (!username.equals(that.username)) {
-      return false;
-    }
+    return username.equals(that.username);
 
-    return true;
   }
 
   @Override

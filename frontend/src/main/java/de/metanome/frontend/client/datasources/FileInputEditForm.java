@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,10 @@
 
 package de.metanome.frontend.client.datasources;
 
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -29,9 +33,11 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
+
 import au.com.bytecode.opencsv.CSVParser;
 import au.com.bytecode.opencsv.CSVReader;
-
 import de.metanome.backend.input.file.FileIterator;
 import de.metanome.backend.results_db.FileInput;
 import de.metanome.frontend.client.TabWrapper;
@@ -39,13 +45,6 @@ import de.metanome.frontend.client.helpers.FilePathHelper;
 import de.metanome.frontend.client.helpers.InputValidationException;
 import de.metanome.frontend.client.input_fields.ListBoxInput;
 import de.metanome.frontend.client.services.FileInputRestService;
-
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Input field to configure a file input.
@@ -206,7 +205,8 @@ public class FileInputEditForm extends Grid {
           updateListBox();
         }
       });
-    } catch (InputValidationException e) {
+    }
+    catch (InputValidationException e) {
       messageReceiver.addError("Invalid Input: " + e.getMessage());
     }
   }
@@ -221,7 +221,7 @@ public class FileInputEditForm extends Grid {
         @Override
         public void onFailure(Method method, Throwable throwable) {
           messageReceiver
-              .addError("File Input could not be stored: " + method.getResponse().getText());
+            .addError("File Input could not be stored: " + method.getResponse().getText());
         }
 
         @Override
@@ -235,7 +235,8 @@ public class FileInputEditForm extends Grid {
           updateListBox();
         }
       });
-    } catch (InputValidationException e) {
+    }
+    catch (InputValidationException e) {
       messageReceiver.addError("Invalid Input: " + e.getMessage());
     }
   }
@@ -257,10 +258,9 @@ public class FileInputEditForm extends Grid {
 
   /**
    * Add another user input row to the bottom of the given table
-   *
-   * @param table       the UI object on which to add the row
+   * @param table the UI object on which to add the row
    * @param inputWidget the widget to be used for input
-   * @param name        the name of the input property
+   * @param name the name of the input property
    */
   protected void addRow(FlexTable table, Widget inputWidget, String name) {
     int row = table.getRowCount();
@@ -270,7 +270,6 @@ public class FileInputEditForm extends Grid {
 
   /**
    * Creates a UI element for one-character user input
-   *
    * @return a TextBox with width and input length limited to 2 (>1 to allow for escape characters)
    */
   private TextBox getNewOneCharTextBox() {
@@ -282,7 +281,6 @@ public class FileInputEditForm extends Grid {
 
   /**
    * Create the CheckBox that triggers the display/hiding of advanced CSV configuration parameters
-   *
    * @return the CheckBox with the mentioned behavior
    */
   protected CheckBox createAdvancedCheckbox() {
@@ -329,8 +327,9 @@ public class FileInputEditForm extends Grid {
       public void onSuccess(Method method, List<FileInput> result) {
         List<String> fileNames = new ArrayList<>();
 
-        for (FileInput input : result)
+        for (FileInput input : result) {
           filesInDatabase.add(input.getIdentifier());
+        }
 
         for (String path : filesOnStorage) {
           if (!filesInDatabase.contains(path)) {
@@ -346,14 +345,13 @@ public class FileInputEditForm extends Grid {
   /**
    * Creates the callback for getting all available csv files. On success the files are added to the
    * according list box.
-   *
    * @return the callback
    */
   protected MethodCallback<List<String>> getStorageCallback() {
     return new MethodCallback<List<String>>() {
       public void onFailure(Method method, Throwable caught) {
         messageReceiver
-            .addError("Could not find any files! Please add them to the input folder.");
+          .addError("Could not find any files! Please add them to the input folder.");
       }
 
       @Override
@@ -362,7 +360,7 @@ public class FileInputEditForm extends Grid {
 
         if (result.size() == 0) {
           messageReceiver
-              .addError("Could not find any files! Please add them to the input folder.");
+            .addError("Could not find any files! Please add them to the input folder.");
           return;
         }
 
@@ -405,7 +403,6 @@ public class FileInputEditForm extends Grid {
 
   /**
    * Setting the advanced settings at the given file input.
-   *
    * @param fileInput the file input at which the advanced settings should be set
    * @return the file input with set advanced settings
    */
@@ -426,7 +423,6 @@ public class FileInputEditForm extends Grid {
   /**
    * Checks, if the given text box contains only a character. If yes, the character is returned.
    * Otherwise an exception is thrown.
-   *
    * @return the character of the text box
    */
   protected String getChar(TextBox textBox) throws InputValidationException {
@@ -442,13 +438,13 @@ public class FileInputEditForm extends Grid {
   /**
    * Checks, if the value of the integer box is an integer. If yes, the integer is returned.
    * Otherwise an exception is thrown.
-   *
    * @return the integer of the integer box
    */
   private int getInteger(IntegerBox integerBox) throws InputValidationException {
     try {
       return integerBox.getValueOrThrow();
-    } catch (ParseException e) {
+    }
+    catch (ParseException e) {
       throw new InputValidationException(integerBox.getName() + " should only contain numbers!");
     }
   }
@@ -474,7 +470,9 @@ public class FileInputEditForm extends Grid {
     this.skipLinesIntegerBox.setValue(skipLines);
   }
 
-  protected void setNullValue(String nullValue) { this.nullValueTextBox.setValue(nullValue); }
+  protected void setNullValue(String nullValue) {
+    this.nullValueTextBox.setValue(nullValue);
+  }
 
   protected void setStrictQuotes(boolean strictQuotes) {
     this.strictQuotesCheckbox.setValue(strictQuotes);
@@ -535,7 +533,6 @@ public class FileInputEditForm extends Grid {
 
   /**
    * Set the message receiver.
-   *
    * @param tab the message receiver tab wrapper
    */
   public void setMessageReceiver(TabWrapper tab) {

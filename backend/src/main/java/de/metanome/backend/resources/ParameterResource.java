@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,26 +16,24 @@
 
 package de.metanome.backend.resources;
 
-import de.metanome.algorithm_integration.Algorithm;
-import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
-import de.metanome.backend.algorithm_loading.AlgorithmJarLoader;
-
 import java.util.List;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import de.metanome.algorithm_integration.Algorithm;
+import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
+import de.metanome.backend.algorithm_loading.AlgorithmJarLoader;
+
 @Path("parameter")
 public class ParameterResource {
 
   /**
    * Loads an algorithm and its configuration requirements
-   *
    * @param algorithmFileName name of the algorithm for which the configuration parameters shall be
-   *                          retrieved
+   * retrieved
    * @return a list of {@link de.metanome.algorithm_integration.configuration.ConfigurationRequirement}s
    * necessary for calling the given algorithm
    */
@@ -47,7 +45,8 @@ public class ParameterResource {
       AlgorithmJarLoader jarLoader = new AlgorithmJarLoader();
       Algorithm algorithm = jarLoader.loadAlgorithm(algorithmFileName);
       return algorithm.getConfigurationRequirements();
-    } catch (Throwable e) {
+    }
+    catch (Throwable e) {
       throw new WebException("Could not retrieve Parameters!", Response.Status.BAD_REQUEST);
     }
   }

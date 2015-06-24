@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,14 @@
 
 package de.metanome.algorithm_integration;
 
-import de.metanome.test_helper.GwtSerializationTester;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import de.metanome.test_helper.GwtSerializationTester;
 
 /**
  * Tests for {@link de.metanome.algorithm_integration.ColumnCondition}
- *
  * @author Jens Ehrlich
  */
 public class ColumnConditionTest {
@@ -40,17 +39,17 @@ public class ColumnConditionTest {
     ColumnIdentifier column21 = new ColumnIdentifier("table2", "column1");
 
     ColumnCondition
-        andCondition =
-        new ColumnConditionAnd(new ColumnConditionValue(column11, "A"),
-                               new ColumnConditionValue(column12, "B"));
+      andCondition =
+      new ColumnConditionAnd(new ColumnConditionValue(column11, "A"),
+        new ColumnConditionValue(column12, "B"));
     ColumnCondition
-        OrCondition =
-        new ColumnConditionOr(andCondition, new ColumnConditionValue(column21, "A"));
+      OrCondition =
+      new ColumnConditionOr(andCondition, new ColumnConditionValue(column21, "A"));
     //check result
     assertEquals(
-        "[table2.column1= A " + ColumnCondition.OR + " [table1.column1= A " + ColumnCondition.AND
+      "[table2.column1= A " + ColumnCondition.OR + " [table1.column1= A " + ColumnCondition.AND
         + " table1.column2= B]]",
-                 OrCondition.toString());
+      OrCondition.toString());
   }
 
   /**
@@ -59,11 +58,11 @@ public class ColumnConditionTest {
   @Test
   public void testGwtSerialization() {
     GwtSerializationTester.checkGwtSerializability(
-        new ColumnConditionValue(new ColumnIdentifier("table1", "column1"), "A"));
+      new ColumnConditionValue(new ColumnIdentifier("table1", "column1"), "A"));
     GwtSerializationTester.checkGwtSerializability(new ColumnConditionAnd(
-        new ColumnConditionValue(new ColumnIdentifier("table1", "column1"), "A")));
+      new ColumnConditionValue(new ColumnIdentifier("table1", "column1"), "A")));
     GwtSerializationTester.checkGwtSerializability(new ColumnConditionOr(
-        new ColumnConditionValue(new ColumnIdentifier("table1", "column1"), "A")));
+      new ColumnConditionValue(new ColumnIdentifier("table1", "column1"), "A")));
   }
 
 }

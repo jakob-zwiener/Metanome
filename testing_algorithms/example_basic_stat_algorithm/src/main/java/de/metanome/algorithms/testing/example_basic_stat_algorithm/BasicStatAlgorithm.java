@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 package de.metanome.algorithms.testing.example_basic_stat_algorithm;
 
+import java.util.ArrayList;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.AlgorithmExecutionException;
 import de.metanome.algorithm_integration.ColumnIdentifier;
@@ -27,13 +29,10 @@ import de.metanome.algorithm_integration.input.FileInputGenerator;
 import de.metanome.algorithm_integration.result_receiver.BasicStatisticsResultReceiver;
 import de.metanome.algorithm_integration.results.BasicStatistic;
 
-import java.util.ArrayList;
-
 /**
  * An example algorithm for testing that expects 5 {@link de.metanome.algorithm_integration.input.FileInputGenerator}s
  * and sends a {@link de.metanome.algorithm_integration.results.BasicStatistic} to the result
  * receiver.
- *
  * @author Jakob Zwiener
  */
 public class BasicStatAlgorithm implements BasicStatisticsAlgorithm, FileInputParameterAlgorithm {
@@ -42,8 +41,8 @@ public class BasicStatAlgorithm implements BasicStatisticsAlgorithm, FileInputPa
   public static final int NUMBER_OF_INPUT_FILES = 5;
   public static final String STATISTIC_NAME = "file name statistic";
   public static final ColumnIdentifier
-      COLUMN_IDENTIFIER =
-      new ColumnIdentifier("testTable", "testColumn");
+    COLUMN_IDENTIFIER =
+    new ColumnIdentifier("testTable", "testColumn");
 
   protected BasicStatisticsResultReceiver resultReceiver = null;
   protected FileInputGenerator[] inputs = null;
@@ -53,7 +52,7 @@ public class BasicStatAlgorithm implements BasicStatisticsAlgorithm, FileInputPa
     ArrayList<ConfigurationRequirement> configuration = new ArrayList<>();
 
     configuration.add(new ConfigurationRequirementFileInput(INPUT_FILE_IDENTIFIER,
-                                                            NUMBER_OF_INPUT_FILES));
+      NUMBER_OF_INPUT_FILES));
 
     return configuration;
   }
@@ -82,14 +81,15 @@ public class BasicStatAlgorithm implements BasicStatisticsAlgorithm, FileInputPa
 
   @Override
   public void setFileInputConfigurationValue(String identifier, FileInputGenerator... values)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     if (!identifier.equals(INPUT_FILE_IDENTIFIER)) {
       throw new AlgorithmConfigurationException(
-          "Metanome attempted to set a file input with wrong identifier.");
+        "Metanome attempted to set a file input with wrong identifier.");
     }
     if (values.length != NUMBER_OF_INPUT_FILES) {
       throw new AlgorithmConfigurationException(
-          "Metanome attempted to set an incorrect number of file inputs.");
+        "Metanome attempted to set an incorrect number of file inputs.");
     }
     inputs = values;
   }

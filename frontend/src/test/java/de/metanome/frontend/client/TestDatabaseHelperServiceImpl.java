@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,11 +24,11 @@ import de.metanome.backend.results_db.HibernateUtil;
 
 /**
  * A service to reset the database in gwt client side tests.
- *
  * @author Jakob Zwiener
  */
 public class TestDatabaseHelperServiceImpl extends RemoteServiceServlet
-    implements TestDatabaseHelperService {
+  implements TestDatabaseHelperService
+{
 
   /**
    * Resets the database.
@@ -40,7 +40,6 @@ public class TestDatabaseHelperServiceImpl extends RemoteServiceServlet
 
   /**
    * Stores an algorithm in the database.
-   *
    * @param algorithm the algorithm to store
    */
   @Override

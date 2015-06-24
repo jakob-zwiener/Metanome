@@ -16,34 +16,34 @@
 
 package de.metanome.algorithm_integration.configuration;
 
-import de.metanome.algorithm_integration.AlgorithmConfigurationException;
-import de.metanome.algorithm_integration.AlgorithmExecutionException;
-
-import org.junit.Test;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
+import org.junit.Test;
+
+import de.metanome.algorithm_integration.AlgorithmConfigurationException;
+import de.metanome.algorithm_integration.AlgorithmExecutionException;
 
 public class ConfigurationRequirementDefaultValueTest {
 
   /**
    * Test method for {@link ConfigurationRequirementDefaultValue#getDefaultValue(int)}
-   *
+   * <p/>
    * The default values should be accessible via an index.
    */
   @Test
   public void testGetDefaultValues() {
     // Setup
     ConfigurationRequirementBoolean configSpec =
-        new ConfigurationRequirementBoolean("parameter1", 2);
+      new ConfigurationRequirementBoolean("parameter1", 2);
 
     // Execute functionality
     try {
       configSpec.checkAndSetDefaultValues(true, false);
-    } catch (AlgorithmConfigurationException e) {
+    }
+    catch (AlgorithmConfigurationException e) {
       fail();
     }
 
@@ -59,7 +59,7 @@ public class ConfigurationRequirementDefaultValueTest {
   public void testCheckAndSetDefaultValuesException() throws AlgorithmConfigurationException {
     // Setup
     ConfigurationRequirementString specificationString =
-        new ConfigurationRequirementString("parameter1", 2);
+      new ConfigurationRequirementString("parameter1", 2);
 
     ConfigurationSettingString expectedSetting1 = new ConfigurationSettingString();
     ConfigurationSettingString expectedSetting2 = new ConfigurationSettingString();
@@ -82,7 +82,7 @@ public class ConfigurationRequirementDefaultValueTest {
     listValues.add("third");
 
     ConfigurationRequirementListBox specificationListBox =
-        new ConfigurationRequirementListBox("parameter1", listValues, 2);
+      new ConfigurationRequirementListBox("parameter1", listValues, 2);
 
     ConfigurationSettingListBox expectedSetting1 = new ConfigurationSettingListBox();
     ConfigurationSettingListBox expectedSetting2 = new ConfigurationSettingListBox();
@@ -103,14 +103,14 @@ public class ConfigurationRequirementDefaultValueTest {
 
   /**
    * Test method for {@link ConfigurationRequirement<de.metanome.algorithm_integration.configuration.ConfigurationSettingBoolean>#checkAndSetSettings(ConfigurationSettingBoolean...)}
-   *
+   * <p/>
    * The values should be correctly settable on the specification.
    */
   @Test
   public void testCheckAndSetSettings() {
     // Setup
     ConfigurationRequirementBoolean configSpec =
-        new ConfigurationRequirementBoolean("parameter1", 2);
+      new ConfigurationRequirementBoolean("parameter1", 2);
     // Expected values
     ConfigurationSettingBoolean expectedValue0 = mock(ConfigurationSettingBoolean.class);
     ConfigurationSettingBoolean expectedValue1 = mock(ConfigurationSettingBoolean.class);
@@ -118,7 +118,8 @@ public class ConfigurationRequirementDefaultValueTest {
     // Execute functionality
     try {
       configSpec.checkAndSetSettings(expectedValue0, expectedValue1);
-    } catch (AlgorithmConfigurationException e) {
+    }
+    catch (AlgorithmConfigurationException e) {
       fail();
     }
 
@@ -129,15 +130,15 @@ public class ConfigurationRequirementDefaultValueTest {
 
   /**
    * Test method for {@link ConfigurationRequirement<de.metanome.algorithm_integration.configuration.ConfigurationSettingBoolean>#checkAndSetSettings(ConfigurationSettingBoolean...)}
-   *
+   * <p/>
    * The values should be correctly settable on the specification.
    */
   @Test
   public void testCheckAndSetSettingsWithRange() {
     // Setup
     ConfigurationRequirementBoolean
-        configSpec =
-        new ConfigurationRequirementBoolean("parameter1", 2, 4);
+      configSpec =
+      new ConfigurationRequirementBoolean("parameter1", 2, 4);
     // Expected values
     ConfigurationSettingBoolean expectedValue0 = mock(ConfigurationSettingBoolean.class);
     ConfigurationSettingBoolean expectedValue1 = mock(ConfigurationSettingBoolean.class);
@@ -147,7 +148,8 @@ public class ConfigurationRequirementDefaultValueTest {
     // Execute functionality
     try {
       configSpec.checkAndSetSettings(expectedValue0, expectedValue1, expectedValue2, expectedValue3);
-    } catch (AlgorithmConfigurationException e) {
+    }
+    catch (AlgorithmConfigurationException e) {
       fail();
     }
 
@@ -157,15 +159,15 @@ public class ConfigurationRequirementDefaultValueTest {
 
   /**
    * Test method for {@link ConfigurationRequirement<de.metanome.algorithm_integration.configuration.ConfigurationSettingBoolean>#checkAndSetSettings(ConfigurationSettingBoolean...)}
-   *
+   * <p/>
    * Setting a wrong number of settings should throw an Exception.
    */
-  @Test(expected=AlgorithmExecutionException.class)
+  @Test(expected = AlgorithmExecutionException.class)
   public void testCheckAndSetSettingsWithWrongNumber() throws AlgorithmConfigurationException {
     // Setup
     ConfigurationRequirementBoolean
-        configSpec =
-        new ConfigurationRequirementBoolean("parameter1", 2);
+      configSpec =
+      new ConfigurationRequirementBoolean("parameter1", 2);
     // Expected values
     ConfigurationSettingBoolean expectedValue = mock(ConfigurationSettingBoolean.class);
 
@@ -176,14 +178,14 @@ public class ConfigurationRequirementDefaultValueTest {
 
   /**
    * Test method for {@link ConfigurationRequirement<de.metanome.algorithm_integration.configuration.ConfigurationSettingInteger>#checkAndSetSettings(ConfigurationSettingInteger...)}
-   *
+   * <p/>
    * Setting a wrong number of settings should throw an Exception.
    */
-  @Test(expected=AlgorithmExecutionException.class)
+  @Test(expected = AlgorithmExecutionException.class)
   public void testCheckAndSetSettingsWithWrongNumberRange() throws AlgorithmConfigurationException {
     // Setup
     ConfigurationRequirementInteger configSpec =
-        new ConfigurationRequirementInteger("parameter1", 2, 4);
+      new ConfigurationRequirementInteger("parameter1", 2, 4);
     // Expected values
     ConfigurationSettingInteger expectedValue = mock(ConfigurationSettingInteger.class);
 

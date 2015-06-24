@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,16 @@
  */
 
 package de.metanome.backend.algorithm_execution;
+
+import java.io.Closeable;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 import de.metanome.algorithm_integration.Algorithm;
 import de.metanome.algorithm_integration.AlgorithmExecutionException;
@@ -49,16 +59,6 @@ import de.metanome.backend.results_db.Input;
 import de.metanome.backend.results_db.Result;
 import de.metanome.backend.results_db.ResultType;
 
-import java.io.Closeable;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-
 /**
  * Executes given algorithms.
  */
@@ -75,14 +75,14 @@ public class AlgorithmExecutor implements Closeable {
 
   /**
    * Constructs a new executor with new result receivers and generators.
-   *
    * @param resultReceiver receives all of the algorithms results
-   * @param fileGenerator  generates temp files
+   * @param fileGenerator generates temp files
    */
   public AlgorithmExecutor(
-      CloseableOmniscientResultReceiver resultReceiver,
-      ProgressCache progressCache,
-      FileGenerator fileGenerator) {
+    CloseableOmniscientResultReceiver resultReceiver,
+    ProgressCache progressCache,
+    FileGenerator fileGenerator)
+  {
     this.resultReceiver = resultReceiver;
     this.progressCache = progressCache;
     this.fileGenerator = fileGenerator;
@@ -94,16 +94,16 @@ public class AlgorithmExecutor implements Closeable {
    * de.metanome.algorithm_integration.configuration.ConfigurationValue}s and all receivers and
    * generators are set before execution. The execution containing the elapsed time while
    * executing the algorithm in nano seconds is returned.
-   *
-   * @param algorithm           the algorithm
-   * @param requirements        list of configuration requirements
+   * @param algorithm the algorithm
+   * @param requirements list of configuration requirements
    * @param executionIdentifier the identifier for the execution
    * @return the execution
    */
   public Execution executeAlgorithm(de.metanome.backend.results_db.Algorithm algorithm,
-                               List<ConfigurationRequirement> requirements,
-                               String executionIdentifier)
-      throws AlgorithmLoadingException, AlgorithmExecutionException {
+                                    List<ConfigurationRequirement> requirements,
+                                    String executionIdentifier)
+    throws AlgorithmLoadingException, AlgorithmExecutionException
+  {
 
     List<ConfigurationValue> parameterValues = new LinkedList<>();
     List<Input> inputs = new ArrayList<>();
@@ -118,10 +118,12 @@ public class AlgorithmExecutor implements Closeable {
       for (ConfigurationSetting setting : requirement.getSettings()) {
         if (setting instanceof ConfigurationSettingFileInput) {
           inputs.add(fileInputResource.get(((ConfigurationSettingFileInput) setting).getId()));
-        } else if (setting instanceof ConfigurationSettingDatabaseConnection) {
+        }
+        else if (setting instanceof ConfigurationSettingDatabaseConnection) {
           inputs.add(databaseConnectionResource
-                         .get(((ConfigurationSettingDatabaseConnection) setting).getId()));
-        } else if (setting instanceof ConfigurationSettingTableInput) {
+            .get(((ConfigurationSettingDatabaseConnection) setting).getId()));
+        }
+        else if (setting instanceof ConfigurationSettingTableInput) {
           inputs.add(tableInputResource.get(((ConfigurationSettingTableInput) setting).getId()));
         }
       }
@@ -129,13 +131,15 @@ public class AlgorithmExecutor implements Closeable {
 
     try {
       return executeAlgorithmWithValues(algorithm, parameterValues, inputs, executionIdentifier);
-    } catch (IllegalArgumentException | SecurityException | IllegalAccessException | IOException |
-        ClassNotFoundException | InstantiationException | InvocationTargetException |
-        NoSuchMethodException e) {
+    }
+    catch (IllegalArgumentException | SecurityException | IllegalAccessException | IOException |
+      ClassNotFoundException | InstantiationException | InvocationTargetException |
+      NoSuchMethodException e) {
       throw new AlgorithmLoadingException(ExceptionParser.parse(e), e);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       throw new AlgorithmLoadingException(
-          ExceptionParser.parse(e, "Algorithm not found in database"), e);
+        ExceptionParser.parse(e, "Algorithm not found in database"), e);
     }
   }
 
@@ -143,19 +147,19 @@ public class AlgorithmExecutor implements Closeable {
    * Executes an algorithm. The algorithm is loaded from the jar, configured and all receivers and
    * generators are set before execution. The execution containing the elapsed time while
    * executing the algorithm in nano seconds is returned.
-   *
-   * @param storedAlgorithm         the algorithm
-   * @param parameters              list of configuration values
+   * @param storedAlgorithm the algorithm
+   * @param parameters list of configuration values
    * @param executionIdentifier the identifier for the execution
    * @return the execution
    */
   public Execution executeAlgorithmWithValues(de.metanome.backend.results_db.Algorithm storedAlgorithm,
-                                         List<ConfigurationValue> parameters,
-                                         List<Input> inputs,
-                                         String executionIdentifier)
-      throws IllegalArgumentException, SecurityException, IOException, ClassNotFoundException,
-             InstantiationException, IllegalAccessException, InvocationTargetException,
-             NoSuchMethodException, AlgorithmExecutionException, EntityStorageException {
+                                              List<ConfigurationValue> parameters,
+                                              List<Input> inputs,
+                                              String executionIdentifier)
+    throws IllegalArgumentException, SecurityException, IOException, ClassNotFoundException,
+    InstantiationException, IllegalAccessException, InvocationTargetException,
+    NoSuchMethodException, AlgorithmExecutionException, EntityStorageException
+  {
 
     AlgorithmAnalyzer analyzer = new AlgorithmAnalyzer(storedAlgorithm.getFileName());
     Algorithm algorithm = analyzer.getAlgorithm();
@@ -184,8 +188,8 @@ public class AlgorithmExecutor implements Closeable {
 
     if (analyzer.hasType(AlgorithmType.UCC)) {
       UniqueColumnCombinationsAlgorithm
-          uccAlgorithm =
-          (UniqueColumnCombinationsAlgorithm) algorithm;
+        uccAlgorithm =
+        (UniqueColumnCombinationsAlgorithm) algorithm;
       uccAlgorithm.setResultReceiver(resultReceiver);
 
       results.add(new Result(resultPathPrefix, ResultType.UCC));
@@ -193,8 +197,8 @@ public class AlgorithmExecutor implements Closeable {
 
     if (analyzer.hasType(AlgorithmType.CUCC)) {
       ConditionalUniqueColumnCombinationAlgorithm
-          cuccAlgorithm =
-          (ConditionalUniqueColumnCombinationAlgorithm) algorithm;
+        cuccAlgorithm =
+        (ConditionalUniqueColumnCombinationAlgorithm) algorithm;
       cuccAlgorithm.setResultReceiver(resultReceiver);
 
       results.add(new Result(resultPathPrefix, ResultType.CUCC));
@@ -221,8 +225,8 @@ public class AlgorithmExecutor implements Closeable {
 
     if (analyzer.hasType(AlgorithmType.PROGRESS_EST)) {
       ProgressEstimatingAlgorithm
-          progressEstimatingAlgorithm =
-          (ProgressEstimatingAlgorithm) algorithm;
+        progressEstimatingAlgorithm =
+        (ProgressEstimatingAlgorithm) algorithm;
       progressEstimatingAlgorithm.setProgressReceiver(progressCache);
     }
 
@@ -235,10 +239,10 @@ public class AlgorithmExecutor implements Closeable {
 
     ExecutionResource executionResource = new ExecutionResource();
     Execution execution = new Execution(storedAlgorithm, beforeWallClockTime)
-        .setEnd(beforeWallClockTime + executionTimeInMs)
-        .setInputs(inputs)
-        .setIdentifier(executionIdentifier)
-        .setResults(results);
+      .setEnd(beforeWallClockTime + executionTimeInMs)
+      .setInputs(inputs)
+      .setIdentifier(executionIdentifier)
+      .setResults(results);
 
     for (Result result : results) {
       result.setExecution(execution);

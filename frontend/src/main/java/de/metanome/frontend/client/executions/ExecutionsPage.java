@@ -16,6 +16,11 @@
 
 package de.metanome.frontend.client.executions;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -24,6 +29,9 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
 
 import de.metanome.backend.results_db.Execution;
 import de.metanome.backend.results_db.Input;
@@ -34,15 +42,7 @@ import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.helpers.FilePathHelper;
 import de.metanome.frontend.client.services.ExecutionRestService;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-
-public class ExecutionsPage  extends FlowPanel implements TabContent {
+public class ExecutionsPage extends FlowPanel implements TabContent {
 
   protected BasePage parent;
   protected FlexTable executionsTable;
@@ -115,9 +115,8 @@ public class ExecutionsPage  extends FlowPanel implements TabContent {
 
   /**
    * Adds an executions to the execution table.
-   *
    * @param execution the execution to be displayed
-   * @param row       the row, in which the execution should be inserted
+   * @param row the row, in which the execution should be inserted
    */
   protected void addExecutionToTable(final Execution execution, int row) {
     Button showButton = new Button("Show");
@@ -138,7 +137,7 @@ public class ExecutionsPage  extends FlowPanel implements TabContent {
 
     // algorithm, date, time, input, result type, show button
     this.executionsTable.setWidget(row, 0,
-                                   new HTML(execution.getAlgorithm().getName()));
+      new HTML(execution.getAlgorithm().getName()));
     this.executionsTable.setWidget(row, 1, new HTML(this.getDate(execution)));
     this.executionsTable.setWidget(row, 2, new HTML(this.getExecutionTime(execution)));
     this.executionsTable.setWidget(row, 3, new HTML(this.getInputs(execution)));
@@ -186,8 +185,8 @@ public class ExecutionsPage  extends FlowPanel implements TabContent {
       HTML dateWidget = (HTML) this.executionsTable.getWidget(row, 1);
 
       if (algorithmWidget != null && algorithm.equals(
-          algorithmWidget.getText()) &&
-          dateWidget != null && date.equals(dateWidget.getText())) {
+        algorithmWidget.getText()) &&
+        dateWidget != null && date.equals(dateWidget.getText())) {
         return row;
       }
       row++;
@@ -217,7 +216,6 @@ public class ExecutionsPage  extends FlowPanel implements TabContent {
   }
 
   /**
-   *
    * @param execution the execution
    * @return an HTML string listing all inputs
    */
@@ -234,7 +232,6 @@ public class ExecutionsPage  extends FlowPanel implements TabContent {
   }
 
   /**
-   *
    * @param execution the execution
    * @return an HTML string listing all result types
    */

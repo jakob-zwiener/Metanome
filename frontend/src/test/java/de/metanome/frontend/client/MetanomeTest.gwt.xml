@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright 2014 by the Metanome project
+  ~ Copyright 2015 by the Metanome project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -16,12 +16,12 @@
   -->
 
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.6.4//EN"
-        "http://google-web-toolkit.googlecode.com/svn/tags/2.4.0/distro-source/core/src/gwt-module.dtd">
+  "http://google-web-toolkit.googlecode.com/svn/tags/2.4.0/distro-source/core/src/gwt-module.dtd">
 
 <module rename-to="metanome">
-    <inherits name="de.metanome.frontend.Metanome"/>
+  <inherits name="de.metanome.frontend.Metanome"/>
 
-    <servlet path="/testService"
-             class="de.metanome.frontend.client.TestDatabaseHelperServiceImpl"/>
+  <servlet path="/testService"
+           class="de.metanome.frontend.client.TestDatabaseHelperServiceImpl"/>
 </module>
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,14 @@
 
 package de.metanome.frontend.client.input_fields;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingDataSource;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingFileInput;
@@ -25,17 +33,8 @@ import de.metanome.frontend.client.helpers.FilePathHelper;
 import de.metanome.frontend.client.helpers.InputValidationException;
 import de.metanome.frontend.client.services.FileInputRestService;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * An input widget, used to specify settings for a file input.
- *
  * @see de.metanome.backend.results_db.FileInput
  */
 public class FileInputInput extends InputField {
@@ -49,7 +48,7 @@ public class FileInputInput extends InputField {
   private String preselectedFilename;
 
   /**
-   * @param optional        specifies whether a remove button should be displayed
+   * @param optional specifies whether a remove button should be displayed
    * @param messageReceiver the message receiver
    */
   public FileInputInput(boolean optional, boolean required, TabWrapper messageReceiver) {
@@ -58,7 +57,7 @@ public class FileInputInput extends InputField {
     this.messageReceiver = messageReceiver;
     this.fileInputs = new HashMap<>();
 
-    listBox = new ListBoxInput(false ,false);
+    listBox = new ListBoxInput(false, false);
     updateListBox();
     this.add(listBox);
   }
@@ -88,7 +87,8 @@ public class FileInputInput extends InputField {
               preselectedIdentifier = identifier;
             }
           }
-        } else {
+        }
+        else {
           messageReceiver.addError("There are no file inputs in the database!");
         }
 
@@ -103,19 +103,19 @@ public class FileInputInput extends InputField {
     };
 
     FileInputRestService
-        fileInputService = com.google.gwt.core.client.GWT.create(FileInputRestService.class);
+      fileInputService = com.google.gwt.core.client.GWT.create(FileInputRestService.class);
     fileInputService.listFileInputs(callback);
   }
 
   /**
    * Selects the given data source in the list box. If the list box has not yet been filled with the
    * available values, we save the value and set it when the list box is filled.
-   *
    * @param dataSourceSetting the data source setting
    * @throws AlgorithmConfigurationException If the data source setting is not a file input setting
    */
   public void selectDataSource(ConfigurationSettingDataSource dataSourceSetting)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     this.preselectedFilename = dataSourceSetting.getValueAsString();
 
     if (!this.listBox.containsValues()) {
@@ -125,14 +125,14 @@ public class FileInputInput extends InputField {
     if (dataSourceSetting instanceof ConfigurationSettingFileInput) {
       ConfigurationSettingFileInput setting = (ConfigurationSettingFileInput) dataSourceSetting;
       this.setValues(setting);
-    } else {
+    }
+    else {
       throw new AlgorithmConfigurationException("This is not a file input setting.");
     }
   }
 
   /**
    * Returns the current widget's settings as a setting
-   *
    * @return the widget's settings
    */
   public ConfigurationSettingFileInput getValues() throws InputValidationException {
@@ -141,7 +141,8 @@ public class FileInputInput extends InputField {
     if (selectedValue == null || selectedValue.equals("--")) {
       if (isRequired) {
         throw new InputValidationException("You must choose a file input!");
-      } else {
+      }
+      else {
         return null;
       }
     }
@@ -153,12 +154,12 @@ public class FileInputInput extends InputField {
 
   /**
    * Takes a setting a sets the selected value of the list box to the given setting.
-   *
    * @param setting the settings to set
    * @throws AlgorithmConfigurationException if no file inputs are set
    */
   public void setValues(ConfigurationSettingFileInput setting)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     for (Map.Entry<String, FileInput> input : this.fileInputs.entrySet()) {
       FileInput current = input.getValue();
       if (current.getFileName().equals(setting.getFileName())) {
@@ -171,22 +172,21 @@ public class FileInputInput extends InputField {
 
   /**
    * Creates a ConfigurationSettingCsvFile from the given FileInput
-   *
    * @param fileInput the file input
    * @return the setting generated from the file input
    */
   protected ConfigurationSettingFileInput getCurrentSetting(FileInput fileInput) {
     ConfigurationSettingFileInput settingFileInput = new ConfigurationSettingFileInput()
-        .setFileName(fileInput.getFileName())
-        .setEscapeChar(fileInput.getEscapeChar())
-        .setHeader(fileInput.isHasHeader())
-        .setIgnoreLeadingWhiteSpace(fileInput.isIgnoreLeadingWhiteSpace())
-        .setQuoteChar(fileInput.getQuoteChar())
-        .setSeparatorChar(fileInput.getSeparator())
-        .setSkipDifferingLines(fileInput.isSkipDifferingLines())
-        .setSkipLines(fileInput.getSkipLines())
-        .setStrictQuotes(fileInput.isStrictQuotes())
-        .setNullValue(fileInput.getNullValue());
+      .setFileName(fileInput.getFileName())
+      .setEscapeChar(fileInput.getEscapeChar())
+      .setHeader(fileInput.isHasHeader())
+      .setIgnoreLeadingWhiteSpace(fileInput.isIgnoreLeadingWhiteSpace())
+      .setQuoteChar(fileInput.getQuoteChar())
+      .setSeparatorChar(fileInput.getSeparator())
+      .setSkipDifferingLines(fileInput.isSkipDifferingLines())
+      .setSkipLines(fileInput.getSkipLines())
+      .setStrictQuotes(fileInput.isStrictQuotes())
+      .setNullValue(fileInput.getNullValue());
     settingFileInput.setId(fileInput.getId());
     return settingFileInput;
   }

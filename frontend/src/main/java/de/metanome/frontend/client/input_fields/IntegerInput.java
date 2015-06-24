@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,11 @@
 
 package de.metanome.frontend.client.input_fields;
 
+import java.text.ParseException;
+
 import com.google.gwt.user.client.ui.IntegerBox;
 
 import de.metanome.frontend.client.helpers.InputValidationException;
-
-import java.text.ParseException;
 
 
 /**
@@ -32,7 +32,7 @@ public class IntegerInput extends InputField {
 
   /**
    * @param optional If true, a remove button will be rendered, to remove this widget from its
-   *                 parent.
+   * parent.
    * @param required If true, a value has to be set.
    */
   public IntegerInput(boolean optional, boolean required) {
@@ -45,23 +45,24 @@ public class IntegerInput extends InputField {
   /**
    * Checks if the input field contains only numbers and returns the inserted number.
    * If the input field is empty and the value is not required, -1 is returned.
-   *
    * @return the value of the input field
    * @throws InputValidationException if the value cannot be parsed as an int
-   *                                  or if the value was not set, but is required
+   * or if the value was not set, but is required
    */
   public int getValue() throws InputValidationException {
     Integer val;
     try {
       val = this.textbox.getValueOrThrow();
-    } catch (ParseException e) {
+    }
+    catch (ParseException e) {
       throw new InputValidationException("Only numbers are allowed!", e);
     }
 
     if (val == null) {
       if (this.isRequired) {
         throw new InputValidationException("You have to enter a number!");
-      } else {
+      }
+      else {
         return -1;
       }
     }
@@ -71,7 +72,6 @@ public class IntegerInput extends InputField {
 
   /**
    * Sets the value of the integer box
-   *
    * @param value the value which should be set
    */
   public void setValue(Integer value) {

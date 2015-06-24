@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,21 +16,19 @@
 
 package de.metanome.backend.results_db;
 
-import com.google.common.annotations.GwtIncompatible;
-
 import java.io.Serializable;
+
+import com.google.common.annotations.GwtIncompatible;
 
 /**
  * All Entities in the results db should extend ResultsDbEntity. The entities should be storeable
  * and deleteable.
- *
  * @author Jakob Zwiener
  */
 public abstract class ResultsDbEntity implements Serializable {
 
   /**
    * Stores a ResultsDbEntity in the database.
-   *
    * @return the stored entity
    */
   @GwtIncompatible("Storing objects in the database is not gwt compatible.")
@@ -43,7 +41,8 @@ public abstract class ResultsDbEntity implements Serializable {
   public void delete() {
     try {
       HibernateUtil.delete(this);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       // The exception would only be thrown if the Algorithm did not have the Entity annotation.
     }
   }

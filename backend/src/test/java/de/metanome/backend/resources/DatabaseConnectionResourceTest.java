@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,20 +16,17 @@
 
 package de.metanome.backend.resources;
 
-import de.metanome.algorithm_integration.configuration.DbSystem;
-import de.metanome.backend.results_db.DatabaseConnection;
-import de.metanome.backend.results_db.EntityStorageException;
-import de.metanome.backend.results_db.HibernateUtil;
+import static org.junit.Assert.*;
+
+import java.util.List;
 
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Test;
 
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import de.metanome.algorithm_integration.configuration.DbSystem;
+import de.metanome.backend.results_db.DatabaseConnection;
+import de.metanome.backend.results_db.EntityStorageException;
+import de.metanome.backend.results_db.HibernateUtil;
 
 
 /**
@@ -51,7 +48,7 @@ public class DatabaseConnectionResourceTest {
     DatabaseConnection expectedDb1 = new DatabaseConnection("url1", "password1", "db1", DbSystem.DB2);
     DatabaseConnection expectedDb2 = new DatabaseConnection("url2", "password2", "db2", DbSystem.DB2);
 
-    DatabaseConnection[] expectedDbConnections = {expectedDb1, expectedDb2};
+    DatabaseConnection[] expectedDbConnections = { expectedDb1, expectedDb2 };
 
     for (DatabaseConnection db : expectedDbConnections) {
       dbResource.store(db);
@@ -62,7 +59,7 @@ public class DatabaseConnectionResourceTest {
 
     // Check result
     assertThat(actualDbConnections,
-               IsIterableContainingInAnyOrder.containsInAnyOrder(expectedDbConnections));
+      IsIterableContainingInAnyOrder.containsInAnyOrder(expectedDbConnections));
 
     // Cleanup
     HibernateUtil.clear();

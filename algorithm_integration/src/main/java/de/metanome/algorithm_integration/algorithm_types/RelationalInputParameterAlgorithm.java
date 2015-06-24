@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,23 +22,21 @@ import de.metanome.algorithm_integration.input.RelationalInputGenerator;
 
 /**
  * An {@link Algorithm} that takes {@link RelationalInputGenerator} configuration values.
- *
  * @author Jakob Zwiener
  */
 public interface RelationalInputParameterAlgorithm extends Algorithm {
 
   /**
    * Sets a RelationalInputGenerator configuration value on the algorithm.
-   *
    * @param identifier the value's identifier
-   * @param values     the configuration values
+   * @param values the configuration values
    * @throws de.metanome.algorithm_integration.AlgorithmConfigurationException if the algorithm
-   *                                                                           cannot be correctly
-   *                                                                           configured using the
-   *                                                                           received configuration
-   *                                                                           values
+   * cannot be correctly
+   * configured using the
+   * received configuration
+   * values
    */
   void setRelationalInputConfigurationValue(String identifier, RelationalInputGenerator... values)
-      throws AlgorithmConfigurationException;
+    throws AlgorithmConfigurationException;
 
 }

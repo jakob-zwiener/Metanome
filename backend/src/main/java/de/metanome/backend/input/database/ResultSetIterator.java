@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,17 +16,17 @@
 
 package de.metanome.backend.input.database;
 
-import com.google.common.collect.ImmutableList;
-
-import de.metanome.algorithm_integration.input.InputIterationException;
-import de.metanome.algorithm_integration.input.RelationalInput;
-import de.metanome.backend.helper.ExceptionParser;
-
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+
+import com.google.common.collect.ImmutableList;
+
+import de.metanome.algorithm_integration.input.InputIterationException;
+import de.metanome.algorithm_integration.input.RelationalInput;
+import de.metanome.backend.helper.ExceptionParser;
 
 public class ResultSetIterator implements RelationalInput {
 
@@ -47,7 +47,8 @@ public class ResultSetIterator implements RelationalInput {
   }
 
   protected ImmutableList<String> retrieveColumnNames(ResultSetMetaData resultSetMetaData)
-      throws SQLException {
+    throws SQLException
+  {
     List<String> columnNames = new LinkedList<>();
 
     for (int i = 0; i < numberOfColumns; i++) {
@@ -62,9 +63,10 @@ public class ResultSetIterator implements RelationalInput {
     if (!nextCalled) {
       try {
         hasNext = resultSet.next();
-      } catch (SQLException e) {
+      }
+      catch (SQLException e) {
         throw new InputIterationException(
-            ExceptionParser.parse(e, "Could not retrieve next row"), e);
+          ExceptionParser.parse(e, "Could not retrieve next row"), e);
       }
       nextCalled = true;
     }
@@ -78,9 +80,10 @@ public class ResultSetIterator implements RelationalInput {
     if (!nextCalled) {
       try {
         resultSet.next();
-      } catch (SQLException e) {
+      }
+      catch (SQLException e) {
         throw new InputIterationException(
-            ExceptionParser.parse(e, "Could not retrieve next row"), e);
+          ExceptionParser.parse(e, "Could not retrieve next row"), e);
       }
     }
 
@@ -91,9 +94,10 @@ public class ResultSetIterator implements RelationalInput {
     for (int columnIndex = 0; columnIndex < numberOfColumns; columnIndex++) {
       try {
         resultRow[columnIndex] = resultSet.getString(columnIndex + 1);
-      } catch (SQLException e) {
+      }
+      catch (SQLException e) {
         throw new InputIterationException(
-            ExceptionParser.parse(e, "Could not retrieve values from result set"), e);
+          ExceptionParser.parse(e, "Could not retrieve values from result set"), e);
       }
     }
 

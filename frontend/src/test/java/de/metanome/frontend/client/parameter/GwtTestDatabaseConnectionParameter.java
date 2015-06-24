@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 package de.metanome.frontend.client.parameter;
 
+import java.util.ArrayList;
+
 import com.google.gwt.junit.client.GWTTestCase;
 
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
@@ -29,8 +31,6 @@ import de.metanome.frontend.client.TestHelper;
 import de.metanome.frontend.client.helpers.InputValidationException;
 import de.metanome.frontend.client.input_fields.DatabaseConnectionInput;
 
-import java.util.ArrayList;
-
 public class GwtTestDatabaseConnectionParameter extends GWTTestCase {
 
   private String aUrl = "url";
@@ -42,7 +42,8 @@ public class GwtTestDatabaseConnectionParameter extends GWTTestCase {
    * Tests the selection of a specific item corresponding to the given ConfigurationSetting.
    */
   public void testSelectDataSourceOnFilledDropdown()
-      throws AlgorithmConfigurationException, InputValidationException {
+    throws AlgorithmConfigurationException, InputValidationException
+  {
     // Set up
     TestHelper.resetDatabaseSync();
 
@@ -56,8 +57,8 @@ public class GwtTestDatabaseConnectionParameter extends GWTTestCase {
 
     DatabaseConnectionInput widget = new DatabaseConnectionInput(false, false, tabWrapper, new ArrayList<String>());
     ConfigurationSettingDatabaseConnection
-        setting =
-        new ConfigurationSettingDatabaseConnection(aUrl, aUser, aPassword, aSystem);
+      setting =
+      new ConfigurationSettingDatabaseConnection(aUrl, aUser, aPassword, aSystem);
 
     widget.databaseConnections.put(aUrl, databaseConnection);
     widget.listBox.addValue("--");
@@ -96,15 +97,15 @@ public class GwtTestDatabaseConnectionParameter extends GWTTestCase {
     databaseConnection.setSystem(aSystem);
 
     ConfigurationSettingDatabaseConnection
-        setting =
-        new ConfigurationSettingDatabaseConnection(aUrl, aUser, aPassword, aSystem);
+      setting =
+      new ConfigurationSettingDatabaseConnection(aUrl, aUser, aPassword, aSystem);
 
     ConfigurationRequirementDatabaseConnection
-        configSpec =
-        new ConfigurationRequirementDatabaseConnection("test");
+      configSpec =
+      new ConfigurationRequirementDatabaseConnection("test");
     InputParameterDatabaseConnectionWidget
-        dataSourceWidget =
-        new InputParameterDatabaseConnectionWidget(configSpec, tabWrapper);
+      dataSourceWidget =
+      new InputParameterDatabaseConnectionWidget(configSpec, tabWrapper);
 
     dataSourceWidget.inputWidgets.get(0).listBox.addValue(aUrl);
     dataSourceWidget.inputWidgets.get(0).databaseConnections.put(aUrl, databaseConnection);
@@ -113,12 +114,12 @@ public class GwtTestDatabaseConnectionParameter extends GWTTestCase {
     dataSourceWidget.setDataSource(setting);
 
     assertTrue(
-        ((DatabaseConnectionInput) dataSourceWidget.getWidget(0)).listBox.getValues().size() == 1);
+      ((DatabaseConnectionInput) dataSourceWidget.getWidget(0)).listBox.getValues().size() == 1);
 
     ConfigurationSettingDataSource retrievedSetting = null;
     retrievedSetting = (ConfigurationSettingDataSource) dataSourceWidget
-        .getUpdatedSpecification()
-        .getSettings()[0];
+      .getUpdatedSpecification()
+      .getSettings()[0];
 
     assertEquals(expectedIdentifier, retrievedSetting.getValueAsString());
 
@@ -130,13 +131,13 @@ public class GwtTestDatabaseConnectionParameter extends GWTTestCase {
     //Setup
     int maxValue = 5;
     ConfigurationRequirementDatabaseConnection
-        specification =
-        new ConfigurationRequirementDatabaseConnection("database connection", 3, maxValue);
+      specification =
+      new ConfigurationRequirementDatabaseConnection("database connection", 3, maxValue);
 
     //Execute
     InputParameterDatabaseConnectionWidget
-        widget =
-        new InputParameterDatabaseConnectionWidget(specification, new TabWrapper());
+      widget =
+      new InputParameterDatabaseConnectionWidget(specification, new TabWrapper());
 
     //Check
     assertEquals(maxValue, widget.inputWidgets.size());

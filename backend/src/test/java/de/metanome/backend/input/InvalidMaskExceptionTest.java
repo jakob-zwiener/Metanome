@@ -16,22 +16,21 @@
 
 package de.metanome.backend.input;
 
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 /**
  * Test for {@link InvalidMaskException}.
- *
  * @author Jakob Zwiener
  */
 public class InvalidMaskExceptionTest {
 
   /**
    * Test for {@link InvalidMaskException#InvalidMaskException(String)}
-   *
+   * <p/>
    * The exception should store the message.
    */
   @Test
@@ -44,7 +43,8 @@ public class InvalidMaskExceptionTest {
     String actualMessage;
     try {
       throw new InvalidMaskException(expectedMessage);
-    } catch (InvalidMaskException e) {
+    }
+    catch (InvalidMaskException e) {
       actualMessage = e.getMessage();
     }
 
@@ -54,7 +54,7 @@ public class InvalidMaskExceptionTest {
 
   /**
    * Test method for {@link InvalidMaskException#InvalidMaskException(String, Throwable)}
-   *
+   * <p/>
    * The exception should store the message and the cause.
    */
   @Test
@@ -69,7 +69,8 @@ public class InvalidMaskExceptionTest {
     Throwable actualCause;
     try {
       throw new InvalidMaskException(expectedMessage, expectedCause);
-    } catch (InvalidMaskException e) {
+    }
+    catch (InvalidMaskException e) {
       actualMessage = e.getMessage();
       actualCause = e.getCause();
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,16 +26,15 @@ public interface IntegerParameterAlgorithm extends Algorithm {
 
   /**
    * Sets a integer configuration value on the algorithm.
-   *
    * @param identifier the values identifier
-   * @param values     the integer values for configuration
+   * @param values the integer values for configuration
    * @throws de.metanome.algorithm_integration.AlgorithmConfigurationException if the algorithm
-   *                                                                           cannot be correctly
-   *                                                                           configured using the
-   *                                                                           received configuration
-   *                                                                           values
+   * cannot be correctly
+   * configured using the
+   * received configuration
+   * values
    */
   void setIntegerConfigurationValue(String identifier, Integer... values)
-      throws AlgorithmConfigurationException;
+    throws AlgorithmConfigurationException;
 
 }

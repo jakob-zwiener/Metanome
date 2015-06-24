@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,16 @@
 
 package de.metanome.backend.results_db;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
 import com.google.common.annotations.GwtCompatible;
 
 import de.metanome.algorithm_integration.configuration.DbSystem;
 
-import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.Transient;
-
 /**
  * Represents a database connection in the database.
- *
  * @author Jakob Zwiener
  */
 @Entity
@@ -41,7 +39,8 @@ public class DatabaseConnection extends Input implements Serializable {
   protected String comment;
 
   // Exists for Serialization
-  public DatabaseConnection() {}
+  public DatabaseConnection() {
+  }
 
   public DatabaseConnection(String name) {
     super(name);
@@ -124,11 +123,8 @@ public class DatabaseConnection extends Input implements Serializable {
 
     DatabaseConnection that = (DatabaseConnection) o;
 
-    if (id != that.id) {
-      return false;
-    }
+    return id == that.id;
 
-    return true;
   }
 
   @Override

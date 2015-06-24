@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,23 @@
 
 package de.metanome.backend.results_db;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import de.metanome.algorithm_integration.algorithm_types.BasicStatisticsAlgorithm;
 import de.metanome.algorithm_integration.algorithm_types.ConditionalUniqueColumnCombinationAlgorithm;
 import de.metanome.algorithm_integration.algorithm_types.DatabaseConnectionParameterAlgorithm;
@@ -28,34 +45,15 @@ import de.metanome.algorithm_integration.algorithm_types.RelationalInputParamete
 import de.metanome.algorithm_integration.algorithm_types.TableInputParameterAlgorithm;
 import de.metanome.algorithm_integration.algorithm_types.UniqueColumnCombinationsAlgorithm;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.xml.bind.annotation.XmlTransient;
-
 /**
  * Represents an algorithm in the database.
- *
  * @author Jakob Zwiener
  */
 @NamedQueries(
-    @NamedQuery(
-        name = "get all",
-        query = "from Algorithm"
-    )
+  @NamedQuery(
+    name = "get all",
+    query = "from Algorithm"
+  )
 )
 @Entity
 public class Algorithm implements Serializable, Comparable<Algorithm> {
@@ -87,7 +85,6 @@ public class Algorithm implements Serializable, Comparable<Algorithm> {
   }
 
   /**
-   *
    * @param fileName the file name of the algorithm jar
    */
   public Algorithm(String fileName) {
@@ -97,8 +94,7 @@ public class Algorithm implements Serializable, Comparable<Algorithm> {
   /**
    * The algorithm should have the appropriate algorithm types set, based on the implemented
    * interfaces.
-   *
-   * @param fileName            the file name of the algorithm jar
+   * @param fileName the file name of the algorithm jar
    * @param algorithmInterfaces the implemented interfaces
    */
   public Algorithm(String fileName, Set<Class<?>> algorithmInterfaces) {
@@ -120,20 +116,21 @@ public class Algorithm implements Serializable, Comparable<Algorithm> {
   /**
    * This constructor sets all attributes as given, and sets the algorithm types based on the given
    * interfaces. If no name is specified, fileName is used for this purpose.
-   *
-   * @param fileName            the file name of the algorithm jar
-   * @param name                the name of the implemented algorithm
-   * @param author              name(s) of the author(s)
-   * @param description         any additional information on the algorithm
+   * @param fileName the file name of the algorithm jar
+   * @param name the name of the implemented algorithm
+   * @param author name(s) of the author(s)
+   * @param description any additional information on the algorithm
    * @param algorithmInterfaces the implemented interfaces
    */
   public Algorithm(String fileName, String name, String author, String description,
-                   Set<Class<?>> algorithmInterfaces) {
+                   Set<Class<?>> algorithmInterfaces)
+  {
     this(fileName, algorithmInterfaces);
 
     if (name != null) {
       this.name = name;
-    } else {
+    }
+    else {
       this.name = fileName;
     }
 
@@ -313,11 +310,8 @@ public class Algorithm implements Serializable, Comparable<Algorithm> {
 
     Algorithm algorithm = (Algorithm) o;
 
-    if (fileName != null ? !fileName.equals(algorithm.fileName) : algorithm.fileName != null) {
-      return false;
-    }
+    return !(fileName != null ? !fileName.equals(algorithm.fileName) : algorithm.fileName != null);
 
-    return true;
   }
 
   @Override
@@ -337,21 +331,21 @@ public class Algorithm implements Serializable, Comparable<Algorithm> {
   @Override
   public String toString() {
     return "Algorithm ["
-           +   "fileName=" + fileName
-           + ", name=" + name
-           + ", author=" + author
-           + ", description=" + description
-           + ", ind=" + ind
-           + ", fd=" + fd
-           + ", Ucc=" + ucc
-           + ", cucc=" + cucc
-           + ", od=" + od
-           + ", relationalInput=" + relationalInput
-           + ", databaseConnection=" + databaseConnection
-           + ", tableInput=" + tableInput
-           + ", fileInput=" + fileInput
-           + ", basicStat=" + basicStat
-           + "]";
+      + "fileName=" + fileName
+      + ", name=" + name
+      + ", author=" + author
+      + ", description=" + description
+      + ", ind=" + ind
+      + ", fd=" + fd
+      + ", Ucc=" + ucc
+      + ", cucc=" + cucc
+      + ", od=" + od
+      + ", relationalInput=" + relationalInput
+      + ", databaseConnection=" + databaseConnection
+      + ", tableInput=" + tableInput
+      + ", fileInput=" + fileInput
+      + ", basicStat=" + basicStat
+      + "]";
   }
 
 }

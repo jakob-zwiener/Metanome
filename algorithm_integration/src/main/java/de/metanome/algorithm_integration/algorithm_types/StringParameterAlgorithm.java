@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,23 +21,21 @@ import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 
 /**
  * An {@link Algorithm} that takes string configuration values.
- *
  * @author Jakob Zwiener
  */
 public interface StringParameterAlgorithm extends Algorithm {
 
   /**
    * Sets a string configuration value on the algorithm.
-   *
    * @param identifier the values identifier
-   * @param values     the String values for configuration
+   * @param values the String values for configuration
    * @throws de.metanome.algorithm_integration.AlgorithmConfigurationException if the algorithm
-   *                                                                           cannot be correctly
-   *                                                                           configured using the
-   *                                                                           received configuration
-   *                                                                           values
+   * cannot be correctly
+   * configured using the
+   * received configuration
+   * values
    */
   void setStringConfigurationValue(String identifier, String... values)
-      throws AlgorithmConfigurationException;
+    throws AlgorithmConfigurationException;
 
 }

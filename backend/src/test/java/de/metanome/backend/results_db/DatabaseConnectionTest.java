@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,19 +16,18 @@
 
 package de.metanome.backend.results_db;
 
+import static org.junit.Assert.*;
+
+import java.util.List;
+
+import org.junit.Test;
+
 import de.metanome.algorithm_integration.configuration.DbSystem;
 import de.metanome.backend.resources.DatabaseConnectionResource;
 import de.metanome.test_helper.EqualsAndHashCodeTester;
 
-import org.junit.Test;
-
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-
 /**
  * Tests for {@link de.metanome.backend.results_db.DatabaseConnection}
- *
  * @author Jakob Zwiener
  */
 public class DatabaseConnectionTest {
@@ -44,17 +43,17 @@ public class DatabaseConnectionTest {
     // Setup
     long id = 42;
     DatabaseConnection databaseConnection = new DatabaseConnection("db")
-        .setId(id);
+      .setId(id);
     DatabaseConnection equalDatabaseConnection = new DatabaseConnection("db")
-        .setId(id);
+      .setId(id);
     DatabaseConnection notEqualDatabaseConnection = new DatabaseConnection("db")
-        .setId(23);
+      .setId(23);
 
     // Execute functionality
     // Check result
     new EqualsAndHashCodeTester<DatabaseConnection>()
-        .performBasicEqualsAndHashCodeChecks(databaseConnection, equalDatabaseConnection,
-                                             notEqualDatabaseConnection);
+      .performBasicEqualsAndHashCodeChecks(databaseConnection, equalDatabaseConnection,
+        notEqualDatabaseConnection);
   }
 
   /**

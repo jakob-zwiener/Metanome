@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,24 +16,22 @@
 
 package de.metanome.frontend.client.services;
 
-import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
+import java.util.List;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 
 import org.fusesource.restygwt.client.MethodCallback;
 import org.fusesource.restygwt.client.RestService;
 
-import java.util.List;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
 
 @Path("/api/parameter")
 public interface ParameterRestService extends RestService {
 
   @GET
-  @Path("/{algorithmFileName}")
-  public void retrieveParameters(@PathParam("algorithmFileName") String algorithmFileName,
-                                 MethodCallback<List<ConfigurationRequirement>> callback);
+  @Path("/{algorithmFileName}") void retrieveParameters(@PathParam("algorithmFileName") String algorithmFileName,
+                                                        MethodCallback<List<ConfigurationRequirement>> callback);
 
 }
 

@@ -16,17 +16,16 @@
 
 package de.metanome.backend.input;
 
-import de.metanome.algorithm_integration.input.InputIterationException;
-import de.metanome.algorithm_integration.input.RelationalInput;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import de.metanome.algorithm_integration.input.InputIterationException;
+import de.metanome.algorithm_integration.input.RelationalInput;
+
 /**
  * Masks columns of a {@link RelationalInput}. Only the specified columns will be in the masked
  * iterator. Columns are specified by their column index.
- *
  * @author Jakob Zwiener
  */
 public class MaskingRelationalInput implements RelationalInput {
@@ -35,7 +34,8 @@ public class MaskingRelationalInput implements RelationalInput {
   protected final int[] mask;
 
   public MaskingRelationalInput(RelationalInput relationalInput, int... mask)
-      throws InvalidMaskException {
+    throws InvalidMaskException
+  {
 
     this.relationalInput = relationalInput;
 
@@ -50,8 +50,8 @@ public class MaskingRelationalInput implements RelationalInput {
     for (int columnIndex : mask) {
       if ((columnIndex < 0) || (columnIndex >= this.relationalInput.numberOfColumns())) {
         throw new InvalidMaskException(
-            String.format("Column index %d is invalid. Number of columns is %d.", columnIndex,
-                          this.relationalInput.numberOfColumns()));
+          String.format("Column index %d is invalid. Number of columns is %d.", columnIndex,
+            this.relationalInput.numberOfColumns()));
       }
     }
 
@@ -85,7 +85,6 @@ public class MaskingRelationalInput implements RelationalInput {
 
   /**
    * Masks a line.
-   *
    * @param line the line to mask
    * @return the masked line
    */

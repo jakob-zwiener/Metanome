@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,10 @@
 
 package de.metanome.frontend.client.algorithms;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
@@ -23,22 +27,17 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
+
 import de.metanome.backend.results_db.Algorithm;
 import de.metanome.frontend.client.BasePage;
 import de.metanome.frontend.client.TabContent;
 import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.services.AlgorithmRestService;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /**
  * UI element that incorporates structure and logic for displaying and adding algorithms.
- *
  * @author Claudia Exeler
  */
 public class AlgorithmsPage extends FlowPanel implements TabContent {
@@ -78,7 +77,7 @@ public class AlgorithmsPage extends FlowPanel implements TabContent {
     this.odList = new FlexTable();
     this.add(this.odList);
     updateOdAlgorithms();
-    
+
     this.add(new HTML("<h3>Inclusion Dependencies<//h3>"));
     this.indList = new FlexTable();
     this.add(this.indList);
@@ -107,7 +106,7 @@ public class AlgorithmsPage extends FlowPanel implements TabContent {
    */
   private void updateCuccAlgorithms() {
     this.restService.listConditionalUniqueColumnCombinationsAlgorithms(
-        getRetrieveCallback(this.cuccList));
+      getRetrieveCallback(this.cuccList));
   }
 
   /**
@@ -123,7 +122,7 @@ public class AlgorithmsPage extends FlowPanel implements TabContent {
   private void updateIndAlgorithms() {
     this.restService.listInclusionDependencyAlgorithms(getRetrieveCallback(this.indList));
   }
-  
+
   /**
    * Request a list of available OD algorithms and display them in the odList
    */
@@ -140,9 +139,8 @@ public class AlgorithmsPage extends FlowPanel implements TabContent {
 
   /**
    * Adds each of the algorithms to the given table, including formatting and buttons.
-   *
    * @param algorithms the algorithms to be displayed
-   * @param table      the table to which the algorithms will be added
+   * @param table the table to which the algorithms will be added
    */
   protected void addAlgorithmsToTable(List<Algorithm> algorithms, FlexTable table) {
     int row = table.getRowCount();
@@ -237,7 +235,6 @@ public class AlgorithmsPage extends FlowPanel implements TabContent {
 
   /**
    * Initiates a service call to add the given algorithm to the database.
-   *
    * @param algorithm algorithm, which should be added to the database
    */
   public void callAddAlgorithm(final Algorithm algorithm) {
@@ -246,8 +243,7 @@ public class AlgorithmsPage extends FlowPanel implements TabContent {
 
   /**
    * Initiates a service call to update the given algorithm in the database.
-   *
-   * @param algorithm    algorithm, which should be updated
+   * @param algorithm algorithm, which should be updated
    * @param oldAlgorithm the old algorithm
    */
   public void callUpdateAlgorithm(Algorithm algorithm, Algorithm oldAlgorithm) {
@@ -256,7 +252,6 @@ public class AlgorithmsPage extends FlowPanel implements TabContent {
 
   /**
    * Initiates a redirect to the Run Configuration page, prefilled with the given algorithm
-   *
    * @param algorithmName name of the algorithm that will be configured
    */
   protected void callRunConfiguration(String algorithmName) {
@@ -266,7 +261,6 @@ public class AlgorithmsPage extends FlowPanel implements TabContent {
 
   /**
    * Constructs a callback that will add all results to the given table
-   *
    * @param list Object that all returned elements will be added to
    * @return the desired callback instance
    */
@@ -276,7 +270,8 @@ public class AlgorithmsPage extends FlowPanel implements TabContent {
       public void onFailure(Method method, Throwable throwable) {
         if (method != null) {
           messageReceiver.addError(method.getResponse().getText());
-        } else{
+        }
+        else {
           messageReceiver.addError(throwable.getMessage());
         }
       }
@@ -291,7 +286,6 @@ public class AlgorithmsPage extends FlowPanel implements TabContent {
 
   /**
    * Constructs a callback that will add the given algorithm to all matching tables
-   *
    * @return the desired callback instance
    */
   protected MethodCallback<Algorithm> getAddCallback() {
@@ -300,7 +294,8 @@ public class AlgorithmsPage extends FlowPanel implements TabContent {
       public void onFailure(Method method, Throwable throwable) {
         if (method != null) {
           messageReceiver.addError("Could not add algorithm: " + method.getResponse().getText());
-        } else {
+        }
+        else {
           messageReceiver.addError("Could not add algorithm.");
         }
       }
@@ -335,7 +330,6 @@ public class AlgorithmsPage extends FlowPanel implements TabContent {
 
   /**
    * Constructs a callback that will update the given algorithm in all matching tables
-   *
    * @return the desired callback instance
    */
   protected MethodCallback<Algorithm> getUpdateCallback(final Algorithm oldAlgorithm) {
@@ -344,7 +338,8 @@ public class AlgorithmsPage extends FlowPanel implements TabContent {
       public void onFailure(Method method, Throwable throwable) {
         if (method != null) {
           messageReceiver.addError("Could not update algorithm: " + method.getResponse().getText());
-        } else {
+        }
+        else {
           messageReceiver.addError("Could not update algorithm.");
         }
         editForm.updateFileListBox();
@@ -382,8 +377,7 @@ public class AlgorithmsPage extends FlowPanel implements TabContent {
 
   /**
    * Removes the row, which contains the given algorithm Name, from the given table
-   *
-   * @param table         the table
+   * @param table the table
    * @param algorithmName the algorithm name
    */
   protected void removeRow(FlexTable table, String algorithmName) {
@@ -400,8 +394,7 @@ public class AlgorithmsPage extends FlowPanel implements TabContent {
 
   /**
    * Update the row, which contains the given algorithm, from the given table
-   *
-   * @param table     the table
+   * @param table the table
    * @param algorithm the algorithm
    */
   protected void updateRow(FlexTable table, final Algorithm algorithm, String oldName) {
@@ -432,7 +425,6 @@ public class AlgorithmsPage extends FlowPanel implements TabContent {
 
   /**
    * (non-Javadoc)
-   *
    * @see de.metanome.frontend.client.TabContent#setMessageReceiver(de.metanome.frontend.client.TabWrapper)
    */
   @Override

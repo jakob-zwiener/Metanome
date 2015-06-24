@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,19 +16,16 @@
 
 package de.metanome.backend.resources;
 
-import de.metanome.backend.results_db.EntityStorageException;
-import de.metanome.backend.results_db.FileInput;
-import de.metanome.backend.results_db.HibernateUtil;
+import static org.junit.Assert.*;
+
+import java.util.List;
 
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Test;
 
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import de.metanome.backend.results_db.EntityStorageException;
+import de.metanome.backend.results_db.FileInput;
+import de.metanome.backend.results_db.HibernateUtil;
 
 /**
  * Tests for {@link de.metanome.backend.resources.FileInputResource}
@@ -52,7 +49,7 @@ public class FileInputResourceTest {
     FileInput expectedFileInput2 = new FileInput("file");
     expectedFileInput2.setFileName("file2");
 
-    FileInput[] expectedFileInputs = {expectedFileInput1, expectedFileInput2};
+    FileInput[] expectedFileInputs = { expectedFileInput1, expectedFileInput2 };
 
     for (FileInput input : expectedFileInputs) {
       fileInputResource.store(input);
@@ -63,7 +60,7 @@ public class FileInputResourceTest {
 
     // Check result
     assertThat(actualFileInputs,
-               IsIterableContainingInAnyOrder.containsInAnyOrder(expectedFileInputs));
+      IsIterableContainingInAnyOrder.containsInAnyOrder(expectedFileInputs));
 
     // Cleanup
     HibernateUtil.clear();

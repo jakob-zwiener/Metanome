@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,17 @@
 package de.metanome.frontend.client.results;
 
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
+
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
 
 import de.metanome.algorithm_integration.ColumnIdentifier;
 import de.metanome.algorithm_integration.result_receiver.CouldNotReceiveResultException;
@@ -35,14 +43,6 @@ import de.metanome.backend.results_db.ResultType;
 import de.metanome.frontend.client.TabContent;
 import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.services.AlgorithmExecutionRestService;
-
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
 
 /**
@@ -84,8 +84,9 @@ public class ResultsTablePage extends FlowPanel implements OmniscientResultRecei
    * Fetches the results from the execution service and displays them on success.
    */
   protected void fetchPrinterResults() {
-    if (executionService == null)
+    if (executionService == null) {
       return;
+    }
 
     executionService.getPrinterResults(executionIdentifier, getResultCallback());
   }
@@ -94,8 +95,9 @@ public class ResultsTablePage extends FlowPanel implements OmniscientResultRecei
    * Fetches the results from the execution service and displays them on success.
    */
   protected void fetchCacheResults() {
-    if (executionService == null)
+    if (executionService == null) {
       return;
+    }
 
     executionService.getCacheResults(executionIdentifier, getResultCallback());
   }
@@ -104,8 +106,9 @@ public class ResultsTablePage extends FlowPanel implements OmniscientResultRecei
    * Fetches the results from the execution service and displays them on success.
    */
   protected void getCounterResults() {
-    if (executionService == null)
+    if (executionService == null) {
       return;
+    }
 
     executionService.getCounterResults(executionIdentifier, new MethodCallback<Map<ResultType, Integer>>() {
       @Override
@@ -114,23 +117,29 @@ public class ResultsTablePage extends FlowPanel implements OmniscientResultRecei
 
       @Override
       public void onSuccess(Method method, Map<ResultType, Integer> result) {
-        if (result.containsKey(ResultType.UCC))
+        if (result.containsKey(ResultType.UCC)) {
           displayCountResult(result.get(ResultType.UCC), uccTable);
+        }
 
-        if (result.containsKey(ResultType.FD))
+        if (result.containsKey(ResultType.FD)) {
           displayCountResult(result.get(ResultType.FD), fdTable);
+        }
 
-        if (result.containsKey(ResultType.IND))
+        if (result.containsKey(ResultType.IND)) {
           displayCountResult(result.get(ResultType.IND), indTable);
+        }
 
-        if (result.containsKey(ResultType.CUCC))
+        if (result.containsKey(ResultType.CUCC)) {
           displayCountResult(result.get(ResultType.CUCC), cuccTable);
+        }
 
-        if (result.containsKey(ResultType.OD))
+        if (result.containsKey(ResultType.OD)) {
           displayCountResult(result.get(ResultType.OD), odTable);
+        }
 
-        if (result.containsKey(ResultType.STAT))
+        if (result.containsKey(ResultType.STAT)) {
           displayCountResult(result.get(ResultType.STAT), basicsTable);
+        }
 
       }
     });
@@ -168,14 +177,14 @@ public class ResultsTablePage extends FlowPanel implements OmniscientResultRecei
 
   /**
    * Displays the incoming results.
-   *
    * @param results the results of algorithm execution
    */
   protected void displayResults(List<Result> results) {
     for (Result r : results) {
       try {
         r.sendResultTo(this);
-      } catch (CouldNotReceiveResultException e) {
+      }
+      catch (CouldNotReceiveResultException e) {
         this.messageReceiver.addError("Could not display results: " + e.getMessage());
       }
     }
@@ -207,7 +216,8 @@ public class ResultsTablePage extends FlowPanel implements OmniscientResultRecei
 
   @Override
   public void receiveResult(UniqueColumnCombination uniqueColumnCombination)
-      throws CouldNotReceiveResultException {
+    throws CouldNotReceiveResultException
+  {
     if (this.resultsPanel.getWidgetIndex(uccTable) < 0) {
       this.resultsPanel.add(uccTable);
     }
@@ -215,7 +225,7 @@ public class ResultsTablePage extends FlowPanel implements OmniscientResultRecei
     int row = uccTable.getRowCount();
     int col = 0;
     for (ColumnIdentifier colId : uniqueColumnCombination.getColumnCombination()
-        .getColumnIdentifiers()) {
+      .getColumnIdentifiers()) {
       uccTable.setText(row, col, colId.toString());
       col++;
     }
@@ -223,7 +233,8 @@ public class ResultsTablePage extends FlowPanel implements OmniscientResultRecei
 
   @Override
   public void receiveResult(ConditionalUniqueColumnCombination conditionalUniqueColumnCombination)
-      throws CouldNotReceiveResultException {
+    throws CouldNotReceiveResultException
+  {
     if (this.resultsPanel.getWidgetIndex(cuccTable) < 0) {
       this.resultsPanel.add(cuccTable);
     }
@@ -234,7 +245,7 @@ public class ResultsTablePage extends FlowPanel implements OmniscientResultRecei
     cuccTable.setWidget(row, 2, buildPatternTableauTableHtml(conditionalUniqueColumnCombination));
     cuccTable.setText(row, 3, ConditionalUniqueColumnCombination.CUCC_SEPARATOR);
     cuccTable.setText(row, 4, Float.toString(
-conditionalUniqueColumnCombination.getCondition().getCoverage()));
+      conditionalUniqueColumnCombination.getCondition().getCoverage()));
   }
 
   @Override
@@ -248,7 +259,7 @@ conditionalUniqueColumnCombination.getCondition().getCoverage()));
     fdTable.setText(row, 1, "-->");
     fdTable.setText(row, 2, functionalDependency.getDependant().toString());
   }
-  
+
   @Override
   public void receiveResult(OrderDependency orderDependency) throws CouldNotReceiveResultException {
     if (this.resultsPanel.getWidgetIndex(odTable) < 0) {
@@ -259,7 +270,7 @@ conditionalUniqueColumnCombination.getCondition().getCoverage()));
     odTable.setText(row, 0, orderDependency.getLhs().toString());
     odTable.setText(row, 1, OrderDependency.OD_SEPARATOR);
     odTable.setText(row, 2, orderDependency.getRhs().toString());
-    
+
   }
 
   /* (non-Javadoc)
@@ -289,7 +300,8 @@ conditionalUniqueColumnCombination.getCondition().getCoverage()));
         if (condition.containsKey(column)) {
           String value = condition.get(column);
           table.setText(rowCount, columnCount, value);
-        } else {
+        }
+        else {
           table.setText(rowCount, columnCount, "-");
         }
         columnCount++;

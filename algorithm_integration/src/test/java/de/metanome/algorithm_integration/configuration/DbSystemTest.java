@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,17 +16,16 @@
 
 package de.metanome.algorithm_integration.configuration;
 
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 /**
  * Tests for {@link de.metanome.algorithm_integration.configuration.DbSystem}
- *
  * @author Jakob Zwiener
  */
 public class DbSystemTest {

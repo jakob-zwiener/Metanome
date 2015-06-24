@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,16 +16,15 @@
 
 package de.metanome.frontend.client.input_fields;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.junit.client.GWTTestCase;
 
 import de.metanome.frontend.client.helpers.InputValidationException;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Tests for {@link de.metanome.frontend.client.input_fields.ListBoxInput}
- *
  * @author Jakob Zwiener
  */
 public class GwtTestListBoxInput extends GWTTestCase {
@@ -66,7 +65,8 @@ public class GwtTestListBoxInput extends GWTTestCase {
 
     try {
       listBox.getSelectedValue();
-    } catch (InputValidationException e) {
+    }
+    catch (InputValidationException e) {
       // should throw an exception
     }
   }
@@ -103,7 +103,7 @@ public class GwtTestListBoxInput extends GWTTestCase {
 
   /**
    * Test method for {@link ListBoxInput#setSelectedValue(String)}
-   *
+   * <p/>
    * When setting the selected value to a value that is not in the list box false should be
    * returned.
    */
@@ -117,7 +117,7 @@ public class GwtTestListBoxInput extends GWTTestCase {
 
   /**
    * Test method for {@link ListBoxInput#getSelectedValue()}
-   *
+   * <p/>
    * On an empty list box the getSelectedValue method should return null.
    */
   public void testGetSelectedValueEmpty() throws InputValidationException {
@@ -130,7 +130,7 @@ public class GwtTestListBoxInput extends GWTTestCase {
 
   /**
    * Test method for {@link ListBoxInput#getSelectedValue()}
-   *
+   * <p/>
    * On a list box with values but no selected value, the getSelectedValue method should return the
    * first value.
    */

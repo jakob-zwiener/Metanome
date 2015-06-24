@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,15 @@
 
 package de.metanome.frontend.client.parameter;
 
+import java.util.List;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
+import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirementBoolean;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingBoolean;
-import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
 import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.input_fields.BooleanInput;
 import de.metanome.frontend.client.input_fields.InputField;
-
-import java.util.List;
 
 public class InputParameterBooleanWidget extends InputParameterWidget {
 
@@ -34,7 +34,8 @@ public class InputParameterBooleanWidget extends InputParameterWidget {
 
 
   public InputParameterBooleanWidget(ConfigurationRequirementBoolean specification,
-                                     TabWrapper wrapper) {
+                                     TabWrapper wrapper)
+  {
     super(specification, wrapper);
   }
 
@@ -43,7 +44,9 @@ public class InputParameterBooleanWidget extends InputParameterWidget {
     // Create the field with the default value, if one is set
     Boolean defaultValue = this.specification.getDefaultValue(settingIndex);
     BooleanInput field = new BooleanInput(optional, required);
-    if (defaultValue != null) field.setValue(defaultValue);
+    if (defaultValue != null) {
+      field.setValue(defaultValue);
+    }
 
     // Add the field at the correct position
     this.inputWidgets.add(field);

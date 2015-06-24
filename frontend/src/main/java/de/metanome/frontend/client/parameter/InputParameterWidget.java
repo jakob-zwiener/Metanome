@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,9 @@
 
 package de.metanome.frontend.client.parameter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
@@ -28,9 +31,6 @@ import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.helpers.InputValidationException;
 import de.metanome.frontend.client.input_fields.InputField;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class InputParameterWidget extends FlowPanel implements IsWidget {
 
   protected Button addButton;
@@ -39,8 +39,7 @@ public abstract class InputParameterWidget extends FlowPanel implements IsWidget
   /**
    * Creates a widget with the given number of input fields and sets the configuration specification
    * and the tab wrapper.
-   *
-   * @param config  the configuration specification
+   * @param config the configuration specification
    * @param wrapper the tab wrapper
    */
   public InputParameterWidget(ConfigurationRequirement config, TabWrapper wrapper) {
@@ -80,7 +79,6 @@ public abstract class InputParameterWidget extends FlowPanel implements IsWidget
 
   /**
    * Removes the given input field
-   *
    * @param w the input field, which should be removed
    * @return true, if input field could be removed, false otherwise
    */
@@ -107,20 +105,18 @@ public abstract class InputParameterWidget extends FlowPanel implements IsWidget
 
   /**
    * Adds an input field to the widget.
-   *
    * @param optional specifies, weather a a remove button will be rendered
-   * @param index    specifies the index of the corresponding setting
+   * @param index specifies the index of the corresponding setting
    */
   protected abstract void addInputField(boolean optional, boolean required, int index);
 
   /**
    * Gets the configuration specification and updates the current configuration specification.
-   *
    * @return the updated specification of the input
    * @throws InputValidationException if the specification is invalid
    */
   public abstract ConfigurationRequirement getUpdatedSpecification()
-      throws InputValidationException, AlgorithmConfigurationException;
+    throws InputValidationException, AlgorithmConfigurationException;
 
   /**
    * @return true, if the input field represents a data source input, false otherwise
@@ -136,7 +132,6 @@ public abstract class InputParameterWidget extends FlowPanel implements IsWidget
 
   /**
    * Sets the list of all input widgets to the given list
-   *
    * @param inputWidgetsList list of input widgets
    */
   public abstract void setInputWidgets(List<? extends InputField> inputWidgetsList);
@@ -148,14 +143,12 @@ public abstract class InputParameterWidget extends FlowPanel implements IsWidget
 
   /**
    * Sets the configuration specification
-   *
    * @param config the configuration specification, which should be set
    */
   public abstract void setSpecification(ConfigurationRequirement config);
 
   /**
    * Sets the message receiver
-   *
    * @param messageReceiver the tab wrapper, which should be set
    */
   public abstract void setMessageReceiver(TabWrapper messageReceiver);

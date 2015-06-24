@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,14 @@
 
 package de.metanome.test_helper;
 
+import static org.junit.Assert.*;
+
 import com.google.gwt.rpc.client.ast.HasValues;
 import com.google.gwt.rpc.client.ast.ReturnCommand;
 import com.google.gwt.rpc.client.impl.HasValuesCommandSink;
 import com.google.gwt.rpc.server.CommandServerSerializationStreamWriter;
 import com.google.gwt.rpc.server.HostedModeClientOracle;
 import com.google.gwt.user.client.rpc.SerializationException;
-
-import static org.junit.Assert.fail;
 
 public class GwtSerializationTester {
 
@@ -32,18 +32,20 @@ public class GwtSerializationTester {
     HasValues command = new ReturnCommand();
     HasValuesCommandSink hvcs = new HasValuesCommandSink(command);
     CommandServerSerializationStreamWriter
-        out =
-        new CommandServerSerializationStreamWriter(hmco, hvcs);
+      out =
+      new CommandServerSerializationStreamWriter(hmco, hvcs);
 
     try {
       out.writeObject(o);
-    } catch (SerializationException e) {
+    }
+    catch (SerializationException e) {
       fail("Object not serializable: " + o + " Caused by: " + e.getMessage());
     }
 
     try {
       o.getClass().getDeclaredConstructor();
-    } catch (NoSuchMethodException e) {
+    }
+    catch (NoSuchMethodException e) {
       fail("Object not serializable: " + o + " Caused by: " + e.getMessage());
     }
   }

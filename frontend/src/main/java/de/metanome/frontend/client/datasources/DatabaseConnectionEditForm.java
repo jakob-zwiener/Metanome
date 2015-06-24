@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 package de.metanome.frontend.client.datasources;
 
+import java.util.Arrays;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
@@ -24,19 +26,15 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
+
 import de.metanome.algorithm_integration.configuration.DbSystem;
 import de.metanome.backend.results_db.DatabaseConnection;
 import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.helpers.InputValidationException;
 import de.metanome.frontend.client.input_fields.ListBoxInput;
 import de.metanome.frontend.client.services.DatabaseConnectionRestService;
-
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
-import java.util.Arrays;
-
-import javax.activation.DataContentHandler;
 
 /**
  * Input field to configure a database connection.
@@ -106,12 +104,11 @@ public class DatabaseConnectionEditForm extends Grid {
 
   /**
    * Set the url,username and password in the according text boxes.
-   *
-   * @param url      the url for the database connection
-   * @param system   the database system for the database connection
+   * @param url the url for the database connection
+   * @param system the database system for the database connection
    * @param username the username for the database connection
    * @param password the password for the database connection
-   * @param comment  the comment for the database connection
+   * @param comment the comment for the database connection
    */
   public void setValues(String url, String system, String username, String password, String comment) {
     this.dbUrlTextbox.setValue(url);
@@ -123,7 +120,6 @@ public class DatabaseConnectionEditForm extends Grid {
 
   /**
    * Create a database connection with the specified values.
-   *
    * @return a database connection
    * @throws InputValidationException if one of the fields is empty
    */
@@ -136,11 +132,11 @@ public class DatabaseConnectionEditForm extends Grid {
 
     if (url.isEmpty() || username.isEmpty() || password.isEmpty() || system.isEmpty()) {
       throw new InputValidationException(
-          "The database url, username, password and system should all be set!");
+        "The database url, username, password and system should all be set!");
     }
 
     DatabaseConnection connection = new DatabaseConnection(
-        url, username, password, DbSystem.valueOf(system)
+      url, username, password, DbSystem.valueOf(system)
     );
     connection.setComment(comment);
 
@@ -156,23 +152,24 @@ public class DatabaseConnectionEditForm extends Grid {
       final DatabaseConnection currentConnection = this.getValue();
 
       this.databaseConnectionService
-          .storeDatabaseConnection(currentConnection, new MethodCallback<DatabaseConnection>() {
-            @Override
-            public void onFailure(Method method, Throwable throwable) {
-              messageReceiver
-                  .addError("Database Connection could not be stored:" + method.getResponse().getText());
-            }
+        .storeDatabaseConnection(currentConnection, new MethodCallback<DatabaseConnection>() {
+          @Override
+          public void onFailure(Method method, Throwable throwable) {
+            messageReceiver
+              .addError("Database Connection could not be stored:" + method.getResponse().getText());
+          }
 
-            @Override
-            public void onSuccess(Method method, DatabaseConnection connection) {
-              reset();
-              parent.addDatabaseConnectionToTable(connection);
-              parent.updateTableInputTab(connection);
-              parent.updateDataSourcesOnRunConfiguration();
-            }
+          @Override
+          public void onSuccess(Method method, DatabaseConnection connection) {
+            reset();
+            parent.addDatabaseConnectionToTable(connection);
+            parent.updateTableInputTab(connection);
+            parent.updateDataSourcesOnRunConfiguration();
+          }
 
-          });
-    } catch (InputValidationException e) {
+        });
+    }
+    catch (InputValidationException e) {
       messageReceiver.addError("Database Connection could not be stored: " + e.getMessage());
     }
   }
@@ -186,26 +183,27 @@ public class DatabaseConnectionEditForm extends Grid {
       final DatabaseConnection currentConnection = this.getValue().setId(oldDatabaseConnection.getId());
 
       this.databaseConnectionService
-          .updateDatabaseConnection(currentConnection, new MethodCallback<DatabaseConnection>() {
-            @Override
-            public void onFailure(Method method, Throwable throwable) {
-              messageReceiver
-                  .addError("Database Connection could not be updated:" + method.getResponse().getText());
-              reset();
-              showSaveButton();
-            }
+        .updateDatabaseConnection(currentConnection, new MethodCallback<DatabaseConnection>() {
+          @Override
+          public void onFailure(Method method, Throwable throwable) {
+            messageReceiver
+              .addError("Database Connection could not be updated:" + method.getResponse().getText());
+            reset();
+            showSaveButton();
+          }
 
-            @Override
-            public void onSuccess(Method method, DatabaseConnection connection) {
-              reset();
-              showSaveButton();
-              parent.updateDatabaseConnectionInTable(connection, oldDatabaseConnection);
-              parent.updateTableInputTab(connection, oldDatabaseConnection);
-              parent.updateDataSourcesOnRunConfiguration();
-            }
+          @Override
+          public void onSuccess(Method method, DatabaseConnection connection) {
+            reset();
+            showSaveButton();
+            parent.updateDatabaseConnectionInTable(connection, oldDatabaseConnection);
+            parent.updateTableInputTab(connection, oldDatabaseConnection);
+            parent.updateDataSourcesOnRunConfiguration();
+          }
 
-          });
-    } catch (InputValidationException e) {
+        });
+    }
+    catch (InputValidationException e) {
       messageReceiver.addError("Database Connection could not be stored: " + e.getMessage());
     }
   }
@@ -245,7 +243,6 @@ public class DatabaseConnectionEditForm extends Grid {
 
   /**
    * Set the message receiver.
-   *
    * @param tab the message receiver tab wrapper
    */
   public void setMessageReceiver(TabWrapper tab) {

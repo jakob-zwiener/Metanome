@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,9 +26,8 @@ public interface OrderDependencyResultReceiver {
 
   /**
    * Receives a {@link OrderDependency} from an {@link OrderDependencyAlgorithm}.
-   *
    * @param orderDependency a found {@link OrderDependency}
    */
   void receiveResult(OrderDependency orderDependency)
-      throws CouldNotReceiveResultException;
+    throws CouldNotReceiveResultException;
 }

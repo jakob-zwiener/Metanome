@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,6 @@
 
 package de.metanome.backend.algorithm_execution;
 
-import de.metanome.algorithm_integration.algorithm_execution.FileCreationException;
-import de.metanome.algorithm_integration.algorithm_execution.FileGenerator;
-
-import org.apache.commons.lang3.RandomStringUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -28,10 +23,14 @@ import java.net.URLDecoder;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
+import de.metanome.algorithm_integration.algorithm_execution.FileCreationException;
+import de.metanome.algorithm_integration.algorithm_execution.FileGenerator;
+
 /**
  * The generator builds empty, readable, writable files with random file names, that are deleted on
  * close.
- *
  * @author Jakob Zwiener
  */
 public class TempFileGenerator implements FileGenerator {
@@ -60,7 +59,8 @@ public class TempFileGenerator implements FileGenerator {
 
     try {
       tempFile.createNewFile();
-    } catch (IOException e) {
+    }
+    catch (IOException e) {
       throw new FileCreationException("Could not create temporary file.");
     }
 
@@ -77,7 +77,8 @@ public class TempFileGenerator implements FileGenerator {
     for (File tempFile : createdFiles) {
       try {
         tempFile.delete();
-      } catch (Exception e) {
+      }
+      catch (Exception e) {
         System.out.println("A file could not be deleted.");
       }
     }

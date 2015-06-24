@@ -16,10 +16,10 @@
 
 package de.metanome.algorithm_integration.configuration;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
-import java.io.Serializable;
 
 /**
  * A ConfigurationSetting represents the actual values of a {@link de.metanome.algorithm_integration.configuration.ConfigurationRequirement}.
@@ -27,20 +27,21 @@ import java.io.Serializable;
  * setting.
  */
 @JsonTypeInfo(
-    use = JsonTypeInfo.Id.NAME,
-    include = JsonTypeInfo.As.PROPERTY,
-    property = "type")
+  use = JsonTypeInfo.Id.NAME,
+  include = JsonTypeInfo.As.PROPERTY,
+  property = "type")
 @JsonSubTypes({
-                  @JsonSubTypes.Type(value = ConfigurationSettingFileInput.class, name = "ConfigurationSettingFileInput"),
-                  @JsonSubTypes.Type(value = ConfigurationSettingTableInput.class, name = "ConfigurationSettingTableInput"),
-                  @JsonSubTypes.Type(value = ConfigurationSettingDatabaseConnection.class, name = "ConfigurationSettingDatabaseConnection"),
-                  @JsonSubTypes.Type(value = ConfigurationSettingBoolean.class, name = "ConfigurationSettingBoolean"),
-                  @JsonSubTypes.Type(value = ConfigurationSettingInteger.class, name = "ConfigurationSettingInteger"),
-                  @JsonSubTypes.Type(value = ConfigurationSettingListBox.class, name = "ConfigurationSettingListBox"),
-                  @JsonSubTypes.Type(value = ConfigurationSettingString.class, name = "ConfigurationSettingString")
-              })
+  @JsonSubTypes.Type(value = ConfigurationSettingFileInput.class, name = "ConfigurationSettingFileInput"),
+  @JsonSubTypes.Type(value = ConfigurationSettingTableInput.class, name = "ConfigurationSettingTableInput"),
+  @JsonSubTypes.Type(value = ConfigurationSettingDatabaseConnection.class, name = "ConfigurationSettingDatabaseConnection"),
+  @JsonSubTypes.Type(value = ConfigurationSettingBoolean.class, name = "ConfigurationSettingBoolean"),
+  @JsonSubTypes.Type(value = ConfigurationSettingInteger.class, name = "ConfigurationSettingInteger"),
+  @JsonSubTypes.Type(value = ConfigurationSettingListBox.class, name = "ConfigurationSettingListBox"),
+  @JsonSubTypes.Type(value = ConfigurationSettingString.class, name = "ConfigurationSettingString")
+})
 public abstract class ConfigurationSetting implements Serializable {
 
-  public ConfigurationSetting() {}
+  public ConfigurationSetting() {
+  }
 
 }

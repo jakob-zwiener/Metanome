@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,17 +16,16 @@
 
 package de.metanome.algorithm_helper.data_structures;
 
-import de.metanome.algorithm_integration.input.InputIterationException;
-import de.metanome.algorithm_integration.input.RelationalInput;
-
-import it.unimi.dsi.fastutil.longs.LongArrayList;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
+
+import de.metanome.algorithm_integration.input.InputIterationException;
+import de.metanome.algorithm_integration.input.RelationalInput;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 
 /**
  * Constructs a list of {@link PositionListIndex}es from the given {@link
@@ -44,6 +43,7 @@ public class PLIBuilder {
     this.input = input;
     this.nullEqualsNull = true;
   }
+
   public PLIBuilder(RelationalInput input, boolean nullEqualsNull) {
     this(input);
     this.nullEqualsNull = nullEqualsNull;
@@ -51,7 +51,6 @@ public class PLIBuilder {
 
   /**
    * Builds a {@link PositionListIndex} for every column in the input.
-   *
    * @return list of plis for all columns
    * @throws InputIterationException if the input cannot be iterated
    */
@@ -66,7 +65,6 @@ public class PLIBuilder {
 
   /**
    * Calculates the raw PositionListIndices
-   *
    * @return list of associated clusters (PLI)
    * @throws InputIterationException if the input cannot be iterated
    */
@@ -81,20 +79,19 @@ public class PLIBuilder {
   /**
    * Returns the number of tuples in the input after calculating the plis. Can be used after
    * calculateUnpurgedPLI was called.
-   *
    * @return number of tuples in dataset
    */
   public long getNumberOfTuples() throws InputIterationException {
     if (this.numberOfTuples == -1) {
       throw new InputIterationException();
-    } else {
+    }
+    else {
       return this.numberOfTuples;
     }
   }
 
   /**
    * Builds a {@link TreeSet} of the values of every column in the input. "null" values are filtered as they are not required for spider.
-   *
    * @return all comlumns' sorted distinct values
    * @throws InputIterationException if the input cannot be iterated
    */
@@ -142,7 +139,8 @@ public class PLIBuilder {
 
     if (columns.get(columnCount).containsKey(attributeCell)) {
       columns.get(columnCount).get(attributeCell).add(rowCount);
-    } else {
+    }
+    else {
       LongArrayList newList = new LongArrayList();
       newList.add(rowCount);
       columns.get(columnCount).put(attributeCell, newList);

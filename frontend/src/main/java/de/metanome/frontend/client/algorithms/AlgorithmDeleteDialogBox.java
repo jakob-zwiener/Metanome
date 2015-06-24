@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,8 +35,8 @@ public class AlgorithmDeleteDialogBox extends DialogBox {
     String algorithmName = algorithm.getName();
     this.setTitle("Deleting algorithm " + algorithmName);
     this.setText("Deleting the algorithm '" + algorithmName + "' results in deleting all "
-                 + "executions of this algorithm. "
-                 + "Do you still want to delete the algorithm '" + algorithmName + "'?");
+      + "executions of this algorithm. "
+      + "Do you still want to delete the algorithm '" + algorithmName + "'?");
 
     Button deleteButton = new Button("Delete");
     deleteButton.addClickHandler(new ClickHandler() {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 package de.metanome.algorithms.algorithm_template;
 
+import java.util.ArrayList;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.AlgorithmExecutionException;
 import de.metanome.algorithm_integration.algorithm_execution.FileGenerator;
@@ -29,11 +31,10 @@ import de.metanome.algorithm_integration.input.RelationalInputGenerator;
 import de.metanome.algorithm_integration.result_receiver.FunctionalDependencyResultReceiver;
 import de.metanome.algorithm_integration.result_receiver.UniqueColumnCombinationResultReceiver;
 
-import java.util.ArrayList;
-
 public class AlgorithmTemplate
-    implements UniqueColumnCombinationsAlgorithm, FunctionalDependencyAlgorithm, TempFileAlgorithm,
-               StringParameterAlgorithm, RelationalInputParameterAlgorithm {
+  implements UniqueColumnCombinationsAlgorithm, FunctionalDependencyAlgorithm, TempFileAlgorithm,
+  StringParameterAlgorithm, RelationalInputParameterAlgorithm
+{
 
   @Override
   public ArrayList<ConfigurationRequirement> getConfigurationRequirements() {
@@ -49,7 +50,8 @@ public class AlgorithmTemplate
 
   @Override
   public void setStringConfigurationValue(String identifier, String... values)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     // TODO Auto-generated method stub
 
   }
@@ -62,14 +64,16 @@ public class AlgorithmTemplate
 
   @Override
   public void setResultReceiver(
-      FunctionalDependencyResultReceiver resultReceiver) {
+    FunctionalDependencyResultReceiver resultReceiver)
+  {
     // TODO Auto-generated method stub
 
   }
 
   @Override
   public void setResultReceiver(
-      UniqueColumnCombinationResultReceiver resultReceiver) {
+    UniqueColumnCombinationResultReceiver resultReceiver)
+  {
     // TODO Auto-generated method stub
 
   }
@@ -77,7 +81,8 @@ public class AlgorithmTemplate
   @Override
   public void setRelationalInputConfigurationValue(String identifier,
                                                    RelationalInputGenerator... values)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     // TODO Auto-generated method stub
   }
 }

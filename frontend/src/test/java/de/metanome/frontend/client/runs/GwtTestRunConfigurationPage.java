@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,10 @@
 
 package de.metanome.frontend.client.runs;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import com.google.gwt.junit.client.GWTTestCase;
 
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
@@ -25,10 +29,6 @@ import de.metanome.backend.results_db.Algorithm;
 import de.metanome.frontend.client.BasePage;
 import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.TestHelper;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Tests for the algorithm specific pages (tabs)
@@ -94,7 +94,7 @@ public class GwtTestRunConfigurationPage extends GWTTestCase {
 
     // Check
     assertEquals(noOfAlgorithms + algorithms.size(),
-                 runConfigPage.getJarChooser().getListItemCount());
+      runConfigPage.getJarChooser().getListItemCount());
 
     // Cleanup
     TestHelper.resetDatabaseSync();
@@ -119,7 +119,7 @@ public class GwtTestRunConfigurationPage extends GWTTestCase {
 
     // Check
     assertEquals(noOfAlgorithms + algorithms.size() - 1,
-                 runConfigPage.getJarChooser().getListItemCount());
+      runConfigPage.getJarChooser().getListItemCount());
 
     // Cleanup
     TestHelper.resetDatabaseSync();

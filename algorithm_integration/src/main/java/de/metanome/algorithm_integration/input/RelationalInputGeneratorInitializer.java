@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,27 +24,24 @@ import de.metanome.algorithm_integration.configuration.ConfigurationSettingTable
 /**
  * Initializes {@link de.metanome.algorithm_integration.input.RelationalInputGenerator}s that are
  * based on files or database tables.
- *
  * @author Tanja Bergmann
  */
 public interface RelationalInputGeneratorInitializer {
 
   /**
    * Initialize {@link de.metanome.algorithm_integration.input.RelationalInputGenerator} from a {@link de.metanome.algorithm_integration.configuration.ConfigurationSettingFileInput}.
-   *
    * @param setting the setting used to initialize the input
    * @throws AlgorithmConfigurationException if the input cannot be initialized
    */
-  public void initialize(ConfigurationSettingFileInput setting)
-      throws AlgorithmConfigurationException;
+  void initialize(ConfigurationSettingFileInput setting)
+    throws AlgorithmConfigurationException;
 
   /**
    * Initialize {@link de.metanome.algorithm_integration.input.RelationalInputGenerator} from a {@link de.metanome.algorithm_integration.configuration.ConfigurationSettingTableInput}.
-   *
    * @param setting the setting used to initialize the input
    * @throws AlgorithmConfigurationException if the input cannot be initialized
    */
-  public void initialize(ConfigurationSettingTableInput setting)
-      throws AlgorithmConfigurationException;
+  void initialize(ConfigurationSettingTableInput setting)
+    throws AlgorithmConfigurationException;
 
 }

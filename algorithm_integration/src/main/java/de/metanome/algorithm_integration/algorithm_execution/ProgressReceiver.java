@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import de.metanome.algorithm_integration.Algorithm;
 
 /**
  * Receives an {@link Algorithm}'s progress.
- *
  * @author Jakob Zwiener
  */
 public interface ProgressReceiver {
@@ -28,7 +27,6 @@ public interface ProgressReceiver {
   /**
    * Updates the {@link Algorithm}'s progress. Progress should be between 0 and 1 including bounds.
    * If the progress is invalid false is returned.
-   *
    * @param progress the current progress normalized between 0 and 1 including bounds.
    * @return true iff the new progress is valid.
    */

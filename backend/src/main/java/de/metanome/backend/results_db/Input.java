@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,7 @@
 
 package de.metanome.backend.results_db;
 
-import com.google.common.annotations.GwtCompatible;
-
 import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -27,9 +24,10 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Transient;
 
+import com.google.common.annotations.GwtCompatible;
+
 /**
  * Represents superclass inputs in the database.
- *
  * @author Jakob Zwiener
  */
 @Entity
@@ -41,7 +39,8 @@ public class Input implements Serializable {
   protected String name;
 
   // Exists for Serialization
-  public Input() {}
+  public Input() {
+  }
 
   public Input(String name) {
     this.name = name;
@@ -78,11 +77,8 @@ public class Input implements Serializable {
 
     Input input = (Input) o;
 
-    if (id != input.id) {
-      return false;
-    }
+    return id == input.id;
 
-    return true;
   }
 
   @Override

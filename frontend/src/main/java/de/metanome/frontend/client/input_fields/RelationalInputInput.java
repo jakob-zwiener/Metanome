@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,13 @@
 package de.metanome.frontend.client.input_fields;
 
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingDataSource;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingDatabaseConnection;
@@ -33,13 +40,6 @@ import de.metanome.frontend.client.helpers.InputValidationException;
 import de.metanome.frontend.client.services.FileInputRestService;
 import de.metanome.frontend.client.services.TableInputRestService;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class RelationalInputInput extends InputField {
 
   public ListBoxInput listbox;
@@ -54,7 +54,7 @@ public class RelationalInputInput extends InputField {
   private String preselectedInput;
 
   /**
-   * @param optional        specifies whether a remove button should be displayed
+   * @param optional specifies whether a remove button should be displayed
    * @param messageReceiver the message receiver
    */
   public RelationalInputInput(boolean optional, boolean required, TabWrapper messageReceiver) {
@@ -96,7 +96,7 @@ public class RelationalInputInput extends InputField {
     return new MethodCallback<List<FileInput>>() {
       public void onFailure(Method method, Throwable caught) {
         messageReceiver.addError("There are no file inputs in the database: " +
-                                 method.getResponse().getText());
+          method.getResponse().getText());
       }
 
       public void onSuccess(Method method, List<FileInput> result) {
@@ -117,7 +117,7 @@ public class RelationalInputInput extends InputField {
     return new MethodCallback<List<TableInput>>() {
       public void onFailure(Method method, Throwable caught) {
         messageReceiver.addError("There are no relational inputs in the database: " +
-                                 method.getResponse().getText());
+          method.getResponse().getText());
       }
 
       public void onSuccess(Method method, List<TableInput> result) {
@@ -138,12 +138,12 @@ public class RelationalInputInput extends InputField {
   /**
    * Selects the given data source in the list box. If the list box has not yet been filled with the
    * available values, we save the value and set it when the list box is filled.
-   *
    * @param dataSourceSetting the data source setting
    * @throws de.metanome.algorithm_integration.AlgorithmConfigurationException If the data source setting is not a relational input setting
    */
   public void selectDataSource(ConfigurationSettingDataSource dataSourceSetting)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     this.preselectedInput = dataSourceSetting.getValueAsString();
 
     if (!this.listbox.containsValues()) {
@@ -153,24 +153,26 @@ public class RelationalInputInput extends InputField {
     if (dataSourceSetting instanceof ConfigurationSettingRelationalInput) {
       ConfigurationSettingRelationalInput setting = (ConfigurationSettingRelationalInput) dataSourceSetting;
       this.setValues(setting);
-    } else {
+    }
+    else {
       throw new AlgorithmConfigurationException("This is not a relational input setting.");
     }
   }
 
   /**
    * Returns the current widget's settings as a setting
-   *
    * @return the widget's settings
    */
   public ConfigurationSettingRelationalInput getValues()
-      throws InputValidationException, AlgorithmConfigurationException {
+    throws InputValidationException, AlgorithmConfigurationException
+  {
     String selectedValue = this.listbox.getSelectedValue();
 
     if (selectedValue == null || selectedValue.equals("--")) {
       if (isRequired) {
         throw new InputValidationException("You must choose an input!");
-      } else {
+      }
+      else {
         return null;
       }
     }
@@ -182,12 +184,12 @@ public class RelationalInputInput extends InputField {
 
   /**
    * Takes a setting a sets the selected value of the list box to the given setting.
-   *
    * @param setting the settings to set
    * @throws AlgorithmConfigurationException if no inputs are set
    */
   public void setValues(ConfigurationSettingRelationalInput setting)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     for (Map.Entry<String, Input> input : this.inputs.entrySet()) {
       Input current = input.getValue();
       if (current.getIdentifier().equals(setting.getValueAsString())) {
@@ -200,16 +202,18 @@ public class RelationalInputInput extends InputField {
 
   /**
    * Creates a ConfigurationSettingRelationalInput from the given Input
-   *
    * @param input the input
    * @return the setting generated from the input
    */
   protected ConfigurationSettingRelationalInput getCurrentSetting(Input input)
-      throws AlgorithmConfigurationException {
-    if (input instanceof FileInput)
+    throws AlgorithmConfigurationException
+  {
+    if (input instanceof FileInput) {
       return getConfigurationSettingFileInput((FileInput) input);
-    if (input instanceof TableInput)
+    }
+    if (input instanceof TableInput) {
       return getConfigurationSettingTableInput((TableInput) input);
+    }
 
     throw new AlgorithmConfigurationException("Input not supported!");
   }
@@ -219,10 +223,10 @@ public class RelationalInputInput extends InputField {
 
     DatabaseConnection databaseConnection = tableInput.getDatabaseConnection();
     ConfigurationSettingDatabaseConnection databaseConnectionSetting = new ConfigurationSettingDatabaseConnection(
-        databaseConnection.getUrl(),
-        databaseConnection.getUsername(),
-        databaseConnection.getPassword(),
-        databaseConnection.getSystem());
+      databaseConnection.getUrl(),
+      databaseConnection.getUsername(),
+      databaseConnection.getPassword(),
+      databaseConnection.getSystem());
 
     setting.setId(tableInput.getId());
     setting.setTable(tableInput.getTableName());
@@ -233,15 +237,15 @@ public class RelationalInputInput extends InputField {
 
   private ConfigurationSettingRelationalInput getConfigurationSettingFileInput(FileInput fileInput) {
     ConfigurationSettingFileInput settingFileInput = new ConfigurationSettingFileInput()
-        .setFileName(fileInput.getFileName())
-        .setEscapeChar(fileInput.getEscapeChar())
-        .setHeader(fileInput.isHasHeader())
-        .setIgnoreLeadingWhiteSpace(fileInput.isIgnoreLeadingWhiteSpace())
-        .setQuoteChar(fileInput.getQuoteChar())
-        .setSeparatorChar(fileInput.getSeparator())
-        .setSkipDifferingLines(fileInput.isSkipDifferingLines())
-        .setSkipLines(fileInput.getSkipLines())
-        .setStrictQuotes(fileInput.isStrictQuotes());
+      .setFileName(fileInput.getFileName())
+      .setEscapeChar(fileInput.getEscapeChar())
+      .setHeader(fileInput.isHasHeader())
+      .setIgnoreLeadingWhiteSpace(fileInput.isIgnoreLeadingWhiteSpace())
+      .setQuoteChar(fileInput.getQuoteChar())
+      .setSeparatorChar(fileInput.getSeparator())
+      .setSkipDifferingLines(fileInput.isSkipDifferingLines())
+      .setSkipLines(fileInput.getSkipLines())
+      .setStrictQuotes(fileInput.isStrictQuotes());
     settingFileInput.setId(fileInput.getId());
     return settingFileInput;
   }

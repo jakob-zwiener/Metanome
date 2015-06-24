@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,13 @@
 
 package de.metanome.frontend.client.datasources;
 
+import java.util.ArrayList;
+
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
+
+import org.fusesource.restygwt.client.MethodCallback;
 
 import de.metanome.algorithm_integration.configuration.DbSystem;
 import de.metanome.backend.results_db.DatabaseConnection;
@@ -27,10 +31,6 @@ import de.metanome.frontend.client.BasePage;
 import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.TestHelper;
 import de.metanome.frontend.client.helpers.InputValidationException;
-
-import org.fusesource.restygwt.client.MethodCallback;
-
-import java.util.ArrayList;
 
 
 public class GwtTestDatabaseConnectionTab extends GWTTestCase {
@@ -167,8 +167,8 @@ public class GwtTestDatabaseConnectionTab extends GWTTestCase {
 
     // Execute (delete Database Connection 2)
     MethodCallback<Void>
-        callback =
-        databaseConnectionTab.getDeleteCallback(databaseConnection2);
+      callback =
+      databaseConnectionTab.getDeleteCallback(databaseConnection2);
     callback.onSuccess(null, null);
 
     // Check
@@ -209,11 +209,11 @@ public class GwtTestDatabaseConnectionTab extends GWTTestCase {
     // Expected Values
     String expectedValue = "updated";
     DatabaseConnection updatedDatabaseConnection = new DatabaseConnection()
-        .setUrl(expectedValue)
-        .setComment(expectedValue)
-        .setUsername(expectedValue)
-        .setPassword(expectedValue)
-        .setSystem(DbSystem.HANA);
+      .setUrl(expectedValue)
+      .setComment(expectedValue)
+      .setUsername(expectedValue)
+      .setPassword(expectedValue)
+      .setSystem(DbSystem.HANA);
 
     // Execute
     connectionTab.updateDatabaseConnectionInTable(updatedDatabaseConnection, oldDatabaseConnection);
@@ -223,7 +223,7 @@ public class GwtTestDatabaseConnectionTab extends GWTTestCase {
     assertTrue(((HTML) (connectionTab.connectionInputList.getWidget(1, 0))).getText().contains(expectedValue));
     assertTrue(((HTML) (connectionTab.connectionInputList.getWidget(1, 1))).getText().contains(expectedValue));
     assertEquals(((HTML) (connectionTab.connectionInputList.getWidget(1, 2))).getText(),
-                 DbSystem.HANA.name());
+      DbSystem.HANA.name());
     assertTrue(connectionTab.connectionInputList.getText(1, 3).contains(expectedValue));
 
     // Clean up

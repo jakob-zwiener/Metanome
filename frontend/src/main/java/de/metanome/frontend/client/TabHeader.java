@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,6 @@ import de.metanome.frontend.client.results.ResultsPage;
 /**
  * Widget to be put into the tab bars of result tabs. Includes the algorithm name as well as a close
  * button.
- *
  * @author Claudia Exeler
  */
 public class TabHeader extends HorizontalPanel {
@@ -38,10 +37,9 @@ public class TabHeader extends HorizontalPanel {
 
   /**
    * Constructor.
-   *
    * @param algorithmName the name of the algorithm or whatever should be displayed as tab title
-   * @param tabContent    the panel holding the corresponding tab's contents
-   * @param resultsPage   the TabLayoutPanel where resultsTab will be added to
+   * @param tabContent the panel holding the corresponding tab's contents
+   * @param resultsPage the TabLayoutPanel where resultsTab will be added to
    */
   public TabHeader(String algorithmName, Panel tabContent, ResultsPage resultsPage) {
     this.tab = tabContent;

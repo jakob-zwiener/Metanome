@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,17 @@
 
 package de.metanome.backend.result_receiver;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import de.metanome.algorithm_integration.result_receiver.CouldNotReceiveResultException;
@@ -30,104 +41,108 @@ import de.metanome.algorithm_integration.results.UniqueColumnCombination;
 import de.metanome.backend.helper.ExceptionParser;
 import de.metanome.backend.results_db.ResultType;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-
 /**
  * Writes all received Results to disk. When all results were received, the results are
  * read again and returned.
  */
 public class ResultPrinter extends ResultReceiver {
-  
+
   protected EnumMap<ResultType, PrintStream> openStreams;
 
   public ResultPrinter(String algorithmExecutionIdentifier)
-      throws FileNotFoundException {
+    throws FileNotFoundException
+  {
     super(algorithmExecutionIdentifier);
     this.openStreams = new EnumMap<>(ResultType.class);
   }
+
   protected ResultPrinter(String algorithmExecutionIdentifier, Boolean test)
-      throws FileNotFoundException {
+    throws FileNotFoundException
+  {
     super(algorithmExecutionIdentifier, test);
     this.openStreams = new EnumMap<>(ResultType.class);
   }
 
   @Override
   public void receiveResult(BasicStatistic statistic)
-      throws CouldNotReceiveResultException {
+    throws CouldNotReceiveResultException
+  {
     try {
       JsonConverter<BasicStatistic> jsonConverter = new JsonConverter<>();
       getStream(ResultType.STAT).println(jsonConverter.toJsonString(statistic));
-    } catch (JsonProcessingException e) {
+    }
+    catch (JsonProcessingException e) {
       throw new CouldNotReceiveResultException("Could not convert the result to JSON!");
     }
   }
 
   @Override
   public void receiveResult(FunctionalDependency functionalDependency)
-      throws CouldNotReceiveResultException {
+    throws CouldNotReceiveResultException
+  {
     try {
       JsonConverter<FunctionalDependency> jsonConverter = new JsonConverter<>();
       getStream(ResultType.FD).println(jsonConverter.toJsonString(functionalDependency));
-    } catch (JsonProcessingException e) {
+    }
+    catch (JsonProcessingException e) {
       throw new CouldNotReceiveResultException("Could not convert the result to JSON!");
     }
   }
 
   @Override
   public void receiveResult(InclusionDependency inclusionDependency)
-      throws CouldNotReceiveResultException {
+    throws CouldNotReceiveResultException
+  {
     try {
       JsonConverter<InclusionDependency> jsonConverter = new JsonConverter<>();
       getStream(ResultType.IND).println(jsonConverter.toJsonString(inclusionDependency));
-    } catch (JsonProcessingException e) {
+    }
+    catch (JsonProcessingException e) {
       throw new CouldNotReceiveResultException("Could not convert the result to JSON!");
     }
   }
 
   @Override
   public void receiveResult(UniqueColumnCombination uniqueColumnCombination)
-      throws CouldNotReceiveResultException {
+    throws CouldNotReceiveResultException
+  {
     try {
       JsonConverter<UniqueColumnCombination> jsonConverter = new JsonConverter<>();
       getStream(ResultType.UCC).println(jsonConverter.toJsonString(uniqueColumnCombination));
-    } catch (JsonProcessingException e) {
+    }
+    catch (JsonProcessingException e) {
       throw new CouldNotReceiveResultException("Could not convert the result to JSON!");
     }
   }
 
   @Override
   public void receiveResult(ConditionalUniqueColumnCombination conditionalUniqueColumnCombination)
-      throws CouldNotReceiveResultException {
+    throws CouldNotReceiveResultException
+  {
     try {
       JsonConverter<ConditionalUniqueColumnCombination> jsonConverter = new JsonConverter<>();
       getStream(ResultType.CUCC).println(jsonConverter.toJsonString(conditionalUniqueColumnCombination));
-    } catch (JsonProcessingException e) {
+    }
+    catch (JsonProcessingException e) {
       throw new CouldNotReceiveResultException("Could not convert the result to JSON!");
     }
   }
-  
+
   @Override
   public void receiveResult(OrderDependency orderDependency)
-      throws CouldNotReceiveResultException {
+    throws CouldNotReceiveResultException
+  {
     try {
       JsonConverter<OrderDependency> jsonConverter = new JsonConverter<>();
       getStream(ResultType.OD).println(jsonConverter.toJsonString(orderDependency));
-    } catch (JsonProcessingException e) {
+    }
+    catch (JsonProcessingException e) {
       throw new CouldNotReceiveResultException("Could not convert the result to JSON!");
     }
   }
 
   protected PrintStream getStream(ResultType type) throws CouldNotReceiveResultException {
-    if(!openStreams.containsKey(type)){
+    if (!openStreams.containsKey(type)) {
       openStreams.put(type, openStream(type.getEnding()));
     }
     return openStreams.get(type);
@@ -136,9 +151,10 @@ public class ResultPrinter extends ResultReceiver {
   protected PrintStream openStream(String fileSuffix) throws CouldNotReceiveResultException {
     try {
       return new PrintStream(new FileOutputStream(getOutputFilePathPrefix() + fileSuffix), true);
-    } catch (FileNotFoundException e) {
+    }
+    catch (FileNotFoundException e) {
       throw new CouldNotReceiveResultException(
-          ExceptionParser.parse(e, "Could not open result file for writing"), e);
+        ExceptionParser.parse(e, "Could not open result file for writing"), e);
     }
   }
 
@@ -172,7 +188,7 @@ public class ResultPrinter extends ResultReceiver {
   private List<Result> readResult(ResultType type) throws IOException {
     List<Result> results = new ArrayList<>();
     try (BufferedReader br = new BufferedReader(
-        new FileReader(getOutputFilePathPrefix() + type.getEnding()))) {
+      new FileReader(getOutputFilePathPrefix() + type.getEnding()))) {
       String line = br.readLine();
 
       while (line != null) {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ import de.metanome.algorithm_integration.input.TableInputGenerator;
 /**
  * An {@link Algorithm} that takes {@link de.metanome.algorithm_integration.input.TableInputGenerator}
  * configuration values.
- *
  * @author Jakob Zwiener
  */
 public interface TableInputParameterAlgorithm extends Algorithm {
@@ -31,13 +30,12 @@ public interface TableInputParameterAlgorithm extends Algorithm {
   /**
    * Sets a {@link de.metanome.algorithm_integration.input.TableInputGenerator} configuration value
    * on the algorithm.
-   *
    * @param identifier the parameter's identifier
-   * @param values     one or multiple TableInputGenerator values
+   * @param values one or multiple TableInputGenerator values
    * @throws AlgorithmConfigurationException if the algorithm cannot be correctly configured using
-   *                                         the received configuration values
+   * the received configuration values
    */
   void setTableInputConfigurationValue(String identifier, TableInputGenerator... values)
-      throws AlgorithmConfigurationException;
+    throws AlgorithmConfigurationException;
 
 }

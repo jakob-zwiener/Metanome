@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 package de.metanome.algorithm_integration.results;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import de.metanome.algorithm_integration.ColumnCombination;
@@ -23,11 +25,8 @@ import de.metanome.algorithm_integration.ColumnIdentifier;
 import de.metanome.algorithm_integration.result_receiver.CouldNotReceiveResultException;
 import de.metanome.algorithm_integration.result_receiver.OmniscientResultReceiver;
 
-import javax.xml.bind.annotation.XmlTransient;
-
 /**
  * Represents a functional dependency.
- *
  * @author Jakob Zwiener
  */
 @JsonTypeName("FunctionalDependency")
@@ -47,7 +46,8 @@ public class FunctionalDependency implements Result {
   }
 
   public FunctionalDependency(ColumnCombination determinant,
-                              ColumnIdentifier dependant) {
+                              ColumnIdentifier dependant)
+  {
     this.determinant = determinant;
     this.dependant = dependant;
   }
@@ -59,8 +59,8 @@ public class FunctionalDependency implements Result {
     return determinant;
   }
 
-  public void setDependant(ColumnIdentifier dependant) {
-    this.dependant = dependant;
+  public void setDeterminant(ColumnCombination determinant) {
+    this.determinant = determinant;
   }
 
   /**
@@ -70,14 +70,15 @@ public class FunctionalDependency implements Result {
     return dependant;
   }
 
-  public void setDeterminant(ColumnCombination determinant) {
-    this.determinant = determinant;
+  public void setDependant(ColumnIdentifier dependant) {
+    this.dependant = dependant;
   }
 
   @Override
   @XmlTransient
   public void sendResultTo(OmniscientResultReceiver resultReceiver)
-      throws CouldNotReceiveResultException {
+    throws CouldNotReceiveResultException
+  {
     resultReceiver.receiveResult(this);
   }
 
@@ -86,9 +87,9 @@ public class FunctionalDependency implements Result {
     StringBuilder builder = new StringBuilder();
 
     builder
-        .append(determinant)
-        .append(FD_SEPARATOR)
-        .append(dependant);
+      .append(determinant)
+      .append(FD_SEPARATOR)
+      .append(dependant);
 
     return builder.toString();
   }
@@ -98,9 +99,9 @@ public class FunctionalDependency implements Result {
     final int prime = 31;
     int result = 1;
     result = prime * result
-             + ((dependant == null) ? 0 : dependant.hashCode());
+      + ((dependant == null) ? 0 : dependant.hashCode());
     result = prime * result
-             + ((determinant == null) ? 0 : determinant.hashCode());
+      + ((determinant == null) ? 0 : determinant.hashCode());
     return result;
   }
 
@@ -120,14 +121,16 @@ public class FunctionalDependency implements Result {
       if (other.dependant != null) {
         return false;
       }
-    } else if (!dependant.equals(other.dependant)) {
+    }
+    else if (!dependant.equals(other.dependant)) {
       return false;
     }
     if (determinant == null) {
       if (other.determinant != null) {
         return false;
       }
-    } else if (!determinant.equals(other.determinant)) {
+    }
+    else if (!determinant.equals(other.determinant)) {
       return false;
     }
     return true;

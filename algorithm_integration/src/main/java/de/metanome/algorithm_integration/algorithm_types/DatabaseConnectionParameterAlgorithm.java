@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,24 +23,22 @@ import de.metanome.algorithm_integration.input.DatabaseConnectionGenerator;
 /**
  * An {@link Algorithm} that takes {@link de.metanome.algorithm_integration.input.DatabaseConnectionGenerator}
  * configuration values.
- *
  * @author Jakob Zwiener
  */
 public interface DatabaseConnectionParameterAlgorithm extends Algorithm {
 
   /**
    * Sets a DatabaseConnectionGenerator configuration value on the algorithm.
-   *
    * @param identifier the parameter's identifier
-   * @param values     one or multiple DatabaseConnectionGenerator values
+   * @param values one or multiple DatabaseConnectionGenerator values
    * @throws de.metanome.algorithm_integration.AlgorithmConfigurationException if the algorithm
-   *                                                                           cannot be correctly
-   *                                                                           configured using the
-   *                                                                           received configuration
-   *                                                                           values
+   * cannot be correctly
+   * configured using the
+   * received configuration
+   * values
    */
   void setDatabaseConnectionGeneratorConfigurationValue(String identifier,
                                                         DatabaseConnectionGenerator... values)
-      throws AlgorithmConfigurationException;
+    throws AlgorithmConfigurationException;
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,23 +23,21 @@ import de.metanome.algorithm_integration.input.FileInputGenerator;
 /**
  * An {@link de.metanome.algorithm_integration.Algorithm} that takes {@link
  * de.metanome.algorithm_integration.input.FileInputGenerator} configuration values.
- *
  * @author Jakob Zwiener
  */
 public interface FileInputParameterAlgorithm extends Algorithm {
 
   /**
    * Sets a FileInputGenerator configuration value on the algorithm.
-   *
    * @param identifier the value's identifier
-   * @param values     the configuration values
+   * @param values the configuration values
    * @throws de.metanome.algorithm_integration.AlgorithmConfigurationException if the algorithm
-   *                                                                           cannot be correctly
-   *                                                                           configured using the
-   *                                                                           received configuration
-   *                                                                           values
+   * cannot be correctly
+   * configured using the
+   * received configuration
+   * values
    */
   void setFileInputConfigurationValue(String identifier, FileInputGenerator... values)
-      throws AlgorithmConfigurationException;
+    throws AlgorithmConfigurationException;
 
 }

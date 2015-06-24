@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,16 +16,10 @@
 
 package de.metanome.backend.resources;
 
-import de.metanome.backend.results_db.EntityStorageException;
-import de.metanome.backend.results_db.Execution;
-import de.metanome.backend.results_db.HibernateUtil;
-import de.metanome.backend.results_db.Result;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -34,6 +28,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+
+import de.metanome.backend.results_db.EntityStorageException;
+import de.metanome.backend.results_db.Execution;
+import de.metanome.backend.results_db.HibernateUtil;
+import de.metanome.backend.results_db.Result;
 
 @Path("executions")
 public class ExecutionResource implements Resource<Execution> {
@@ -51,7 +50,8 @@ public class ExecutionResource implements Resource<Execution> {
   public Execution store(Execution execution) {
     try {
       HibernateUtil.store(execution);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       throw new WebException(e, Response.Status.BAD_REQUEST);
     }
 
@@ -77,14 +77,14 @@ public class ExecutionResource implements Resource<Execution> {
           file.delete();
         }
       }
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       throw new WebException(e, Response.Status.BAD_REQUEST);
     }
   }
 
   /**
    * Retrieves an execution from the database.
-   *
    * @param id the execution's id
    * @return the execution
    */
@@ -95,7 +95,8 @@ public class ExecutionResource implements Resource<Execution> {
   public Execution get(@PathParam("id") long id) {
     try {
       return (Execution) HibernateUtil.retrieve(Execution.class, id);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       throw new WebException(e, Response.Status.BAD_REQUEST);
     }
   }
@@ -110,7 +111,8 @@ public class ExecutionResource implements Resource<Execution> {
     List<Execution> executions = null;
     try {
       executions = HibernateUtil.queryCriteria(Execution.class);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       // Algorithm should implement Entity, so the exception should not occur.
       e.printStackTrace();
     }
@@ -120,7 +122,6 @@ public class ExecutionResource implements Resource<Execution> {
 
   /**
    * Retrieves all executions, which belong to the given algorithm.
-   *
    * @param name the name of the algorithm
    * @return all matching executions
    */
@@ -138,7 +139,8 @@ public class ExecutionResource implements Resource<Execution> {
           executions.add(execution);
         }
       }
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       // Algorithm should implement Entity, so the exception should not occur.
       e.printStackTrace();
     }
@@ -148,7 +150,7 @@ public class ExecutionResource implements Resource<Execution> {
 
   /**
    * Adds a result to the execution.
-   * @param id     the id of the execution
+   * @param id the id of the execution
    * @param result the result, which should be added to the execution
    */
   @GET
@@ -160,7 +162,8 @@ public class ExecutionResource implements Resource<Execution> {
       Execution execution = (Execution) HibernateUtil.retrieve(Execution.class, id);
       execution.addResult(result);
       HibernateUtil.update(execution);
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       throw new WebException(e, Response.Status.BAD_REQUEST);
     }
   }
@@ -178,7 +181,8 @@ public class ExecutionResource implements Resource<Execution> {
   public Execution update(Execution execution) {
     try {
       HibernateUtil.update(execution);
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       throw new WebException(e, Response.Status.BAD_REQUEST);
     }
     return execution;

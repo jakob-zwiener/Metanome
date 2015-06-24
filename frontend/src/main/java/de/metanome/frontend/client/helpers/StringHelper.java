@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,32 +18,32 @@ package de.metanome.frontend.client.helpers;
 
 /**
  * TODO docs
- *
  * @author Claudia Exeler
  */
 public class StringHelper {
 
   /**
    * TODO docs
-   *
    * @param input input string
    * @return the first char of the input string
    */
   public static char getFirstCharFromInput(String input) {
     if (input.length() == 1) {
       return input.charAt(0);
-    } else if (input.equals("\\n")) {
+    }
+    else if (input.equals("\\n")) {
       return '\n';
-    } else if (input.equals("\\t")) {
+    }
+    else if (input.equals("\\t")) {
       return '\t';
-    } else {
+    }
+    else {
       return 0;
     }
   }
 
   /**
    * Returns one character from input string.
-   *
    * @param value input string
    * @return first character
    * @throws InputValidationException thrown if no character was extracted from value.
@@ -52,7 +52,7 @@ public class StringHelper {
     char firstChar = getFirstCharFromInput(value);
     if (firstChar == 0) {
       throw new InputValidationException(
-          "You must specify one-character values for advanced CSV settings.");
+        "You must specify one-character values for advanced CSV settings.");
     }
     return firstChar;
   }

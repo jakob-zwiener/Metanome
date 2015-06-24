@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,8 @@ public class GwtTestRelationalInputParameter extends GWTTestCase {
    * Tests the selection of a specific item corresponding to the given ConfigurationSetting.
    */
   public void testSelectDataSourceOnFilledDropdown()
-      throws AlgorithmConfigurationException, InputValidationException {
+    throws AlgorithmConfigurationException, InputValidationException
+  {
     // Set up
     TestHelper.resetDatabaseSync();
 
@@ -82,8 +83,8 @@ public class GwtTestRelationalInputParameter extends GWTTestCase {
 
     ConfigurationRequirementRelationalInput configSpec = new ConfigurationRequirementRelationalInput("test");
     InputParameterRelationalInputWidget
-        dataSourceWidget =
-        new InputParameterRelationalInputWidget(configSpec, tabWrapper);
+      dataSourceWidget =
+      new InputParameterRelationalInputWidget(configSpec, tabWrapper);
 
     dataSourceWidget.inputWidgets.get(0).listbox.addValue(aFileName);
     dataSourceWidget.inputWidgets.get(0).inputs.put(aFileName, fileInput);
@@ -93,14 +94,15 @@ public class GwtTestRelationalInputParameter extends GWTTestCase {
 
     // Check
     assertTrue(
-        ((RelationalInputInput) dataSourceWidget.getWidget(0)).listbox.getValues().size() == 2);
+      ((RelationalInputInput) dataSourceWidget.getWidget(0)).listbox.getValues().size() == 2);
 
     ConfigurationSettingDataSource retrievedSetting = null;
     try {
-      retrievedSetting = (ConfigurationSettingDataSource) dataSourceWidget
-          .getUpdatedSpecification()
-          .getSettings()[0];
-    } catch (InputValidationException e) {
+      retrievedSetting = dataSourceWidget
+        .getUpdatedSpecification()
+        .getSettings()[0];
+    }
+    catch (InputValidationException e) {
       TestHelper.resetDatabaseSync();
       e.printStackTrace();
       fail();
@@ -115,13 +117,13 @@ public class GwtTestRelationalInputParameter extends GWTTestCase {
     //Setup
     int maxValue = 5;
     ConfigurationRequirementRelationalInput
-        specification =
-        new ConfigurationRequirementRelationalInput("relation input", 3, maxValue);
+      specification =
+      new ConfigurationRequirementRelationalInput("relation input", 3, maxValue);
 
     //Execute
     InputParameterRelationalInputWidget
-        widget =
-        new InputParameterRelationalInputWidget(specification, new TabWrapper());
+      widget =
+      new InputParameterRelationalInputWidget(specification, new TabWrapper());
 
     //Check
     assertEquals(maxValue, widget.inputWidgets.size());

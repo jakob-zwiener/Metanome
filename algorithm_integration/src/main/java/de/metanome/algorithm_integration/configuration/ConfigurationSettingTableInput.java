@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,29 +16,26 @@
 
 package de.metanome.algorithm_integration.configuration;
 
-import com.google.common.annotations.GwtIncompatible;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.common.annotations.GwtIncompatible;
 
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.input.RelationalInputGeneratorInitializer;
 
-import javax.xml.bind.annotation.XmlTransient;
-
 
 /**
  * The setting of a {@link de.metanome.algorithm_integration.configuration.ConfigurationRequirementTableInput}
- *
  * @author Tanja Bergmann
  */
 @JsonTypeName("ConfigurationSettingTableInput")
 public class ConfigurationSettingTableInput extends ConfigurationSettingRelationalInput {
 
-  private String table;
-  private ConfigurationSettingDatabaseConnection databaseConnection;
-
   // Needed for restful serialization
   public String type = "ConfigurationSettingTableInput";
+  private String table;
+  private ConfigurationSettingDatabaseConnection databaseConnection;
 
   /**
    * Exists for serialization.
@@ -47,7 +44,8 @@ public class ConfigurationSettingTableInput extends ConfigurationSettingRelation
   }
 
   public ConfigurationSettingTableInput(String table,
-                                        ConfigurationSettingDatabaseConnection databaseConnection) {
+                                        ConfigurationSettingDatabaseConnection databaseConnection)
+  {
     this.table = table;
     this.databaseConnection = databaseConnection;
   }
@@ -81,7 +79,8 @@ public class ConfigurationSettingTableInput extends ConfigurationSettingRelation
   @XmlTransient
   @GwtIncompatible("Can only be called from backend.")
   public void generate(RelationalInputGeneratorInitializer initializer)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     initializer.initialize(this);
   }
 
@@ -99,11 +98,8 @@ public class ConfigurationSettingTableInput extends ConfigurationSettingRelation
     if (!table.equals(that.table)) {
       return false;
     }
-    if (!databaseConnection.equals(that.databaseConnection)) {
-      return false;
-    }
+    return databaseConnection.equals(that.databaseConnection);
 
-    return true;
   }
 
   @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,7 @@
 
 package de.metanome.backend.algorithm_loading;
 
-import de.metanome.algorithm_integration.algorithm_types.UniqueColumnCombinationsAlgorithm;
-
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,14 +24,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URLDecoder;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+
+import de.metanome.algorithm_integration.algorithm_types.UniqueColumnCombinationsAlgorithm;
 
 /**
  * Tests for {@link de.metanome.backend.algorithm_loading.AlgorithmFinder}
- *
  * @author Claudia Exeler
  */
 public class AlgorithmFinderTest {
@@ -43,14 +39,15 @@ public class AlgorithmFinderTest {
    */
   @Test
   public void getAlgorithmType()
-      throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException,
-             IllegalArgumentException, SecurityException, InvocationTargetException,
-             NoSuchMethodException {
+    throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException,
+    IllegalArgumentException, SecurityException, InvocationTargetException,
+    NoSuchMethodException
+  {
     // Setup
     String
-        jarFilePath =
-        Thread.currentThread().getContextClassLoader()
-            .getResource("algorithms/example_ucc_algorithm.jar").getFile();
+      jarFilePath =
+      Thread.currentThread().getContextClassLoader()
+        .getResource("algorithms/example_ucc_algorithm.jar").getFile();
     File file = new File(URLDecoder.decode(jarFilePath, "utf-8"));
 
     // Execute functionality
@@ -67,13 +64,14 @@ public class AlgorithmFinderTest {
    */
   @Test
   public void getAlgorithmTypeByFileName()
-      throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException,
-             IllegalArgumentException, SecurityException, InvocationTargetException,
-             NoSuchMethodException {
+    throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException,
+    IllegalArgumentException, SecurityException, InvocationTargetException,
+    NoSuchMethodException
+  {
     // Execute functionality
     Set<Class<?>>
-        algorithmInterfaces =
-        new AlgorithmFinder().getAlgorithmInterfaces("example_ucc_algorithm.jar");
+      algorithmInterfaces =
+      new AlgorithmFinder().getAlgorithmInterfaces("example_ucc_algorithm.jar");
 
     // Check result
     assertNotNull(algorithmInterfaces);
@@ -103,14 +101,15 @@ public class AlgorithmFinderTest {
    */
   @Test
   public void testRetrieveUniqueColumnCombinationJarFiles()
-      throws IOException, ClassNotFoundException {
+    throws IOException, ClassNotFoundException
+  {
     // Setup
     AlgorithmFinder algoFinder = new AlgorithmFinder();
 
     //Execute
     String[]
-        algos =
-        algoFinder.getAvailableAlgorithmFileNames(UniqueColumnCombinationsAlgorithm.class);
+      algos =
+      algoFinder.getAvailableAlgorithmFileNames(UniqueColumnCombinationsAlgorithm.class);
 
     //Check
     assertEquals(4, algos.length); //TODO determine number of expected algorithms dynamically

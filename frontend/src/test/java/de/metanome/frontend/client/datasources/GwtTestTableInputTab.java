@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,13 @@
 
 package de.metanome.frontend.client.datasources;
 
+import java.util.ArrayList;
+
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
+
+import org.fusesource.restygwt.client.MethodCallback;
 
 import de.metanome.algorithm_integration.configuration.DbSystem;
 import de.metanome.backend.results_db.DatabaseConnection;
@@ -28,10 +32,6 @@ import de.metanome.frontend.client.BasePage;
 import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.TestHelper;
 import de.metanome.frontend.client.helpers.InputValidationException;
-
-import org.fusesource.restygwt.client.MethodCallback;
-
-import java.util.ArrayList;
 
 public class GwtTestTableInputTab extends GWTTestCase {
 
@@ -151,9 +151,9 @@ public class GwtTestTableInputTab extends GWTTestCase {
     int rowCount = tableInputTab.tableInputList.getRowCount();
 
     // Execute (delete Table Input 2)
-    MethodCallback<Void >
-        callback =
-        tableInputTab.getDeleteCallback(tableInput2);
+    MethodCallback<Void>
+      callback =
+      tableInputTab.getDeleteCallback(tableInput2);
     callback.onSuccess(null, null);
 
     // Check

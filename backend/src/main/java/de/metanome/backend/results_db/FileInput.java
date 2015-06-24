@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,21 +16,18 @@
 
 package de.metanome.backend.results_db;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
 import com.google.common.annotations.GwtCompatible;
 
 import au.com.bytecode.opencsv.CSVParser;
 import au.com.bytecode.opencsv.CSVReader;
-
 import de.metanome.backend.input.file.FileIterator;
-
-import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.Transient;
 
 /**
  * Represents file inputs in the database.
- *
  * @author Jakob Zwiener
  */
 @Entity
@@ -50,11 +47,11 @@ public class FileInput extends Input implements Serializable {
   protected String nullValue;
 
   // Exists for Serialization
-  public FileInput() {}
+  public FileInput() {
+  }
 
   /**
    * Constructs a FileInput with a given file name. Default parser settings are set.
-   *
    * @param fileName input's file name
    */
   public FileInput(String fileName) {
@@ -155,18 +152,12 @@ public class FileInput extends Input implements Serializable {
     return this.fileName;
   }
 
-  public FileInput setSeparator(String separator) {
-    this.separator = separator;
-
-    return this;
-  }
-
   public String getSeparator() {
     return separator;
   }
 
-  public FileInput setQuoteChar(String quoteChar) {
-    this.quoteChar = quoteChar;
+  public FileInput setSeparator(String separator) {
+    this.separator = separator;
 
     return this;
   }
@@ -175,8 +166,8 @@ public class FileInput extends Input implements Serializable {
     return quoteChar;
   }
 
-  public FileInput setEscapeChar(String escapeChar) {
-    this.escapeChar = escapeChar;
+  public FileInput setQuoteChar(String quoteChar) {
+    this.quoteChar = quoteChar;
 
     return this;
   }
@@ -185,8 +176,8 @@ public class FileInput extends Input implements Serializable {
     return escapeChar;
   }
 
-  public FileInput setNullValue(String nullValue) {
-    this.nullValue = nullValue;
+  public FileInput setEscapeChar(String escapeChar) {
+    this.escapeChar = escapeChar;
 
     return this;
   }
@@ -195,16 +186,27 @@ public class FileInput extends Input implements Serializable {
     return nullValue;
   }
 
+  public FileInput setNullValue(String nullValue) {
+    this.nullValue = nullValue;
+
+    return this;
+  }
+
   @Transient
-  public char getSeparatorAsChar() { return toChar(this.separator); }
+  public char getSeparatorAsChar() {
+    return toChar(this.separator);
+  }
+
   @Transient
   public char getQuoteCharAsChar() {
     return toChar(this.quoteChar);
   }
+
   @Transient
   public char getEscapeCharAsChar() {
     return toChar(this.escapeChar);
   }
+
   @Transient
   private char toChar(String str) {
     if (str.isEmpty()) {

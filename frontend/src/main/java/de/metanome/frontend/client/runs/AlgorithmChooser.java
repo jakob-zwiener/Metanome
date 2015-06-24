@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,19 @@
 
 package de.metanome.frontend.client.runs;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
 
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingDataSource;
@@ -30,18 +39,8 @@ import de.metanome.backend.results_db.Algorithm;
 import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.services.ParameterRestService;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 /**
  * A UI Widget that allows to choose a JAR containing the algorithm to use
- *
  * @author Claudia Exeler
  */
 public class AlgorithmChooser extends FlowPanel {
@@ -99,8 +98,9 @@ public class AlgorithmChooser extends FlowPanel {
     this.algorithmListBox.getElement().getFirstChildElement().setAttribute("disabled", "disabled");
     this.algorithmListBox.setSelectedIndex(0);
 
-    for (String name : this.categoryMap.get(this.currentCategory))
+    for (String name : this.categoryMap.get(this.currentCategory)) {
       sortedInsert(name);
+    }
   }
 
   /**
@@ -129,12 +129,12 @@ public class AlgorithmChooser extends FlowPanel {
   /**
    * Calls the service to retrieve parameters to be specified by the user and display corresponding
    * widget
-   *
    * @param selectedValue the name of the selected algorithm
-   * @param callback      callback object for RPC
+   * @param callback callback object for RPC
    */
   public void callParameterService(String selectedValue,
-                                   MethodCallback<List<ConfigurationRequirement>> callback) {
+                                   MethodCallback<List<ConfigurationRequirement>> callback)
+  {
     parameterService.retrieveParameters(selectedValue, callback);
   }
 
@@ -145,7 +145,8 @@ public class AlgorithmChooser extends FlowPanel {
   protected MethodCallback<List<ConfigurationRequirement>> getParameterCallback() {
     return new MethodCallback<List<ConfigurationRequirement>>() {
       public void onFailure(Method method, Throwable caught) {
-        messageReceiver.addError("Error while retrieving configuration requirements: " + method.getResponse().getText());
+        messageReceiver.addError(
+          "Error while retrieving configuration requirements: " + method.getResponse().getText());
       }
 
       public void onSuccess(Method method, List<ConfigurationRequirement> result) {
@@ -156,7 +157,6 @@ public class AlgorithmChooser extends FlowPanel {
 
   /**
    * Handles the incoming list of parameters by adding a ParameterTable to the corresponding tab.
-   *
    * @param paramList list of parameters necessary for the chosen algorithm
    */
   protected void forwardParameters(List<ConfigurationRequirement> paramList) {
@@ -180,7 +180,6 @@ public class AlgorithmChooser extends FlowPanel {
 
   /**
    * Select the entry with the given value.
-   *
    * @param algorithmName value to select
    * @throws IndexOutOfBoundsException if none of the entries have the given value.
    */
@@ -195,12 +194,11 @@ public class AlgorithmChooser extends FlowPanel {
     }
 
     throw new IndexOutOfBoundsException(
-        "The value " + algorithmName + " is not available in this jarChooser.");
+      "The value " + algorithmName + " is not available in this jarChooser.");
   }
 
   /**
    * Add another entry, but only if it is not yet present. (Using algorithm's name as key)
-   *
    * @param algorithm The algorithm to be added
    */
   public void addAlgorithm(Algorithm algorithm) {
@@ -214,24 +212,29 @@ public class AlgorithmChooser extends FlowPanel {
 
       this.categoryMap.get(AlgorithmCategory.All.name()).add(name);
 
-      if (algorithm.isCucc())
+      if (algorithm.isCucc()) {
         this.categoryMap.get(AlgorithmCategory.Conditional_Unique_Column_Combination.name()).add(name);
-      if (algorithm.isUcc())
+      }
+      if (algorithm.isUcc()) {
         this.categoryMap.get(AlgorithmCategory.Unique_Column_Combinations.name()).add(name);
-      if (algorithm.isFd())
+      }
+      if (algorithm.isFd()) {
         this.categoryMap.get(AlgorithmCategory.Functional_Dependencies.name()).add(name);
-      if (algorithm.isOd())
+      }
+      if (algorithm.isOd()) {
         this.categoryMap.get(AlgorithmCategory.Order_Dependencies.name()).add(name);
-      if (algorithm.isInd())
+      }
+      if (algorithm.isInd()) {
         this.categoryMap.get(AlgorithmCategory.Inclusion_Dependencies.name()).add(name);
-      if (algorithm.isBasicStat())
+      }
+      if (algorithm.isBasicStat()) {
         this.categoryMap.get(AlgorithmCategory.Basic_Statistics.name()).add(name);
+      }
     }
   }
 
   /**
    * Removes the given name from the algorithm chooser.
-   *
    * @param algorithmName the algorithm's name, which should be removed
    */
   public void removeAlgorithm(String algorithmName) {
@@ -252,7 +255,6 @@ public class AlgorithmChooser extends FlowPanel {
   /**
    * Inserts a new item in alphabetical ordering into the algorithm list box, that is, after
    * before the first item that is lexicographically larger than the argument.
-   *
    * @param name The value to be inserted.
    */
   private void sortedInsert(String name) {
@@ -263,31 +265,31 @@ public class AlgorithmChooser extends FlowPanel {
         this.algorithmListBox.addItem(name);
         return;
       }
-    } while (this.algorithmListBox.getValue(insertIndex).compareTo(name) < 0);
+    }
+    while (this.algorithmListBox.getValue(insertIndex).compareTo(name) < 0);
     this.algorithmListBox.insertItem(name, insertIndex);
   }
 
   /**
    * Filters the list of algorithms so that only those are displayed that would accept the given
    * data source
-   *
    * @param dataSource the data source that shall be profiled / for which algorithms should be
-   *                   filtered
+   * filtered
    */
   public void filterForPrimaryDataSource(ConfigurationSettingDataSource dataSource) {
     resetListBoxes();
 
     for (Algorithm algorithm : this.algorithmMap.values()) {
       if (dataSource instanceof ConfigurationSettingDatabaseConnection &&
-          !algorithm.isDatabaseConnection()) {
+        !algorithm.isDatabaseConnection()) {
         removeAlgorithmFromListBox(algorithm.getName());
       }
       else if (dataSource instanceof ConfigurationSettingTableInput &&
-               !(algorithm.isTableInput() || algorithm.isRelationalInput())) {
+        !(algorithm.isTableInput() || algorithm.isRelationalInput())) {
         removeAlgorithmFromListBox(algorithm.getName());
       }
       else if (dataSource instanceof ConfigurationSettingFileInput &&
-               !(algorithm.isFileInput() || algorithm.isRelationalInput())) {
+        !(algorithm.isFileInput() || algorithm.isRelationalInput())) {
         removeAlgorithmFromListBox(algorithm.getName());
       }
     }
@@ -331,7 +333,7 @@ public class AlgorithmChooser extends FlowPanel {
   /**
    * Updates an algorithm.
    * @param algorithm the algorithm
-   * @param oldName   the old name of the algorithm
+   * @param oldName the old name of the algorithm
    */
   public void update(Algorithm algorithm, String oldName) {
     if (this.algorithmMap.containsKey(oldName)) {
@@ -339,6 +341,10 @@ public class AlgorithmChooser extends FlowPanel {
       this.addAlgorithm(algorithm);
       updateAlgorithmListBox();
     }
+  }
+
+  public void setMessageReceiver(TabWrapper receiver) {
+    this.messageReceiver = receiver;
   }
 
   /**
@@ -363,10 +369,6 @@ public class AlgorithmChooser extends FlowPanel {
       }
       return categories;
     }
-  }
-
-  public void setMessageReceiver(TabWrapper receiver) {
-    this.messageReceiver = receiver;
   }
 
 }

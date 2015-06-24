@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,6 @@
 
 package de.metanome.backend.input.database;
 
-import de.metanome.algorithm_integration.AlgorithmConfigurationException;
-import de.metanome.algorithm_integration.configuration.ConfigurationSettingDatabaseConnection;
-import de.metanome.algorithm_integration.configuration.DbSystem;
-import de.metanome.algorithm_integration.input.DatabaseConnectionGenerator;
-import de.metanome.algorithm_integration.input.InputGenerationException;
-import de.metanome.algorithm_integration.input.RelationalInput;
-import de.metanome.backend.helper.ExceptionParser;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -32,9 +24,16 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.metanome.algorithm_integration.AlgorithmConfigurationException;
+import de.metanome.algorithm_integration.configuration.ConfigurationSettingDatabaseConnection;
+import de.metanome.algorithm_integration.configuration.DbSystem;
+import de.metanome.algorithm_integration.input.DatabaseConnectionGenerator;
+import de.metanome.algorithm_integration.input.InputGenerationException;
+import de.metanome.algorithm_integration.input.RelationalInput;
+import de.metanome.backend.helper.ExceptionParser;
+
 /**
  * Generates {@link ResultSetIterator}s or {@link java.sql.ResultSet}s for a given query.
- *
  * @author Jakob Zwiener
  * @see ResultSetIterator
  * @see java.sql.ResultSet
@@ -42,13 +41,13 @@ import java.util.List;
 public class DefaultDatabaseConnectionGenerator implements DatabaseConnectionGenerator {
 
   public static final int DEFAULT_FETCH_SIZE = 100;
-  private int fetchSize = DEFAULT_FETCH_SIZE;
   public static final int DEFAULT_RESULT_SET_TYPE = ResultSet.TYPE_FORWARD_ONLY;
-  private int resultSetType = DEFAULT_RESULT_SET_TYPE;
   public static final int DEFAULT_RESULT_SET_CONCURRENCY = ResultSet.CONCUR_READ_ONLY;
-  private int resultSetConcurrency = DEFAULT_RESULT_SET_CONCURRENCY;
   protected Connection dbConnection;
   protected DbSystem system;
+  private int fetchSize = DEFAULT_FETCH_SIZE;
+  private int resultSetType = DEFAULT_RESULT_SET_TYPE;
+  private int resultSetConcurrency = DEFAULT_RESULT_SET_CONCURRENCY;
   private List<Statement> statements = new LinkedList<>();
 
   /**
@@ -58,34 +57,39 @@ public class DefaultDatabaseConnectionGenerator implements DatabaseConnectionGen
   }
 
   public DefaultDatabaseConnectionGenerator(String dbUrl, String userName, String password, DbSystem system)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     try {
       this.dbConnection = DriverManager.getConnection(dbUrl, userName, password);
       this.dbConnection.setAutoCommit(false);
       this.system = system;
-    } catch (SQLException e) {
+    }
+    catch (SQLException e) {
       throw new AlgorithmConfigurationException(
-          ExceptionParser.parse(e, "Failed to get Database Connection"), e);
+        ExceptionParser.parse(e, "Failed to get Database Connection"), e);
     }
   }
 
   public DefaultDatabaseConnectionGenerator(ConfigurationSettingDatabaseConnection setting)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     this(setting.getDbUrl(), setting.getUsername(), setting.getPassword(), setting.getSystem());
   }
 
   @Override
   public RelationalInput generateRelationalInputFromSql(String queryString)
-      throws InputGenerationException {
+    throws InputGenerationException
+  {
 
     ResultSet resultSet = executeQuery(queryString);
 
     ResultSetIterator resultSetIterator;
     try {
       resultSetIterator = new ResultSetIterator(resultSet);
-    } catch (SQLException e) {
+    }
+    catch (SQLException e) {
       throw new InputGenerationException(
-          ExceptionParser.parse(e, "Could not construct database input"), e);
+        ExceptionParser.parse(e, "Could not construct database input"), e);
     }
 
     return resultSetIterator;
@@ -93,7 +97,6 @@ public class DefaultDatabaseConnectionGenerator implements DatabaseConnectionGen
 
   /**
    * Executes the given query and returns the associated {@link ResultSet}.
-   *
    * @param queryString the query string to execute
    * @return associated {@link ResultSet}
    */
@@ -103,16 +106,18 @@ public class DefaultDatabaseConnectionGenerator implements DatabaseConnectionGen
       sqlStatement = dbConnection.createStatement(getResultSetType(), getResultSetConcurrency());
       sqlStatement.setFetchSize(getFetchSize());
       statements.add(sqlStatement);
-    } catch (SQLException e) {
+    }
+    catch (SQLException e) {
       throw new InputGenerationException(
-          ExceptionParser.parse(e, "Could not create sql statement on connection"), e);
+        ExceptionParser.parse(e, "Could not create sql statement on connection"), e);
     }
     ResultSet resultSet;
     try {
       resultSet = sqlStatement.executeQuery(queryString);
-    } catch (SQLException e) {
+    }
+    catch (SQLException e) {
       throw new InputGenerationException(
-          ExceptionParser.parse(e, "Could not execute sql statement"), e);
+        ExceptionParser.parse(e, "Could not execute sql statement"), e);
     }
 
     return resultSet;

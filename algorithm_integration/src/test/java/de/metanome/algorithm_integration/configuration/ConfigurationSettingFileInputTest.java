@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,14 @@
 
 package de.metanome.algorithm_integration.configuration;
 
-import de.metanome.test_helper.GwtSerializationTester;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import de.metanome.test_helper.GwtSerializationTester;
 
 /**
  * Tests for {@link ConfigurationSettingFileInput}
- *
  * @author Jakob Zwiener
  */
 public class ConfigurationSettingFileInputTest {
@@ -51,11 +50,11 @@ public class ConfigurationSettingFileInputTest {
 
     // Execute functionality
     ConfigurationSettingFileInput
-        actualSetting =
-        new ConfigurationSettingFileInput(expectedFileName, expectedIsAdvanced, expectedSeparator,
-                                        expectedQuote, expectedEscape, expectedIsStrictQuotes,
-                                        expectedIsIgnoreLeadingWhitespace, expectedLines,
-                                        expectedHeader, expectedDifferingLines, expectedNullValue);
+      actualSetting =
+      new ConfigurationSettingFileInput(expectedFileName, expectedIsAdvanced, expectedSeparator,
+        expectedQuote, expectedEscape, expectedIsStrictQuotes,
+        expectedIsIgnoreLeadingWhitespace, expectedLines,
+        expectedHeader, expectedDifferingLines, expectedNullValue);
 
     // Check result
     assertEquals(expectedFileName, actualSetting.getFileName());
@@ -76,7 +75,7 @@ public class ConfigurationSettingFileInputTest {
   @Test
   public void testGwtSerialization() {
     GwtSerializationTester.checkGwtSerializability(
-        new ConfigurationSettingFileInput("fileName", true, ',', '"', '\\', true, true, 2, true,
-                                        true, ""));
+      new ConfigurationSettingFileInput("fileName", true, ',', '"', '\\', true, true, 2, true,
+        true, ""));
   }
 }

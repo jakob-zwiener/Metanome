@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 
 package de.metanome.frontend.client.runs;
+
+import java.util.List;
 
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -34,8 +36,6 @@ import de.metanome.frontend.client.TabWrapper;
 import de.metanome.frontend.client.helpers.FilePathHelper;
 import de.metanome.frontend.client.parameter.ParameterTable;
 import de.metanome.frontend.client.services.AlgorithmExecutionRestService;
-
-import java.util.List;
 
 /**
  * The Run Configuration page allow to specify all parameters for an algorithm execution: The
@@ -57,7 +57,6 @@ public class RunConfigurationPage extends DockLayoutPanel implements TabContent 
   /**
    * Initializes ExecutionService and registers given algorithms. However, more algorithms can be
    * registered whenever they become available, through {@link RunConfigurationPage#addAlgorithms(java.util.List)}
-   *
    * @param basePage the base page this sub page
    */
   public RunConfigurationPage(BasePage basePage) {
@@ -91,7 +90,6 @@ public class RunConfigurationPage extends DockLayoutPanel implements TabContent 
   /**
    * Adds a widget for user's parameter input to the tab. The content of the tab depends on the
    * requested parameters.
-   *
    * @param paramList list of required parameters
    */
   public void addParameterTable(List<ConfigurationRequirement> paramList) {
@@ -102,7 +100,6 @@ public class RunConfigurationPage extends DockLayoutPanel implements TabContent 
 
   /**
    * Method to add more algorithms after construction.
-   *
    * @param algorithms a list of algorithms to be added
    */
   public void addAlgorithms(List<Algorithm> algorithms) {
@@ -114,7 +111,6 @@ public class RunConfigurationPage extends DockLayoutPanel implements TabContent 
 
   /**
    * Removes a algorithm from the algorithm chooser.
-   *
    * @param algorithmName the algorithm name, which should be removed
    */
   public void removeAlgorithm(String algorithmName) {
@@ -123,7 +119,6 @@ public class RunConfigurationPage extends DockLayoutPanel implements TabContent 
 
   /**
    * Select the given algorithm on the underlying JarChooser.
-   *
    * @param algorithmName the value to select
    */
   public void selectAlgorithm(String algorithmName) {
@@ -144,7 +139,6 @@ public class RunConfigurationPage extends DockLayoutPanel implements TabContent 
   /**
    * Sets the data source that should be profiled ("Primary Data Source"), displays its value in a
    * label, and triggers the jarChooser to filter for applicable algorithms.
-   *
    * @param dataSource the data source to profile
    */
   public void setPrimaryDataSource(ConfigurationSettingDataSource dataSource) {
@@ -152,12 +146,13 @@ public class RunConfigurationPage extends DockLayoutPanel implements TabContent 
     this.messageReceiver.clearInfos();
 
     String dataSourceName = dataSource.getValueAsString();
-    if (dataSource instanceof ConfigurationSettingFileInput)
+    if (dataSource instanceof ConfigurationSettingFileInput) {
       dataSourceName = FilePathHelper.getFileName(dataSourceName);
+    }
 
     this.primaryDataSource = dataSource;
     this.primaryDataSourceLabel.setText(
-        "This should filter for algorithms applicable on " + dataSourceName);
+      "This should filter for algorithms applicable on " + dataSourceName);
     removeParameterTable();
 
     this.algorithmChooser.filterForPrimaryDataSource(dataSource);
@@ -174,24 +169,24 @@ public class RunConfigurationPage extends DockLayoutPanel implements TabContent 
 
   /**
    * Execute the currently selected algorithm and switch to results page.
-   *
-   * @param parameters    parameters to use for the algorithm execution
+   * @param parameters parameters to use for the algorithm execution
    * @param configuration the configuration to start executing with
-   * @param cacheResults  true, if if true, the results should be cached and written to disk after the algorithm is finished
-   * @param writeResults  true, if the results should be written to disk immediately
-   * @param countResults  true, if the results should be counted
+   * @param cacheResults true, if if true, the results should be cached and written to disk after the algorithm is finished
+   * @param writeResults true, if the results should be written to disk immediately
+   * @param countResults true, if the results should be counted
    */
   public void startExecution(List<ConfigurationRequirement> parameters,
                              List<ConfigurationRequirement> configuration,
                              Boolean cacheResults,
                              Boolean writeResults,
-                             Boolean countResults) {
+                             Boolean countResults)
+  {
 
     final String algorithmName = getCurrentlySelectedAlgorithm();
     final Algorithm algorithm = getAlgorithm(algorithmName);
     parameters.addAll(configuration);
 
-    basePage.startAlgorithmExecution(executionService, algorithm, parameters, cacheResults,writeResults, countResults);
+    basePage.startAlgorithmExecution(executionService, algorithm, parameters, cacheResults, writeResults, countResults);
   }
 
   /**
@@ -228,9 +223,8 @@ public class RunConfigurationPage extends DockLayoutPanel implements TabContent 
   /**
    * Updates an algorithm on the algorithm chooser.
    * Removes the old algorithm and add the new one.
-   *
    * @param algorithm the algorithm name, which was updated
-   * @param oldName   the old algorithm name
+   * @param oldName the old algorithm name
    */
   public void updateAlgorithm(Algorithm algorithm, String oldName) {
     this.algorithmChooser.update(algorithm, oldName);

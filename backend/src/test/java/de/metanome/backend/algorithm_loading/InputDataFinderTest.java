@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,14 @@
 
 package de.metanome.backend.algorithm_loading;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for {@link de.metanome.backend.algorithm_loading.InputDataFinder}
@@ -46,11 +46,11 @@ public class InputDataFinderTest {
   public void testRetrieveFiles() throws UnsupportedEncodingException {
     //Setup
     String
-        pathToAlgorithmsFolder =
-        Thread.currentThread().getContextClassLoader().getResource("algorithms").getPath();
+      pathToAlgorithmsFolder =
+      Thread.currentThread().getContextClassLoader().getResource("algorithms").getPath();
     String
-        pathToCsvFolder =
-        Thread.currentThread().getContextClassLoader().getResource("inputData").getPath();
+      pathToCsvFolder =
+      Thread.currentThread().getContextClassLoader().getResource("inputData").getPath();
 
     //Execute
     File[] filesInAlgorithmsFolder = inputDataFinder.retrieveCsvTsvFiles(pathToAlgorithmsFolder);
@@ -63,7 +63,7 @@ public class InputDataFinderTest {
 
   /**
    * Test method for {@link InputDataFinder#getAvailableFiles()}
-   *
+   * <p/>
    * The method should retrieve the correct number of csv input files.
    */
   @Test

@@ -1,19 +1,23 @@
 /*
- * Copyright 2014 by the Metanome project
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software distributed under the License
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
- * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
+ * Copyright 2015 by the Metanome project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package de.metanome.algorithm_integration.results;
 
+
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
@@ -21,31 +25,19 @@ import de.metanome.algorithm_integration.ColumnPermutation;
 import de.metanome.algorithm_integration.result_receiver.CouldNotReceiveResultException;
 import de.metanome.algorithm_integration.result_receiver.OmniscientResultReceiver;
 
-import javax.xml.bind.annotation.XmlTransient;
-
 
 /**
  * Represents an order dependency.
- *
  * @author Philipp Langer
  */
 @JsonTypeName("OrderDependency")
 public class OrderDependency implements Result {
 
-  public static enum ComparisonOperator {
-    SMALLER_EQUAL, STRICTLY_SMALLER
-  }
-  public static enum OrderType {
-    LEXICOGRAPHICAL, POINTWISE
-  }
-
   public static final String OD_SEPARATOR = "~~>";
-
   protected ComparisonOperator comparisonOperator;
   protected ColumnPermutation lhs;
   protected OrderType orderType;
   protected ColumnPermutation rhs;
-
   /**
    * Exists for serialization.
    */
@@ -55,28 +47,12 @@ public class OrderDependency implements Result {
     this.orderType = OrderType.LEXICOGRAPHICAL;
     this.comparisonOperator = ComparisonOperator.SMALLER_EQUAL;
   }
-
   public OrderDependency(final ColumnPermutation lhs, final ColumnPermutation rhs,
-      final OrderType orderType, final ComparisonOperator comparisonOperator) {
+                         final OrderType orderType, final ComparisonOperator comparisonOperator)
+  {
     this.lhs = lhs;
     this.rhs = rhs;
     this.orderType = orderType;
-    this.comparisonOperator = comparisonOperator;
-  }
-
-  public void setLhs(final ColumnPermutation lhs) {
-    this.lhs = lhs;
-  }
-
-  public void setOrderType(final OrderType orderType) {
-    this.orderType = orderType;
-  }
-
-  public void setRhs(final ColumnPermutation rhs) {
-    this.rhs = rhs;
-  }
-
-  public void setComparisonOperator(final ComparisonOperator comparisonOperator) {
     this.comparisonOperator = comparisonOperator;
   }
 
@@ -84,16 +60,32 @@ public class OrderDependency implements Result {
     return comparisonOperator;
   }
 
+  public void setComparisonOperator(final ComparisonOperator comparisonOperator) {
+    this.comparisonOperator = comparisonOperator;
+  }
+
   public ColumnPermutation getLhs() {
     return lhs;
+  }
+
+  public void setLhs(final ColumnPermutation lhs) {
+    this.lhs = lhs;
   }
 
   public OrderType getOrderType() {
     return orderType;
   }
 
+  public void setOrderType(final OrderType orderType) {
+    this.orderType = orderType;
+  }
+
   public ColumnPermutation getRhs() {
     return rhs;
+  }
+
+  public void setRhs(final ColumnPermutation rhs) {
+    this.rhs = rhs;
   }
 
   @Override
@@ -115,7 +107,8 @@ public class OrderDependency implements Result {
       if (other.lhs != null) {
         return false;
       }
-    } else if (!lhs.equals(other.lhs)) {
+    }
+    else if (!lhs.equals(other.lhs)) {
       return false;
     }
     if (orderType != other.orderType) {
@@ -125,7 +118,8 @@ public class OrderDependency implements Result {
       if (other.rhs != null) {
         return false;
       }
-    } else if (!rhs.equals(other.rhs)) {
+    }
+    else if (!rhs.equals(other.rhs)) {
       return false;
     }
     return true;
@@ -145,7 +139,8 @@ public class OrderDependency implements Result {
   @Override
   @XmlTransient
   public void sendResultTo(final OmniscientResultReceiver resultReceiver)
-      throws CouldNotReceiveResultException {
+    throws CouldNotReceiveResultException
+  {
     resultReceiver.receiveResult(this);
   }
 
@@ -175,7 +170,15 @@ public class OrderDependency implements Result {
     }
 
     return lhs + OrderDependency.OD_SEPARATOR + "[" + comparisonOperatorStringified + ","
-    + orderTypeStringified + "]" + rhs;
+      + orderTypeStringified + "]" + rhs;
+  }
+
+  public enum ComparisonOperator {
+    SMALLER_EQUAL, STRICTLY_SMALLER
+  }
+
+  public enum OrderType {
+    LEXICOGRAPHICAL, POINTWISE
   }
 
 }

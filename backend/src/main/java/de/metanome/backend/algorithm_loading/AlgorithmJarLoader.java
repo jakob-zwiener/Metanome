@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
 
 package de.metanome.backend.algorithm_loading;
 
-import de.metanome.algorithm_integration.Algorithm;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -28,6 +26,8 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
+import de.metanome.algorithm_integration.Algorithm;
+
 public class AlgorithmJarLoader {
 
   protected static final String bootstrapClassTagName = "Algorithm-Bootstrap-Class";
@@ -35,18 +35,18 @@ public class AlgorithmJarLoader {
 
   /**
    * Loads a jar file containing an algorithm and returns an instance of the bootstrap class.
-   *
    * @param filePath the file path to the algorithm jar
    * @return runnable algorithm
    */
   public Algorithm loadAlgorithm(String filePath)
-      throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException,
-             IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
-             SecurityException {
+    throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException,
+    IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
+    SecurityException
+  {
     String
-        pathToFolder =
-        Thread.currentThread().getContextClassLoader().getResource("algorithms/" + filePath)
-            .getPath();
+      pathToFolder =
+      Thread.currentThread().getContextClassLoader().getResource("algorithms/" + filePath)
+        .getPath();
 
     File file = new File(URLDecoder.decode(pathToFolder, "utf-8"));
     JarFile jar = new JarFile(file);
@@ -55,11 +55,11 @@ public class AlgorithmJarLoader {
     Attributes attr = man.getMainAttributes();
     String className = attr.getValue(bootstrapClassTagName);
 
-    URL[] url = {file.toURI().toURL()};
+    URL[] url = { file.toURI().toURL() };
     ClassLoader loader = new URLClassLoader(url, Algorithm.class.getClassLoader());
 
     Class<? extends Algorithm> algorithmClass =
-        Class.forName(className, true, loader).asSubclass(Algorithm.class);
+      Class.forName(className, true, loader).asSubclass(Algorithm.class);
 
     jar.close();
 

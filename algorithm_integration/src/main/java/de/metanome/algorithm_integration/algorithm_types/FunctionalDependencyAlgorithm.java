@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,16 +21,14 @@ import de.metanome.algorithm_integration.result_receiver.FunctionalDependencyRes
 
 /**
  * An {@link Algorithm} that discovers functional dependencies.
- *
  * @author Jakob Zwiener
  */
 public interface FunctionalDependencyAlgorithm extends Algorithm {
 
   /**
    * Sets a {@link FunctionalDependencyResultReceiver} to send the results to.
-   *
    * @param resultReceiver the result receiver the algorithm sents found {@link
-   *                       de.metanome.algorithm_integration.results.FunctionalDependency}s to.
+   * de.metanome.algorithm_integration.results.FunctionalDependency}s to.
    */
   void setResultReceiver(FunctionalDependencyResultReceiver resultReceiver);
 

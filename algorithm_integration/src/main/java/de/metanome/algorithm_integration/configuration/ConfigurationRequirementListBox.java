@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,32 +17,31 @@
 package de.metanome.algorithm_integration.configuration;
 
 
-import com.google.common.annotations.GwtIncompatible;
+import java.util.List;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.common.annotations.GwtIncompatible;
 
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlTransient;
-
 /**
  * Concrete {@link ConfigurationRequirement} for list box of strings.
- *
  * @author Tanja Bergmann
  * @see ConfigurationRequirement
  */
 @JsonTypeName("ConfigurationRequirementListBox")
 public class ConfigurationRequirementListBox
-    extends ConfigurationRequirementDefaultValue<String, ConfigurationSettingListBox> {
+  extends ConfigurationRequirementDefaultValue<String, ConfigurationSettingListBox>
+{
 
   // Needed for restful serialization
   public String type = "ConfigurationRequirementListBox";
 
   private List<String> values;
 
-  public ConfigurationRequirementListBox() { }
+  public ConfigurationRequirementListBox() {
+  }
 
   public ConfigurationRequirementListBox(String identifier, List<String> values) {
     super(identifier);
@@ -54,7 +53,11 @@ public class ConfigurationRequirementListBox
     this.values = values;
   }
 
-  public ConfigurationRequirementListBox(String identifier, List<String> values, int minNumberOfSetting, int maxNumberOfSetting) {
+  public ConfigurationRequirementListBox(String identifier,
+                                         List<String> values,
+                                         int minNumberOfSetting,
+                                         int maxNumberOfSetting)
+  {
     super(identifier, minNumberOfSetting, maxNumberOfSetting);
     this.values = values;
   }
@@ -66,6 +69,7 @@ public class ConfigurationRequirementListBox
   public void setValues(List<String> values) {
     this.values = values;
   }
+
   /**
    * {@inheritDoc}
    */
@@ -73,7 +77,8 @@ public class ConfigurationRequirementListBox
   @Override
   @GwtIncompatible("ConfigurationValues cannot be build on client side.")
   public ConfigurationValue build(ConfigurationFactory factory)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     return factory.build(this);
   }
 

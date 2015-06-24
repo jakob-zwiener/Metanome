@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,13 @@
 
 package de.metanome.backend.results_db;
 
-import de.metanome.test_helper.GwtSerializationTester;
-
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+
+import de.metanome.test_helper.GwtSerializationTester;
 
 /**
  * @author Jakob Zwiener
@@ -43,7 +43,8 @@ public class EntityStorageExceptionTest {
     String actualMessage;
     try {
       throw new EntityStorageException(expectedMessage);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       actualMessage = e.getMessage();
     }
 
@@ -53,7 +54,7 @@ public class EntityStorageExceptionTest {
 
   /**
    * Test method for {@link de.metanome.backend.results_db.EntityStorageException#EntityStorageException(String, Throwable)}
-   *
+   * <p/>
    * The exception should store the message and the cause.
    */
   @Test
@@ -68,7 +69,8 @@ public class EntityStorageExceptionTest {
     Throwable actualCause;
     try {
       throw new EntityStorageException(expectedMessage, expectedCause);
-    } catch (EntityStorageException e) {
+    }
+    catch (EntityStorageException e) {
       actualMessage = e.getMessage();
       actualCause = e.getCause();
     }

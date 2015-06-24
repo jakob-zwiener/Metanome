@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,17 @@
 
 package de.metanome.backend.input.database;
 
+import java.sql.ResultSet;
+
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingTableInput;
 import de.metanome.algorithm_integration.input.InputGenerationException;
 import de.metanome.algorithm_integration.input.RelationalInput;
 import de.metanome.algorithm_integration.input.TableInputGenerator;
 
-import java.sql.ResultSet;
-
 /**
  * Provides database tables as {@link RelationalInput} by executing select statements on an
  * underlying {@link DefaultDatabaseConnectionGenerator}.
- *
  * @author Jakob Zwiener
  * @see de.metanome.algorithm_integration.input.RelationalInput
  * @see DefaultDatabaseConnectionGenerator
@@ -45,7 +44,8 @@ public class DefaultTableInputGenerator implements TableInputGenerator {
    * Exists for tests.
    */
   protected DefaultTableInputGenerator(
-      DefaultDatabaseConnectionGenerator defaultDatabaseConnectionGenerator, String table) {
+    DefaultDatabaseConnectionGenerator defaultDatabaseConnectionGenerator, String table)
+  {
     this.defaultDatabaseConnectionGenerator = defaultDatabaseConnectionGenerator;
     this.table = table;
   }
@@ -55,15 +55,15 @@ public class DefaultTableInputGenerator implements TableInputGenerator {
    * @throws AlgorithmConfigurationException is thrown if the underlying {@link DefaultDatabaseConnectionGenerator} cannot be instantiated.
    */
   public DefaultTableInputGenerator(ConfigurationSettingTableInput setting)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     this.defaultDatabaseConnectionGenerator =
-        new DefaultDatabaseConnectionGenerator(setting.getDatabaseConnection());
+      new DefaultDatabaseConnectionGenerator(setting.getDatabaseConnection());
     this.table = setting.getTable();
   }
 
   /**
    * Generates a new {@link de.metanome.algorithm_integration.input.RelationalInput} to iterate over the data in the table.
-   *
    * @return the {@link de.metanome.algorithm_integration.input.RelationalInput}
    * @throws InputGenerationException if the database statement could not be executed
    */
@@ -71,27 +71,27 @@ public class DefaultTableInputGenerator implements TableInputGenerator {
   public RelationalInput generateNewCopy() throws InputGenerationException {
     String query = String.format(BASE_STATEMENT, table);
     return defaultDatabaseConnectionGenerator
-        .generateRelationalInputFromSql(query);
+      .generateRelationalInputFromSql(query);
   }
 
   @Override
   public ResultSet sortBy(String column, Boolean descending) throws InputGenerationException {
-    String query = String.format(SORT_STATEMENT, table, column, descending? "DESC" : "ASC");
+    String query = String.format(SORT_STATEMENT, table, column, descending ? "DESC" : "ASC");
     return defaultDatabaseConnectionGenerator
-        .generateResultSetFromSql(query);
+      .generateResultSetFromSql(query);
   }
 
   @Override
   public ResultSet filter(String filterExpression) throws InputGenerationException {
     String query = String.format(FILTER_STATEMENT, table, filterExpression);
     return defaultDatabaseConnectionGenerator
-        .generateResultSetFromSql(query);
+      .generateResultSetFromSql(query);
   }
 
   @Override
   public ResultSet select() throws InputGenerationException {
     String query = String.format(BASE_STATEMENT, table);
     return defaultDatabaseConnectionGenerator
-        .generateResultSetFromSql(query);
+      .generateResultSetFromSql(query);
   }
 }

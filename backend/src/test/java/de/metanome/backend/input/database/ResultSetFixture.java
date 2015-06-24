@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,12 @@
 
 package de.metanome.backend.input.database;
 
-import com.mysql.jdbc.ResultSetMetaData;
+import static org.mockito.Mockito.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import com.mysql.jdbc.ResultSetMetaData;
 
 public class ResultSetFixture {
 
@@ -34,9 +33,9 @@ public class ResultSetFixture {
     ResultSet resultSet = mock(ResultSet.class);
     ResultSetMetaData resultSetMetaData = mock(ResultSetMetaData.class);
     when(resultSetMetaData.getColumnCount())
-        .thenReturn(numberOfColumns);
+      .thenReturn(numberOfColumns);
     when(resultSet.getMetaData())
-        .thenReturn(resultSetMetaData);
+      .thenReturn(resultSetMetaData);
 
     return resultSet;
   }

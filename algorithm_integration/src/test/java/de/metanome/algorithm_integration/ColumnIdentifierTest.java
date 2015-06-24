@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,20 +16,17 @@
 
 package de.metanome.algorithm_integration;
 
-import de.metanome.test_helper.GwtSerializationTester;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThat;
+import de.metanome.test_helper.GwtSerializationTester;
 
 /**
  * Test for {@link de.metanome.algorithm_integration.ColumnIdentifier}
- *
  * @author Jakob Zwiener
  */
 public class ColumnIdentifierTest {

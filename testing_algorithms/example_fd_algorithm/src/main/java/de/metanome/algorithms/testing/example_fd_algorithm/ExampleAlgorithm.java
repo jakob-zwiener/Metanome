@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 
 package de.metanome.algorithms.testing.example_fd_algorithm;
+
+import java.util.ArrayList;
 
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.ColumnCombination;
@@ -35,11 +37,10 @@ import de.metanome.algorithm_integration.result_receiver.CouldNotReceiveResultEx
 import de.metanome.algorithm_integration.result_receiver.FunctionalDependencyResultReceiver;
 import de.metanome.algorithm_integration.results.FunctionalDependency;
 
-import java.util.ArrayList;
-
 public class ExampleAlgorithm
-    implements FunctionalDependencyAlgorithm, StringParameterAlgorithm, FileInputParameterAlgorithm,
-               ListBoxParameterAlgorithm, DatabaseConnectionParameterAlgorithm {
+  implements FunctionalDependencyAlgorithm, StringParameterAlgorithm, FileInputParameterAlgorithm,
+  ListBoxParameterAlgorithm, DatabaseConnectionParameterAlgorithm
+{
 
   public final static String LISTBOX_IDENTIFIER = "column names";
   public final static String STRING_IDENTIFIER = "pathToOutputFile";
@@ -55,19 +56,19 @@ public class ExampleAlgorithm
     ArrayList<ConfigurationRequirement> configurationRequirement = new ArrayList<>();
 
     ConfigurationRequirementString requirementString =
-        new ConfigurationRequirementString(STRING_IDENTIFIER);
+      new ConfigurationRequirementString(STRING_IDENTIFIER);
     ConfigurationRequirementFileInput requirementFileInput =
-        new ConfigurationRequirementFileInput(CSVFILE_IDENTIFIER);
+      new ConfigurationRequirementFileInput(CSVFILE_IDENTIFIER);
     ConfigurationRequirementDatabaseConnection requirementDatabaseConnection =
-        new ConfigurationRequirementDatabaseConnection(DATABASE_IDENTIFIER);
+      new ConfigurationRequirementDatabaseConnection(DATABASE_IDENTIFIER);
 
     ArrayList<String> listBoxValues = new ArrayList<>();
     listBoxValues.add("column 1");
     listBoxValues.add("column 2");
     listBoxValues.add("column 3");
     ConfigurationRequirementListBox
-        requirementListBox =
-        new ConfigurationRequirementListBox(LISTBOX_IDENTIFIER, listBoxValues, 1);
+      requirementListBox =
+      new ConfigurationRequirementListBox(LISTBOX_IDENTIFIER, listBoxValues, 1);
 
     requirementString.setRequired(false);
     requirementFileInput.setRequired(false);
@@ -86,14 +87,15 @@ public class ExampleAlgorithm
   public void execute() {
     try {
       resultReceiver.receiveResult(
-          new FunctionalDependency(
-              new ColumnCombination(
-                  new ColumnIdentifier("table1", "column1"),
-                  new ColumnIdentifier("table1", "column2")),
-              new ColumnIdentifier("table1", "column5")
-          )
+        new FunctionalDependency(
+          new ColumnCombination(
+            new ColumnIdentifier("table1", "column1"),
+            new ColumnIdentifier("table1", "column2")),
+          new ColumnIdentifier("table1", "column5")
+        )
       );
-    } catch (CouldNotReceiveResultException e) {
+    }
+    catch (CouldNotReceiveResultException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
@@ -106,7 +108,8 @@ public class ExampleAlgorithm
 
   @Override
   public void setStringConfigurationValue(String identifier, String... values)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     if (!identifier.equals(STRING_IDENTIFIER)) {
       throw new AlgorithmConfigurationException("Incorrect identifier or value list length.");
     }
@@ -115,7 +118,8 @@ public class ExampleAlgorithm
   @Override
   public void setFileInputConfigurationValue(String identifier,
                                              FileInputGenerator... values)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     if (!identifier.equals(CSVFILE_IDENTIFIER)) {
       throw new AlgorithmConfigurationException("Incorrect identifier or value list length.");
     }
@@ -123,7 +127,8 @@ public class ExampleAlgorithm
 
   @Override
   public void setListBoxConfigurationValue(String identifier, String... selectedValues)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     if (!identifier.equals(LISTBOX_IDENTIFIER)) {
       throw new AlgorithmConfigurationException("Incorrect identifier or value list length.");
     }
@@ -132,7 +137,8 @@ public class ExampleAlgorithm
   @Override
   public void setDatabaseConnectionGeneratorConfigurationValue(String identifier,
                                                                DatabaseConnectionGenerator... values)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
 
     if (!identifier.equals(DATABASE_IDENTIFIER)) {
       throw new AlgorithmConfigurationException("Incorrect identifier or value list length.");

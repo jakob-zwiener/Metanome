@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ import de.metanome.frontend.client.helpers.InputValidationException;
 import de.metanome.frontend.client.input_fields.TableInputInput;
 
 
-public class GwtTestTableInputParameter  extends GWTTestCase {
+public class GwtTestTableInputParameter extends GWTTestCase {
 
   String aTableName = "table";
 
@@ -40,7 +40,8 @@ public class GwtTestTableInputParameter  extends GWTTestCase {
    * Tests the selection of a specific item corresponding to the given ConfigurationSetting.
    */
   public void testSelectDataSourceOnFilledDropdown()
-      throws AlgorithmConfigurationException, InputValidationException {
+    throws AlgorithmConfigurationException, InputValidationException
+  {
     // Set up
     TestHelper.resetDatabaseSync();
 
@@ -104,8 +105,8 @@ public class GwtTestTableInputParameter  extends GWTTestCase {
 
     ConfigurationRequirementTableInput configSpec = new ConfigurationRequirementTableInput("test");
     InputParameterTableInputWidget
-        dataSourceWidget =
-        new InputParameterTableInputWidget(configSpec, tabWrapper);
+      dataSourceWidget =
+      new InputParameterTableInputWidget(configSpec, tabWrapper);
 
     dataSourceWidget.inputWidgets.get(0).listBox.addValue(aTableName);
     dataSourceWidget.inputWidgets.get(0).tableInputs.put(aTableName, tableInput);
@@ -118,10 +119,11 @@ public class GwtTestTableInputParameter  extends GWTTestCase {
 
     ConfigurationSettingDataSource retrievedSetting = null;
     try {
-      retrievedSetting = (ConfigurationSettingDataSource) dataSourceWidget
-          .getUpdatedSpecification()
-          .getSettings()[0];
-    } catch (InputValidationException e) {
+      retrievedSetting = dataSourceWidget
+        .getUpdatedSpecification()
+        .getSettings()[0];
+    }
+    catch (InputValidationException e) {
       TestHelper.resetDatabaseSync();
       e.printStackTrace();
       fail();
@@ -136,13 +138,13 @@ public class GwtTestTableInputParameter  extends GWTTestCase {
     //Setup
     int maxValue = 5;
     ConfigurationRequirementTableInput
-        specification =
-        new ConfigurationRequirementTableInput("table input", 3, maxValue);
+      specification =
+      new ConfigurationRequirementTableInput("table input", 3, maxValue);
 
     //Execute
     InputParameterTableInputWidget
-        widget =
-        new InputParameterTableInputWidget(specification, new TabWrapper());
+      widget =
+      new InputParameterTableInputWidget(specification, new TabWrapper());
 
     //Check
     assertEquals(maxValue, widget.inputWidgets.size());

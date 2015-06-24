@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,44 +16,40 @@
 
 package de.metanome.algorithm_integration.results;
 
+import java.io.Serializable;
+import javax.xml.bind.annotation.XmlTransient;
+
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import de.metanome.algorithm_integration.result_receiver.CouldNotReceiveResultException;
 import de.metanome.algorithm_integration.result_receiver.OmniscientResultReceiver;
 
-import java.io.Serializable;
-
-import javax.xml.bind.annotation.XmlTransient;
-
 /**
  * All Results need to be sendable to an {@link OmniscientResultReceiver}.
- *
  * @author Jakob Zwiener
  */
 @JsonTypeInfo(
-    use = JsonTypeInfo.Id.NAME,
-    include = JsonTypeInfo.As.PROPERTY,
-    property = "type")
+  use = JsonTypeInfo.Id.NAME,
+  include = JsonTypeInfo.As.PROPERTY,
+  property = "type")
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = BasicStatistic.class, name = "BasicStatistic"),
-    @JsonSubTypes.Type(value = ConditionalUniqueColumnCombination.class, name = "ConditionalUniqueColumnCombination"),
-    @JsonSubTypes.Type(value = FunctionalDependency.class, name = "FunctionalDependency"),
-    @JsonSubTypes.Type(value = InclusionDependency.class, name = "InclusionDependency"),
-    @JsonSubTypes.Type(value = OrderDependency.class, name = "OrderDependency"),
-    @JsonSubTypes.Type(value = UniqueColumnCombination.class, name = "UniqueColumnCombination")
+  @JsonSubTypes.Type(value = BasicStatistic.class, name = "BasicStatistic"),
+  @JsonSubTypes.Type(value = ConditionalUniqueColumnCombination.class, name = "ConditionalUniqueColumnCombination"),
+  @JsonSubTypes.Type(value = FunctionalDependency.class, name = "FunctionalDependency"),
+  @JsonSubTypes.Type(value = InclusionDependency.class, name = "InclusionDependency"),
+  @JsonSubTypes.Type(value = OrderDependency.class, name = "OrderDependency"),
+  @JsonSubTypes.Type(value = UniqueColumnCombination.class, name = "UniqueColumnCombination")
 })
 public interface Result extends Serializable {
 
   /**
    * Sends a result to an {@link OmniscientResultReceiver}.
-   *
    * @param resultReceiver the {@link de.metanome.algorithm_integration.result_receiver.OmniscientResultReceiver}
-   *                       the result should send itself to
+   * the result should send itself to
    * @throws CouldNotReceiveResultException if the result could not be received
    */
-  @XmlTransient
-  public void sendResultTo(OmniscientResultReceiver resultReceiver)
-      throws CouldNotReceiveResultException;
+  @XmlTransient void sendResultTo(OmniscientResultReceiver resultReceiver)
+    throws CouldNotReceiveResultException;
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,23 +21,21 @@ import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 
 /**
  * An {@link Algorithm} that takes boolean configuration values.
- *
  * @author Jakob Zwiener
  */
 public interface BooleanParameterAlgorithm extends Algorithm {
 
   /**
    * Sets a boolean configuration value on the algorithm.
-   *
    * @param identifier the configuration parameter's identifier
-   * @param values     the configuration parameter's value
+   * @param values the configuration parameter's value
    * @throws de.metanome.algorithm_integration.AlgorithmConfigurationException if the algorithm
-   *                                                                           cannot be correctly
-   *                                                                           configured using the
-   *                                                                           received configuration
-   *                                                                           values
+   * cannot be correctly
+   * configured using the
+   * received configuration
+   * values
    */
   void setBooleanConfigurationValue(String identifier, Boolean... values)
-      throws AlgorithmConfigurationException;
+    throws AlgorithmConfigurationException;
 
 }

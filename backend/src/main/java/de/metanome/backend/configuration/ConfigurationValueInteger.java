@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,17 +16,16 @@
 
 package de.metanome.backend.configuration;
 
+import java.util.Set;
+
 import de.metanome.algorithm_integration.Algorithm;
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.algorithm_types.IntegerParameterAlgorithm;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirementInteger;
 import de.metanome.algorithm_integration.configuration.ConfigurationSettingInteger;
 
-import java.util.Set;
-
 /**
  * Represents integer configuration values for {@link Algorithm}s.
- *
  * @author Jakob Zwiener
  */
 public class ConfigurationValueInteger extends ConfigurationValue<Integer, ConfigurationRequirementInteger> {
@@ -36,13 +35,15 @@ public class ConfigurationValueInteger extends ConfigurationValue<Integer, Confi
   }
 
   public ConfigurationValueInteger(ConfigurationRequirementInteger requirement)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     super(requirement);
   }
 
   @Override
   protected Integer[] convertToValues(ConfigurationRequirementInteger requirement)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     ConfigurationSettingInteger[] settings = requirement.getSettings();
     Integer[] configValues = new Integer[settings.length];
     int i = 0;
@@ -55,10 +56,11 @@ public class ConfigurationValueInteger extends ConfigurationValue<Integer, Confi
 
   @Override
   public void triggerSetValue(Algorithm algorithm, Set<Class<?>> algorithmInterfaces)
-      throws AlgorithmConfigurationException {
+    throws AlgorithmConfigurationException
+  {
     if (!algorithmInterfaces.contains(IntegerParameterAlgorithm.class)) {
       throw new AlgorithmConfigurationException(
-          "Algorithm does not accept integer configuration values.");
+        "Algorithm does not accept integer configuration values.");
     }
 
     IntegerParameterAlgorithm integerParameterAlgorithm = (IntegerParameterAlgorithm) algorithm;

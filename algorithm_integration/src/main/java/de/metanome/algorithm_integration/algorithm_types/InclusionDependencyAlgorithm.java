@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,17 +21,15 @@ import de.metanome.algorithm_integration.result_receiver.InclusionDependencyResu
 
 /**
  * An {@link Algorithm} that discovers inclusion dependencies.
- *
  * @author Jakob Zwiener
  */
 public interface InclusionDependencyAlgorithm extends Algorithm {
 
   /**
    * Sets a {@link InclusionDependencyResultReceiver} to send the results to.
-   *
    * @param resultReceiver the {@link de.metanome.algorithm_integration.result_receiver.InclusionDependencyResultReceiver}
-   *                       the algorithm sends {@link de.metanome.algorithm_integration.results.InclusionDependency}s
-   *                       to.
+   * the algorithm sends {@link de.metanome.algorithm_integration.results.InclusionDependency}s
+   * to.
    */
   void setResultReceiver(InclusionDependencyResultReceiver resultReceiver);
 

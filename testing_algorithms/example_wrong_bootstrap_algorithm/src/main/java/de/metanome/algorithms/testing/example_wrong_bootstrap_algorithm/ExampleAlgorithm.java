@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,12 @@
 
 package de.metanome.algorithms.testing.example_wrong_bootstrap_algorithm;
 
+import java.util.ArrayList;
+
 import de.metanome.algorithm_integration.AlgorithmExecutionException;
 import de.metanome.algorithm_integration.algorithm_types.UniqueColumnCombinationsAlgorithm;
 import de.metanome.algorithm_integration.configuration.ConfigurationRequirement;
 import de.metanome.algorithm_integration.result_receiver.UniqueColumnCombinationResultReceiver;
-
-import java.util.ArrayList;
 
 public class ExampleAlgorithm implements UniqueColumnCombinationsAlgorithm {
 

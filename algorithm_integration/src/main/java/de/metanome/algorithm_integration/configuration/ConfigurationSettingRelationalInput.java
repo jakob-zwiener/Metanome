@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 by the Metanome project
+ * Copyright 2015 by the Metanome project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,42 +16,39 @@
 
 package de.metanome.algorithm_integration.configuration;
 
-import com.google.common.annotations.GwtIncompatible;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.google.common.annotations.GwtIncompatible;
 
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.input.RelationalInputGeneratorInitializer;
-
-import javax.xml.bind.annotation.XmlTransient;
 
 
 /**
  * Allows initialization of the input through double dispatch.
  * The input can be generated from both a file or database table.
- *
  * @author Jakob Zwiener
  */
 @JsonTypeInfo(
-    use = JsonTypeInfo.Id.NAME,
-    include = JsonTypeInfo.As.PROPERTY,
-    property = "type")
+  use = JsonTypeInfo.Id.NAME,
+  include = JsonTypeInfo.As.PROPERTY,
+  property = "type")
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = ConfigurationSettingFileInput.class, name = "ConfigurationSettingFileInput"),
-    @JsonSubTypes.Type(value = ConfigurationSettingTableInput.class, name = "ConfigurationSettingTableInput")
+  @JsonSubTypes.Type(value = ConfigurationSettingFileInput.class, name = "ConfigurationSettingFileInput"),
+  @JsonSubTypes.Type(value = ConfigurationSettingTableInput.class, name = "ConfigurationSettingTableInput")
 })
 public abstract class ConfigurationSettingRelationalInput extends ConfigurationSettingDataSource {
 
   /**
    * Sends itself back to the initializer (double dispatch).
-   *
    * @param initializer the initializer to send the setting to
    * @throws AlgorithmConfigurationException if the input cannot be initialized
    */
   @XmlTransient
   @GwtIncompatible("Can only be called from backend.")
   public abstract void generate(RelationalInputGeneratorInitializer initializer)
-      throws AlgorithmConfigurationException;
+    throws AlgorithmConfigurationException;
 
 }
