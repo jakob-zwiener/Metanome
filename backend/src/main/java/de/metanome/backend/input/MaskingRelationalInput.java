@@ -16,18 +16,19 @@
 
 package de.metanome.backend.input;
 
-import de.metanome.algorithm_integration.input.InputIterationException;
-import de.metanome.algorithm_integration.input.RelationalInput;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import de.metanome.algorithm_integration.input.InputIterationException;
+import de.metanome.algorithm_integration.input.RelationalInput;
 
 /**
  * Masks columns of a {@link RelationalInput}. Only the specified columns will be in the masked
  * iterator. Columns are specified by their column index.
  *
  * @author Jakob Zwiener
+ * @see MaskingRelationalInputGenerator
  */
 public class MaskingRelationalInput implements RelationalInput {
 
